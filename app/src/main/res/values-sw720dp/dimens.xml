@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="item_goods_big_img_min_height">280.0dip</dimen>
+    <dimen name="feedback_btn_top_bottom_pading_size">8.0dip</dimen>
+    <dimen name="feedback_btn_left_right_pading_size">25.0dip</dimen>
+</resources>

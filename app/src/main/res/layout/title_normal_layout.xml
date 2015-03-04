@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentLeft="true">
+
+    <ImageView
+        android:id="@+id/imageview_btn_back"
+        android:layout_width="54.0dip"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:onClick="onBackAction"
+        android:scaleType="center"
+        android:src="@drawable/btn_selector_back" />
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:shadowColor="@color/title_shadow_color"
+        android:shadowDx="2.0"
+        android:shadowDy="1.0"
+        android:shadowRadius="1.0"
+        android:singleLine="true"
+        android:textColor="@color/white"
+        android:textSize="@dimen/title_text_size" />
+</RelativeLayout>

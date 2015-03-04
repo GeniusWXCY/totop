@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/layout_root_content"
+    android:descendantFocusability="afterDescendants"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@drawable/ic_item_pic_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/item_goods_bg_default_margin_left"
+        android:layout_marginTop="10.0dip"
+        android:layout_marginRight="@dimen/item_goods_bg_default_margin_right">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="@drawable/head_line_bg"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10.0dip"
+                android:layout_weight="1.0">
+
+                <FrameLayout
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal"
+                    android:id="@+id/layout_goods_pic"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="@dimen/item_goods_bg_default_margin_left"
+                    android:layout_centerVertical="true">
+
+                    <ImageView
+                        android:layout_gravity="left"
+                        android:id="@+id/imageview_goods_pic"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:scaleType="center"
+                        android:adjustViewBounds="true" />
+                </FrameLayout>
+
+                <TextView
+                    android:textColor="@color/white"
+                    android:gravity="center"
+                    android:id="@+id/text_count"
+                    android:background="@drawable/ic_item_number_bg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="center"
+                    android:layout_alignTop="@id/layout_goods_pic" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.8">
+
+                <TextView
+                    android:textSize="@dimen/item_goods_list_title_text_size"
+                    android:textColor="@color/black"
+                    android:ellipsize="marquee"
+                    android:id="@+id/textview_title"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/item_goods_list_r_margin_left"
+                    android:layout_marginTop="5.0dip"
+                    android:layout_marginRight="@dimen/item_goods_list_r_margin_right"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:text="折叠布简易衣柜" />
+
+                <TextView
+                    android:textColor="@color/gray"
+                    android:gravity="center_vertical"
+                    android:id="@+id/textview_notice"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginLeft="@dimen/item_goods_list_r_margin_left"
+                    android:layout_marginTop="1.0dip"
+                    android:layout_marginRight="@dimen/item_goods_list_r_margin_right"
+                    android:text="小编说：送女朋友送女朋友送女朋友送女朋友送女朋友送女朋友送女朋友"
+                    android:layout_weight="1.0" />
+
+                <RelativeLayout
+                    android:background="@color/item_goods_price_bg"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/item_goods_list_r_margin_left"
+                    android:layout_marginTop="2.0dip"
+                    android:layout_marginRight="@dimen/item_goods_list_r_margin_right">
+
+                    <TextView
+                        android:gravity="center_vertical"
+                        android:id="@+id/text_share"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="1.0dip"
+                        android:text="@string/str_share"
+                        android:drawableLeft="@drawable/btn_selector_share"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true" />
+
+                    <FrameLayout
+                        android:background="@drawable/ic_price_bg"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/text_share">
+
+                        <LinearLayout
+                            android:gravity="bottom"
+                            android:layout_gravity="center_vertical"
+                            android:id="@+id/layout_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:textColor="@color/white"
+                                android:gravity="bottom"
+                                android:id="@+id/text_price_char"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="￥" />
+
+                            <TextView
+                                android:textSize="@dimen/item_goods_price_text_size"
+                                android:textColor="@color/white"
+                                android:id="@+id/text_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="9.9" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:textSize="@dimen/item_goods_original_price_text_size"
+                            android:textColor="@color/white"
+                            android:gravity="right"
+                            android:layout_gravity="bottom|right|center"
+                            android:id="@+id/text_original_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="￥999.0"
+                            android:singleLine="true" />
+                    </FrameLayout>
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/item_goods_list_r_margin_left"
+                    android:layout_marginTop="5.0dip"
+                    android:layout_marginRight="@dimen/item_goods_list_r_margin_right">
+
+                    <Button
+                        android:id="@+id/button_buy_now"
+                        android:background="@drawable/ic_btn_gobuy_bg"
+                        android:clickable="false"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true" />
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/button_buy_now"
+                        android:layout_centerVertical="true">
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textColor="@color/text_order_count"
+                            android:id="@+id/text_order_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="1122" />
+
+                        <TextView
+                            android:textColor="@color/gray"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/str_person_buy" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:id="@+id/layout_shart_line"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/item_goods_list_r_margin_left"
+                    android:layout_marginTop="5.0dip"
+                    android:layout_marginRight="@dimen/item_goods_list_r_margin_right" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_bottom_red_point_m_r">5.0dip</dimen>
+    <dimen name="main_bottom_red_point_m_t">14.0dip</dimen>
+    <dimen name="item_goods_big_img_min_height">230.0dip</dimen>
+    <dimen name="feedback_btn_top_bottom_pading_size">8.0dip</dimen>
+    <dimen name="feedback_btn_left_right_pading_size">25.0dip</dimen>
+</resources>

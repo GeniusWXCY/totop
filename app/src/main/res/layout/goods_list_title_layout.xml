@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <CheckBox
+        android:id="@+id/checkBox_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10.0dip"
+        android:background="@drawable/checkbox_selector_switch"
+        android:button="@null"
+        android:padding="2.0dip" />
+
+    <RadioGroup
+        android:id="@+id/radiogroup_show_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="5.0dip"
+        android:layout_marginTop="5.0dip"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radiobutton_boy_goods"
+            android:layout_width="60dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/radio_selector_top"
+            android:button="@null"
+            android:checked="true"
+            android:gravity="center_horizontal"
+            android:text="@string/str_boy"
+            android:textColor="@drawable/radio_selector_top_text" />
+
+        <RadioButton
+            android:id="@+id/radiobutton_girl_goods"
+            android:layout_width="60dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/radio_selector_top"
+            android:button="@null"
+            android:gravity="center_horizontal"
+            android:text="@string/str_girl"
+            android:textColor="@drawable/radio_selector_top_text" />
+
+        <RadioButton
+            android:id="@+id/radiobutton_windcloud_goods"
+            android:layout_width="80dp"
+            android:layout_height="fill_parent"
+            android:background="@drawable/radio_selector_top"
+            android:button="@null"
+            android:gravity="center_horizontal"
+            android:text="@string/str_wind_cloud"
+            android:textColor="@drawable/radio_selector_top_text"
+            android:checked="false" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/button_left_open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10.0dip"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/btn_selector_left_btn"
+        android:padding="2.0dip" />
+
+</RelativeLayout>
