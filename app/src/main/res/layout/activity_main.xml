@@ -1,11 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/main_bg_color"
+        android:orientation="vertical">
 
+        <RelativeLayout
+            android:id="@+id/layout_main_head"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/title_height"
+            android:background="@color/title_bg_color">
+
+            <include
+                android:id="@+id/layout_goods_title"
+                layout="@layout/goods_list_title_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_bottom_radio"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/ic_tab_radio_group_bg"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/layout_bottom_nine"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.8"
+                android:background="@drawable/ic_tab_bottom_selected">
+
+                <CheckBox
+                    android:id="@+id/checkbox_nine"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:button="@null"
+                    android:checked="true"
+                    android:gravity="bottom|center"
+                    android:paddingBottom="@dimen/main_bottom_checkbox_padding_bottom"
+                    android:text="@string/str_nine_nine"
+                    android:textColor="@drawable/radio_selector_bottom_text"
+                    android:textSize="@dimen/main_bottom_checkbox_text_size" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/main_bottom_line_padding_bottom"
+                android:src="@drawable/ic_top_tab_line" />
+
+            <RelativeLayout
+                android:id="@+id/layout_bottom_nineteen"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.8">
+
+                <CheckBox
+                    android:id="@+id/checkbox_nineteen"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:button="@null"
+                    android:gravity="bottom|center"
+                    android:paddingBottom="@dimen/main_bottom_checkbox_padding_bottom"
+                    android:text="@string/str_nineteen_nine"
+                    android:textColor="@drawable/radio_selector_bottom_text"
+                    android:textSize="@dimen/main_bottom_checkbox_text_size" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/main_bottom_line_padding_bottom"
+                android:src="@drawable/ic_top_tab_line" />
+
+            <RelativeLayout
+                android:id="@+id/layout_bottom_twentynine"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.8">
+
+                <CheckBox
+                    android:id="@+id/checkbox_twentynine"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:button="@null"
+                    android:gravity="bottom|center"
+                    android:paddingBottom="@dimen/main_bottom_checkbox_padding_bottom"
+                    android:text="@string/str_twentynine_nine"
+                    android:textColor="@drawable/radio_selector_bottom_text"
+                    android:textSize="@dimen/main_bottom_checkbox_text_size" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/main_bottom_line_padding_bottom"
+                android:src="@drawable/ic_top_tab_line" />
+
+            <RelativeLayout
+                android:id="@+id/layout_bottom_chaozhi"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.8">
+
+                <CheckBox
+                    android:id="@+id/checkbox_chaozhi"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:button="@null"
+                    android:gravity="bottom|center"
+                    android:paddingBottom="@dimen/main_bottom_checkbox_padding_bottom"
+                    android:text="@string/str_thirtynine_nine"
+                    android:textColor="@drawable/radio_selector_bottom_text"
+                    android:textSize="@dimen/main_bottom_checkbox_text_size"
+                    android:checked="false" />
+            </RelativeLayout>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/main_bottom_line_padding_bottom"
+                android:src="@drawable/ic_top_tab_line" />
+
+            <RelativeLayout
+                android:id="@+id/layout_bottom_personal_center"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_weight="0.8">
+
+                <CheckBox
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@null"
+                    android:button="@null"
+                    android:gravity="bottom|center"
+                    android:paddingBottom="@dimen/main_bottom_checkbox_padding_bottom"
+                    android:text="最近浏览"
+                    android:textColor="@drawable/radio_selector_bottom_text"
+                    android:textSize="@dimen/main_bottom_checkbox_text_size"
+                    android:checked="false" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/listView_goods"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_below="@id/layout_main_head"
+            android:layout_above="@id/layout_bottom_radio"
+            android:cacheColorHint="@color/transparent"
+            android:divider="@null"
+            android:dividerHeight="0.0dip"
+            android:fadingEdge="none"
+            android:fastScrollEnabled="false"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false"
+            android:smoothScrollbar="true" />
+
+    </RelativeLayout>
 </RelativeLayout>
