@@ -10,7 +10,7 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 
 
-public class ProductDetailActivity extends Activity {
+public class GoodsDetailActivity extends Activity {
 
     @InjectView(R.id.webView)
     WebView mWebView;
@@ -21,8 +21,8 @@ public class ProductDetailActivity extends Activity {
 
         ButterKnife.inject(this);
 
-        //String url = "http://m.taobao.com";
-        String url = "http://h5.m.taobao.com/awp/core/detail.htm?spm=a311d.7475193.qianggou.1&id=40703327760";
+        String url = "http://m.taobao.com";
+        //String url = "http://h5.m.taobao.com/awp/core/detail.htm?spm=a311d.7475193.qianggou.1&id=40703327760";
         //String url = "http://www.baidu.com";
 
         mWebView.setWebViewClient(new WebViewClient(){

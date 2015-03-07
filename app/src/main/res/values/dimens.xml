@@ -44,4 +44,6 @@
     <dimen name="feedback_btn_left_right_pading_size">25.0dip</dimen>
     <dimen name="feedback_kefu_text_size">15.0dip</dimen>
     <dimen name="slidingmenu_shadow_width">15.0dip</dimen>
+
+    <dimen name="tool_bar_height">56dp</dimen>
 </resources>

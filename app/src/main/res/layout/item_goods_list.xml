@@ -46,11 +46,11 @@
                         android:id="@+id/imageview_goods_pic"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:scaleType="center"
+                        android:scaleType="fitCenter"
                         android:adjustViewBounds="true" />
                 </FrameLayout>
 
-                <TextView
+                <!--<TextView
                     android:textColor="@color/white"
                     android:gravity="center"
                     android:id="@+id/text_count"
@@ -58,7 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:scaleType="center"
-                    android:layout_alignTop="@id/layout_goods_pic" />
+                    android:layout_alignTop="@id/layout_goods_pic" />-->
             </RelativeLayout>
 
             <LinearLayout
@@ -109,6 +109,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="1.0dip"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
                         android:text="@string/str_share"
                         android:drawableLeft="@drawable/btn_selector_share"
                         android:layout_alignParentRight="true"
