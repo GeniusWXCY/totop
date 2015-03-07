@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.totop.activity.R;
 import com.totop.bean.Goods;
@@ -53,7 +54,6 @@ public class GoodsAdapter extends BaseAdapter{
             convertView = mInflater.inflate(R.layout.item_goods_list,null);
             holder = new ViewHolder(convertView);
 
-            //holder.goodsPicImage.setImageURI();
             UILHelper.displayImage(goods.icon,holder.goodsPicImage);
             holder.titleText.setText(goods.title);
             holder.noticeText.setText(goods.description);
@@ -62,6 +62,13 @@ public class GoodsAdapter extends BaseAdapter{
             holder.orderCountText.setText(String.valueOf(goods.salesvolume));
             holder.goods = goods;
 
+            holder.shareText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(mContext,"this is share!!",Toast.LENGTH_LONG).show();
+                }
+            });
+
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
@@ -69,14 +76,15 @@ public class GoodsAdapter extends BaseAdapter{
         return convertView;
     }
 
-    static class ViewHolder {
+    public static class ViewHolder {
         @InjectView(R.id.imageview_goods_pic)ImageView goodsPicImage;
         @InjectView(R.id.textview_title)TextView titleText;
         @InjectView(R.id.textview_notice)TextView noticeText;
         @InjectView(R.id.text_price)TextView priceText;
         @InjectView(R.id.text_original_price)TextView originalPriceText;
         @InjectView(R.id.text_order_count)TextView orderCountText;
-        Goods goods;
+        @InjectView(R.id.text_share)TextView shareText;
+        public Goods goods;
 
         public ViewHolder(View view) {
             ButterKnife.inject(this, view);

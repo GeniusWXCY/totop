@@ -13,8 +13,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.totop.adapter.GoodsAdapter;
 import com.totop.DataFactory;
+import com.totop.adapter.GoodsAdapter;
 import com.totop.bean.Goods;
 import com.yalantis.contextmenu.lib.ContextMenuDialogFragment;
 import com.yalantis.contextmenu.lib.MenuObject;
@@ -112,7 +112,10 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
     }
 
     @OnItemClick(R.id.listView_goods) void bkItemClick(AdapterView<?> parent, View view, int position, long id){
+
+        GoodsAdapter.ViewHolder viewHolder = (GoodsAdapter.ViewHolder) view.getTag();
         Intent intent = new Intent(MainActivity.this,GoodsDetailActivity.class);
+        intent.putExtra(GoodsDetailActivity.EXTRA_IMAGE_URL,viewHolder.goods.url);
         startActivity(intent);
     }
 
