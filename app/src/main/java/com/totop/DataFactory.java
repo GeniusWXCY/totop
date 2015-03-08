@@ -5,9 +5,6 @@ import com.totop.bean.Goods;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Administrator on 2015/3/7.
- */
 public class DataFactory {
 
     public static List<Goods> make(){

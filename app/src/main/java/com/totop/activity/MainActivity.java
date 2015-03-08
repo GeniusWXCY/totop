@@ -1,18 +1,23 @@
 package com.totop.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.totop.DataFactory;
 import com.totop.adapter.GoodsAdapter;
 import com.totop.bean.Goods;
@@ -27,17 +32,18 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
-import butterknife.OnItemClick;
 
 
 public class MainActivity extends FragmentActivity implements OnMenuItemClickListener,OnMenuItemLongClickListener {
 
-    @InjectView(R.id.listView_goods)ListView mListView;
+    @InjectView(R.id.listView_goods)PullToRefreshListView mPullRefreshListView;
 
     List<Goods> mList = new ArrayList<Goods>();
 
-    private FragmentManager fragmentManager;
+    private FragmentManager mFragmentManager;
     private DialogFragment mMenuDialogFragment;
+    private Context mContext;
+    private GoodsAdapter mGoodsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,22 +51,58 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
         setContentView(R.layout.activity_main);
 
         ButterKnife.inject(this);
+        mContext = this;
+        mList = DataFactory.make();
+        mGoodsAdapter = new GoodsAdapter(this,mList);
 
-        mListView = (ListView) findViewById(R.id.listView_goods);
-        fragmentManager = getSupportFragmentManager();
+        mFragmentManager = getSupportFragmentManager();
         mMenuDialogFragment = ContextMenuDialogFragment.newInstance((int) getResources().getDimension(R.dimen.tool_bar_height), getMenuObjects());
 
-        mList = DataFactory.make();
+        mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+        mPullRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
 
-        mListView.setAdapter(new GoodsAdapter(this,mList));
+                // 获取刷新时间，设置刷新时间格式
+                String label = DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(),
+                        DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
+
+                refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("最后加载时间:" + label);
+
+                Toast.makeText(mContext,"刷新数据!",Toast.LENGTH_SHORT).show();
+                new GetDataTask().execute();
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+                Toast.makeText(mContext,"加载数据!",Toast.LENGTH_SHORT).show();
+                mGoodsAdapter.notifyDataSetChanged();
+                mPullRefreshListView.onRefreshComplete();
+                //没有数据后
+                mPullRefreshListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+            }
+        });
+
+        mPullRefreshListView.setOnLastItemVisibleListener(new PullToRefreshBase.OnLastItemVisibleListener() {
+            @Override
+            public void onLastItemVisible() {
+                Toast.makeText(mContext, "已经没有数据了!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        ListView mListView = mPullRefreshListView.getRefreshableView();
+        mListView.setAdapter(mGoodsAdapter);
         mListView.setItemsCanFocus(true);
-        /*mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                GoodsAdapter.ViewHolder viewHolder = (GoodsAdapter.ViewHolder) view.getTag();
                 Intent intent = new Intent(MainActivity.this,GoodsDetailActivity.class);
+                intent.putExtra(GoodsDetailActivity.EXTRA_IMAGE_URL,viewHolder.goods.url);
                 startActivity(intent);
             }
-        });*/
+        });
     }
 
     private List<MenuObject> getMenuObjects() {
@@ -106,21 +148,35 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
     }
 
     @OnClick(R.id.button_left_open) void bkSearch(){
-        if (fragmentManager.findFragmentByTag(ContextMenuDialogFragment.TAG) == null) {
-            mMenuDialogFragment.show(fragmentManager, ContextMenuDialogFragment.TAG);
+        if (mFragmentManager.findFragmentByTag(ContextMenuDialogFragment.TAG) == null) {
+            mMenuDialogFragment.show(mFragmentManager, ContextMenuDialogFragment.TAG);
         }
-    }
-
-    @OnItemClick(R.id.listView_goods) void bkItemClick(AdapterView<?> parent, View view, int position, long id){
-
-        GoodsAdapter.ViewHolder viewHolder = (GoodsAdapter.ViewHolder) view.getTag();
-        Intent intent = new Intent(MainActivity.this,GoodsDetailActivity.class);
-        intent.putExtra(GoodsDetailActivity.EXTRA_IMAGE_URL,viewHolder.goods.url);
-        startActivity(intent);
     }
 
     @Override
     public void onMenuItemLongClick(View view, int i) {
 
+    }
+
+    private class GetDataTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            // Simulates a background job.
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+
+            mList.add(mList.get(0));
+            mGoodsAdapter.notifyDataSetChanged();
+            mPullRefreshListView.onRefreshComplete();
+            super.onPostExecute(result);
+        }
     }
 }

@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.totop.activity.R;
 import com.totop.bean.Goods;
+import com.totop.utils.ShareUtils;
 import com.totop.utils.UILHelper;
 
 import java.util.List;
@@ -65,7 +65,7 @@ public class GoodsAdapter extends BaseAdapter{
             holder.shareText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext,"this is share!!",Toast.LENGTH_LONG).show();
+                    ShareUtils.share(mContext);
                 }
             });
 

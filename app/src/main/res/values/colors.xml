@@ -44,4 +44,6 @@
     <color name="left_bg">#fff5f5f5</color>
     <color name="left_list_line">#ffe9e9e9</color>
     <color name="left_list_item_text">#ff8b8b8b</color>
+
+    <color name="webview_tool">#F3F4EF</color>
 </resources>

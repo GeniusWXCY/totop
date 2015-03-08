@@ -10,19 +10,82 @@
         android:background="@color/title_bg_color">
 
         <TextView
+            android:id="@+id/text_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:drawableLeft="@drawable/top_back_white"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_text_size"
+            android:text="@string/str_back" />
+
+        <TextView
             android:id="@+id/text_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:textColor="@color/white"
             android:textSize="@dimen/title_text_size"
-            android:text="@string/str_goods_detail_title"/>
+            android:text="@string/str_goods_detail_title" />
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_webview_tool"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/webview_tool"
+        android:gravity="center"
+        android:layout_alignParentBottom="true">
+
+        <ImageButton
+            android:id="@+id/webview_back"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_menu_back"/>
+
+        <ImageButton
+            android:id="@+id/webview_forward"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_menu_forward"/>
+
+        <ImageButton
+            android:id="@+id/webview_share"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_menu_share"/>
+
+        <ImageButton
+            android:id="@+id/webview_favor"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_menu_star"/>
+
+        <ImageButton
+            android:id="@+id/webview_close"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@color/transparent"
+            android:src="@drawable/ic_menu_close_clear_cancel"/>
+    </LinearLayout>
 
     <WebView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/webView"
-        android:layout_alignParentBottom="true"
+        android:layout_above="@id/layout_webview_tool"
         android:layout_below="@+id/layout_main_head" />
 </RelativeLayout>

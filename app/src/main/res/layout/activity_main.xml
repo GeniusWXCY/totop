@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ptr=" http://schemas.android.com/apk/res-auto "
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
@@ -22,37 +23,27 @@
                 android:layout_height="fill_parent" />
         </RelativeLayout>
 
-        <LinearLayout
+        <RadioGroup
             android:id="@+id/layout_bottom_radio"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@drawable/ic_tab_radio_group_bg"
-            android:gravity="bottom"
+            android:gravity="center"
             android:orientation="horizontal">
 
-            <RelativeLayout
-                android:id="@+id/layout_bottom_nine"
+            <RadioButton
+                android:id="@+id/radio_nine"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_weight="0.8"
-                android:background="@drawable/ic_tab_bottom_selected">
-
-                <CheckBox
-                    android:id="@+id/checkbox_nine"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:button="@null"
-                    android:checked="true"
-                    android:gravity="bottom|center"
-                    android:paddingBottom="@dimen/main_bottom_checkbox_padding_bottom"
-                    android:text="@string/str_nine_nine"
-                    android:textColor="@drawable/radio_selector_bottom_text"
-                    android:textSize="@dimen/main_bottom_checkbox_text_size" />
-            </RelativeLayout>
+                android:text="@string/str_nine_nine"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center"
+                android:textColor="@drawable/radio_selector_bottom_text"
+                android:textSize="@dimen/normal_text_size"
+                android:background="@drawable/radio_selector_price"></RadioButton>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -60,26 +51,17 @@
                 android:layout_marginBottom="@dimen/main_bottom_line_padding_bottom"
                 android:src="@drawable/ic_top_tab_line" />
 
-            <RelativeLayout
-                android:id="@+id/layout_bottom_nineteen"
+            <RadioButton
+                android:id="@+id/radio_nineteen"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="0.8">
-
-                <CheckBox
-                    android:id="@+id/checkbox_nineteen"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:button="@null"
-                    android:gravity="bottom|center"
-                    android:paddingBottom="@dimen/main_bottom_checkbox_padding_bottom"
-                    android:text="@string/str_nineteen_nine"
-                    android:textColor="@drawable/radio_selector_bottom_text"
-                    android:textSize="@dimen/main_bottom_checkbox_text_size" />
-            </RelativeLayout>
+                android:layout_weight="0.8"
+                android:text="@string/str_nineteen_nine"
+                android:button="@null"
+                android:gravity="center"
+                android:textColor="@drawable/radio_selector_bottom_text"
+                android:textSize="@dimen/normal_text_size"
+                android:background="@drawable/radio_selector_price"></RadioButton>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -87,26 +69,17 @@
                 android:layout_marginBottom="@dimen/main_bottom_line_padding_bottom"
                 android:src="@drawable/ic_top_tab_line" />
 
-            <RelativeLayout
-                android:id="@+id/layout_bottom_twentynine"
+            <RadioButton
+                android:id="@+id/radio_twentynine"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="0.8">
-
-                <CheckBox
-                    android:id="@+id/checkbox_twentynine"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:button="@null"
-                    android:gravity="bottom|center"
-                    android:paddingBottom="@dimen/main_bottom_checkbox_padding_bottom"
-                    android:text="@string/str_twentynine_nine"
-                    android:textColor="@drawable/radio_selector_bottom_text"
-                    android:textSize="@dimen/main_bottom_checkbox_text_size" />
-            </RelativeLayout>
+                android:layout_weight="0.8"
+                android:button="@null"
+                android:gravity="center"
+                android:text="@string/str_twentynine_nine"
+                android:textColor="@drawable/radio_selector_bottom_text"
+                android:textSize="@dimen/normal_text_size"
+                android:background="@drawable/radio_selector_price"></RadioButton>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -114,27 +87,17 @@
                 android:layout_marginBottom="@dimen/main_bottom_line_padding_bottom"
                 android:src="@drawable/ic_top_tab_line" />
 
-            <RelativeLayout
-                android:id="@+id/layout_bottom_chaozhi"
+            <RadioButton
+                android:id="@+id/radio_hirtynine_nine"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="0.8">
-
-                <CheckBox
-                    android:id="@+id/checkbox_chaozhi"
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:button="@null"
-                    android:gravity="bottom|center"
-                    android:paddingBottom="@dimen/main_bottom_checkbox_padding_bottom"
-                    android:text="@string/str_thirtynine_nine"
-                    android:textColor="@drawable/radio_selector_bottom_text"
-                    android:textSize="@dimen/main_bottom_checkbox_text_size"
-                    android:checked="false" />
-            </RelativeLayout>
+                android:layout_weight="0.8"
+                android:button="@null"
+                android:text="@string/str_thirtynine_nine"
+                android:gravity="center"
+                android:textColor="@drawable/radio_selector_bottom_text"
+                android:textSize="@dimen/normal_text_size"
+                android:background="@drawable/radio_selector_price"></RadioButton>
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -142,29 +105,21 @@
                 android:layout_marginBottom="@dimen/main_bottom_line_padding_bottom"
                 android:src="@drawable/ic_top_tab_line" />
 
-            <RelativeLayout
+            <RadioButton
                 android:id="@+id/layout_bottom_personal_center"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:layout_weight="0.8">
+                android:layout_weight="0.8"
+                android:text="最近浏览"
+                android:gravity="center"
+                android:button="@null"
+                android:textColor="@drawable/radio_selector_bottom_text"
+                android:textSize="@dimen/normal_text_size"
+                android:background="@drawable/radio_selector_price"></RadioButton>
 
-                <CheckBox
-                    android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:background="@null"
-                    android:button="@null"
-                    android:gravity="bottom|center"
-                    android:paddingBottom="@dimen/main_bottom_checkbox_padding_bottom"
-                    android:text="最近浏览"
-                    android:textColor="@drawable/radio_selector_bottom_text"
-                    android:textSize="@dimen/main_bottom_checkbox_text_size"
-                    android:checked="false" />
-            </RelativeLayout>
-        </LinearLayout>
+        </RadioGroup>
 
-        <ListView
+        <!--<ListView
             android:id="@+id/listView_goods"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
@@ -178,7 +133,23 @@
             android:fastScrollEnabled="false"
             android:footerDividersEnabled="false"
             android:headerDividersEnabled="false"
-            android:smoothScrollbar="true" />
+            android:smoothScrollbar="true" />-->
+        <com.handmark.pulltorefresh.library.PullToRefreshListView
+            android:id="@+id/listView_goods"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/layout_main_head"
+            android:layout_above="@id/layout_bottom_radio"
+            android:listSelector="@color/transparent"
+            android:cacheColorHint="@color/transparent"
+            android:divider="@null"
+            android:dividerHeight="0.0dip"
+            android:fadingEdge="none"
+            android:fastScrollEnabled="false"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false"
+            android:smoothScrollbar="true"
+            ptr:ptrHeaderTextColor="@color/black"/>
 
     </RelativeLayout>
 </RelativeLayout>

@@ -3,11 +3,16 @@ package com.totop.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
+
+import com.totop.utils.ShareUtils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 
 public class GoodsDetailActivity extends Activity {
@@ -44,4 +49,35 @@ public class GoodsDetailActivity extends Activity {
         }
         return super.onKeyDown(keyCode,event);
     }
+
+    @OnClick({R.id.text_back,R.id.webview_back,R.id.webview_forward,R.id.webview_share,R.id.webview_favor,R.id.webview_close})
+    public void bkClick(View view){
+        switch (view.getId()){
+            case R.id.text_back:
+            case R.id.webview_close:
+                finish();
+                break;
+            case R.id.webview_back:
+                if(mWebView.canGoBack()){
+                    mWebView.goBack();
+                }else{
+                    Toast.makeText(this,"不能再后退了！",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.webview_forward:
+                if(mWebView.canGoForward()){
+                    mWebView.goForward();
+                }else{
+                    Toast.makeText(this,"不能再往前了！",Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.webview_share:
+                ShareUtils.share(this);
+                break;
+            case R.id.webview_favor:
+                //TODO 收藏
+                break;
+        }
+    }
+
 }
