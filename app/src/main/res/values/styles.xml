@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppBaseTheme" parent="@*android:style/Theme.Translucent.NoTitleBar">
+    <style name="AppBaseTheme" parent="@android:style/Theme.Translucent.NoTitleBar">
         <item name="android:textColor">@color/black</item>
     </style>
     <style name="AppTheme" parent="@style/AppBaseTheme" />
-    <style name="dialog_bg_dim_disabled" parent="@*android:style/Theme.Dialog">
+    <style name="dialog_bg_dim_disabled" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@*android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
@@ -12,7 +12,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
-    <style name="dialog_bg_dim_enabled" parent="@*android:style/Theme.NoTitleBar">
+    <style name="dialog_bg_dim_enabled" parent="@android:style/Theme.NoTitleBar">
         <item name="android:windowBackground">@*android:color/transparent</item>
         <item name="android:windowFrame">@null</item>
         <item name="android:windowNoTitle">true</item>
@@ -20,11 +20,11 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:backgroundDimEnabled">true</item>
     </style>
-    <style name="progress_dialog" parent="@*android:style/Theme.Dialog">
+    <style name="progress_dialog" parent="@android:style/Theme.Dialog">
         <item name="android:windowBackground">@*android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-    <style name="progress_horizontal" parent="@*android:style/Widget.ProgressBar.Horizontal">
+    <style name="progress_horizontal" parent="@android:style/Widget.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal</item>
     </style>
 </resources>

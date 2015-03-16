@@ -1,6 +1,7 @@
 package com.totop.adapter;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,7 @@ public class GoodsAdapter extends BaseAdapter{
             holder.noticeText.setText(goods.description);
             holder.priceText.setText(String.valueOf(goods.currentprice));
             holder.originalPriceText.setText(String.valueOf(goods.originalprice));
+            holder.originalPriceText.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
             holder.orderCountText.setText(String.valueOf(goods.salesvolume));
             holder.goods = goods;
 

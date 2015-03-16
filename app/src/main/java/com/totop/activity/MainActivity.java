@@ -69,14 +69,11 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
 
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("最后加载时间:" + label);
 
-                Toast.makeText(mContext,"刷新数据!",Toast.LENGTH_SHORT).show();
                 new GetDataTask().execute();
             }
-
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
 
-                Toast.makeText(mContext,"加载数据!",Toast.LENGTH_SHORT).show();
                 mGoodsAdapter.notifyDataSetChanged();
                 mPullRefreshListView.onRefreshComplete();
                 //没有数据后
@@ -164,7 +161,7 @@ public class MainActivity extends FragmentActivity implements OnMenuItemClickLis
         protected Void doInBackground(Void... params) {
             // Simulates a background job.
             try {
-                Thread.sleep(4000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
             }
             return null;
