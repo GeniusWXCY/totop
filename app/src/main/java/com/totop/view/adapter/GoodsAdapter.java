@@ -1,4 +1,4 @@
-package com.totop.adapter;
+package com.totop.view.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.totop.activity.R;
-import com.totop.bean.Goods;
+import com.totop.model.Goods;
 import com.totop.utils.ShareUtils;
 import com.totop.utils.UILHelper;
 

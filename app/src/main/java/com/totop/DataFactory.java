@@ -1,6 +1,6 @@
 package com.totop;
 
-import com.totop.bean.Goods;
+import com.totop.model.Goods;
 
 import java.util.ArrayList;
 import java.util.List;

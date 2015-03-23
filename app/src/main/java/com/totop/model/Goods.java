@@ -1,4 +1,4 @@
-package com.totop.bean;
+package com.totop.model;
 
 public class Goods {
 
