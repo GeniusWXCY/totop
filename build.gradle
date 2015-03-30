@@ -17,6 +17,5 @@ allprojects {
 }
 
 dependencies {
-    compile 'de.greenrobot:eventbus:2.4.0'
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
+
 }

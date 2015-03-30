@@ -26,4 +26,7 @@ dependencies {
     compile 'com.yalantis:contextmenu:1.0.2'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile 'cn.trinea.android.common:trinea-android-common:4.2.15'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'net.simonvt.menudrawer:menudrawer:3.0.+@aar'
 }
