@@ -14,48 +14,16 @@
         android:button="@null"
         android:padding="2.0dip" />
 
-    <RadioGroup
-        android:id="@+id/radiogroup_show_category"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_marginBottom="5.0dip"
         android:layout_marginTop="5.0dip"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
-
-        <RadioButton
-            android:id="@+id/radiobutton_boy_goods"
-            android:layout_width="60dp"
-            android:layout_height="fill_parent"
-            android:background="@drawable/radio_selector_top"
-            android:button="@null"
-            android:checked="true"
-            android:gravity="center_horizontal"
-            android:text="@string/str_boy"
-            android:textColor="@drawable/radio_selector_top_text" />
-
-        <RadioButton
-            android:id="@+id/radiobutton_girl_goods"
-            android:layout_width="60dp"
-            android:layout_height="fill_parent"
-            android:background="@drawable/radio_selector_top"
-            android:button="@null"
-            android:gravity="center_horizontal"
-            android:text="@string/str_girl"
-            android:textColor="@drawable/radio_selector_top_text" />
-
-        <RadioButton
-            android:id="@+id/radiobutton_windcloud_goods"
-            android:layout_width="80dp"
-            android:layout_height="fill_parent"
-            android:background="@drawable/radio_selector_top"
-            android:button="@null"
-            android:gravity="center_horizontal"
-            android:text="@string/str_wind_cloud"
-            android:textColor="@drawable/radio_selector_top_text"
-            android:checked="false" />
-    </RadioGroup>
+        android:textColor="@color/white"
+        android:textSize="@dimen/title_text_size"
+        android:text="@string/str_title" />
 
     <Button
         android:id="@+id/button_left_open"

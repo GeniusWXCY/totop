@@ -24,6 +24,38 @@
         </RelativeLayout>
 
         <RadioGroup
+            android:id="@+id/layout_category_bar"
+            android:layout_height="@dimen/title_height"
+            android:layout_below="@id/layout_main_head"
+            android:layout_width="fill_parent"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radiobutton_boy_goods"
+                android:layout_width="60dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/radio_selector_top"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center_vertical"
+                android:layout_gravity = "center"
+                android:text="@string/str_new"
+                android:textColor="@drawable/radio_selector_top_text" />
+
+            <RadioButton
+                android:id="@+id/radiobutton_girl_goods"
+                android:layout_width="60dp"
+                android:layout_height="fill_parent"
+                android:background="@drawable/radio_selector_top"
+                android:button="@null"
+                android:gravity="center_vertical"
+                android:layout_gravity = "center"
+                android:text="@string/str_popularity"
+                android:textColor="@drawable/radio_selector_top_text" />
+        </RadioGroup>
+
+        <RadioGroup
             android:id="@+id/layout_bottom_radio"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -138,7 +170,7 @@
             android:id="@+id/listView_goods"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/layout_main_head"
+            android:layout_below="@id/layout_category_bar"
             android:layout_above="@id/layout_bottom_radio"
             android:listSelector="@color/transparent"
             android:cacheColorHint="@color/transparent"
@@ -149,7 +181,7 @@
             android:footerDividersEnabled="false"
             android:headerDividersEnabled="false"
             android:smoothScrollbar="true"
-            ptr:ptrHeaderTextColor="@color/black"/>
+            ptr:ptrHeaderTextColor="@color/black" />
 
     </RelativeLayout>
 </RelativeLayout>

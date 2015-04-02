@@ -133,9 +133,9 @@
     <string name="str_share_failed">分享失败!</string>
 
 
-    <string name="str_boy">男生</string>
-    <string name="str_girl">女生</string>
-    <string name="str_wind_cloud">风云榜</string>
+    <string name="str_new">上新</string>
+    <string name="str_popularity">人气</string>
     <string name="str_goods_detail_title">手机淘宝</string>
     <string name="str_back">返回</string>
+    <string name="str_title">红丫帽九块九</string>
 </resources>
