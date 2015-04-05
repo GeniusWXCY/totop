@@ -7,6 +7,27 @@ public class Goods {
     public static final int SOURCE_JD = 2;
 
     public String id;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Goods goods = (Goods) o;
+
+        if (!id.equals(goods.id)) return false;
+        if (!name.equals(goods.name)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id.hashCode();
+        result = 31 * result + name.hashCode();
+        return result;
+    }
+
     /**
      * 标题
      */

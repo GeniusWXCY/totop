@@ -54,27 +54,27 @@ public class GoodsAdapter extends BaseAdapter{
         if(convertView == null){
             convertView = mInflater.inflate(R.layout.item_goods_list,null);
             holder = new ViewHolder(convertView);
-
-            UILHelper.displayImage(goods.icon,holder.goodsPicImage);
-            holder.titleText.setText(goods.name);
-            holder.noticeText.setText(goods.description);
-            holder.priceText.setText(String.valueOf(goods.currentPrice));
-            holder.originalPriceText.setText(String.valueOf(goods.originalPrice));
-            holder.originalPriceText.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
-            holder.orderCountText.setText(String.valueOf(goods.salesvolume));
-            holder.goods = goods;
-
-            holder.shareText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ShareUtils.share(mContext);
-                }
-            });
-
             convertView.setTag(holder);
         }else{
             holder = (ViewHolder) convertView.getTag();
         }
+
+        UILHelper.displayImage(goods.icon,holder.goodsPicImage);
+        holder.titleText.setText(goods.name);
+        holder.noticeText.setText(goods.description);
+        holder.priceText.setText(String.valueOf(goods.currentPrice));
+        holder.originalPriceText.setText(String.valueOf(goods.originalPrice));
+        holder.originalPriceText.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
+        holder.orderCountText.setText(String.valueOf(goods.salesvolume));
+        holder.goods = goods;
+
+        holder.shareText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareUtils.share(mContext);
+            }
+        });
+
         return convertView;
     }
 

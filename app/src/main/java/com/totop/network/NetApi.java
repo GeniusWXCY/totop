@@ -2,33 +2,14 @@ package com.totop.network;
 
 import com.totop.model.DataRes;
 import com.totop.model.Goods;
-import com.totop.utils.Constants;
 
 import java.util.List;
 
-import retrofit.RestAdapter;
+import retrofit.http.GET;
+import retrofit.http.Query;
 
-public class NetApi {
+public interface NetApi {
 
-    /**
-     * 每页显示个数
-     */
-    private static final int PAGE_COUNT = 10;
-    private static INetApi service = null;
-
-    static{
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constants.HOST)
-                .build();
-
-        service = restAdapter.create(INetApi.class);
-    }
-
-    public static DataRes<Goods> findGoods(int pageNo,int pageCount,int sortType){
-        return service.findGoods(pageNo, pageCount, sortType);
-    }
-
-    public static DataRes<Goods> findGoods(int pageNo,int sortType){
-        return service.findGoods(pageNo,PAGE_COUNT,sortType);
-    }
+    @GET("/interface/api.do?sk=1000")
+    DataRes<Goods> findGoods(@Query("pi") int pageNo, @Query("ps") int pageCount, @Query("sort") int sortType);
 }
