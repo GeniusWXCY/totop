@@ -42,11 +42,6 @@ import butterknife.OnClick;
 
 public class GoodsListFragment extends Fragment implements OnMenuItemClickListener,OnMenuItemLongClickListener {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    private String mParam1;
-    private String mParam2;
-
     @InjectView(R.id.listView_goods)PullToRefreshListView mPullRefreshListView;
 
     List<Goods> mList = new ArrayList<Goods>();
@@ -55,26 +50,14 @@ public class GoodsListFragment extends Fragment implements OnMenuItemClickListen
     private DialogFragment mMenuDialogFragment;
     private Context mContext;
     private GoodsAdapter mGoodsAdapter;
+    private OnFragmentSettingListener mListener;
 
     public static GoodsListFragment newInstance() {
         GoodsListFragment fragment = new GoodsListFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
         return fragment;
     }
 
     public GoodsListFragment() {
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -128,7 +111,7 @@ public class GoodsListFragment extends Fragment implements OnMenuItemClickListen
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GoodsAdapter.ViewHolder viewHolder = (GoodsAdapter.ViewHolder) view.getTag();
                 Intent intent = new Intent(mContext,GoodsDetailActivity.class);
-                intent.putExtra(GoodsDetailActivity.EXTRA_IMAGE_URL,viewHolder.goods.url);
+                intent.putExtra(GoodsDetailActivity.EXTRA_IMAGE_URL,viewHolder.goods.link);
                 startActivity(intent);
             }
         });
@@ -199,7 +182,7 @@ public class GoodsListFragment extends Fragment implements OnMenuItemClickListen
         Toast.makeText(mContext, "Clicked on position: " + position, Toast.LENGTH_SHORT).show();
     }
 
-    @OnClick(R.id.button_left_open) void bkSearch(){
+    @OnClick(R.id.button_search) void bkSearch(){
         if (mFragmentManager.findFragmentByTag(ContextMenuDialogFragment.TAG) == null) {
             mMenuDialogFragment.show(mFragmentManager, ContextMenuDialogFragment.TAG);
         }
@@ -208,5 +191,24 @@ public class GoodsListFragment extends Fragment implements OnMenuItemClickListen
     @Override
     public void onMenuItemLongClick(View view, int i) {
 
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mListener = (OnFragmentSettingListener) activity;
+    }
+
+    @Override
+    public void onDetach() {
+        mListener = null;
+        super.onDetach();
+    }
+
+    @OnClick(R.id.button_setting)
+    void setting(){
+        if(mListener != null){
+            mListener.toggle();
+        }
     }
 }

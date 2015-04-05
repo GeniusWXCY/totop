@@ -31,22 +31,19 @@ public abstract class BaseMenuActivity extends FragmentActivity implements MenuA
     @Override
     protected void onCreate(Bundle inState) {
         super.onCreate(inState);
-
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         if (inState != null) {
             mActivePosition = inState.getInt(STATE_ACTIVE_POSITION);
         }
-
         mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.BEHIND, getDrawerPosition(), getDragMode());
 
         List<Object> items = new ArrayList<Object>();
-        items.add(new Item("首页", R.drawable.ic_action_refresh_dark));
-        items.add(new Item("分享", R.drawable.ic_action_select_all_dark));
-        items.add(new Item("热门应用推荐", R.drawable.ic_action_refresh_dark));
-        items.add(new Item("联系我们", R.drawable.ic_action_select_all_dark));
-        items.add(new Item("版本更新", R.drawable.ic_action_refresh_dark));
-        items.add(new Item("使用帮助", R.drawable.ic_action_select_all_dark));
+        items.add(new Item(getString(R.string.menu_home), R.drawable.ic_action_refresh_dark));
+        items.add(new Item(getString(R.string.menu_share), R.drawable.ic_action_select_all_dark));
+        items.add(new Item(getString(R.string.menu_hot), R.drawable.ic_action_refresh_dark));
+        items.add(new Item(getString(R.string.menu_contact), R.drawable.ic_action_select_all_dark));
+        items.add(new Item(getString(R.string.menu_version), R.drawable.ic_action_refresh_dark));
+        items.add(new Item(getString(R.string.menu_help), R.drawable.ic_action_select_all_dark));
 
         mList = new ListView(this);
 

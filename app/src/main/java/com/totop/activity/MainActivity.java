@@ -4,30 +4,34 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.totop.fragment.ContactUsFragment;
 import com.totop.fragment.GoodsListFragment;
+import com.totop.fragment.HelpFragment;
+import com.totop.fragment.OnFragmentSettingListener;
 import com.totop.model.Item;
 
 import net.simonvt.menudrawer.MenuDrawer;
 import net.simonvt.menudrawer.Position;
 
+import butterknife.OnClick;
 
-public class MainActivity extends BaseMenuActivity {
+
+public class MainActivity extends BaseMenuActivity implements OnFragmentSettingListener{
 
     private FragmentTransaction mFragmentTransaction;
     private FragmentManager mFragmentManager;
 
     private String mCurrentFragmentTag;
 
-    private static final String STATE_CURRENT_FRAGMENT = "net.simonvt.menudrawer.samples.FragmentSample";
+    private static final String STATE_CURRENT_FRAGMENT = "com.totop.activity.MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //setContentView(R.layout.activity_main);
         mFragmentManager = getSupportFragmentManager();
-
         if (savedInstanceState != null) {
             mCurrentFragmentTag = savedInstanceState.getString(STATE_CURRENT_FRAGMENT);
         }else{
@@ -56,12 +60,24 @@ public class MainActivity extends BaseMenuActivity {
 
     @Override
     protected void onMenuItemClicked(int position, Item item) {
-        if (mCurrentFragmentTag != null){
-            detachFragment(getFragment(mCurrentFragmentTag));
+
+        String title = item.mTitle;
+
+        if(!title.equals(mCurrentFragmentTag)){
+            if(title.equals(getString(R.string.menu_share))){
+                Toast.makeText(this,"分享",Toast.LENGTH_SHORT).show();
+            }else if(title.equals(getString(R.string.menu_version))){
+                Toast.makeText(this,"升级",Toast.LENGTH_SHORT).show();
+            }else if(title.equals(getString(R.string.menu_hot))){
+                Toast.makeText(this,"热门",Toast.LENGTH_SHORT).show();
+            }else {
+                if (mCurrentFragmentTag != null){
+                    detachFragment(getFragment(mCurrentFragmentTag));
+                }
+                attachFragment(mMenuDrawer.getContentContainer().getId(), getFragment(title), title);
+                mCurrentFragmentTag = title;
+            }
         }
-        //TODO
-        //attachFragment(mMenuDrawer.getContentContainer().getId(), getFragment(item.mTitle), item.mTitle);
-        mCurrentFragmentTag = item.mTitle;
         mMenuDrawer.closeMenu();
     }
 
@@ -118,11 +134,15 @@ public class MainActivity extends BaseMenuActivity {
 
     private Fragment getFragment(String tag) {
         Fragment f = mFragmentManager.findFragmentByTag(tag);
-
         if (f == null) {
-            f = GoodsListFragment.newInstance();
+            if(tag.equals(getString(R.string.menu_home))){
+                f = GoodsListFragment.newInstance();
+            }else if(tag.equals(getString(R.string.menu_contact))){
+                f = ContactUsFragment.newInstance();
+            }else if(tag.equals(getString(R.string.menu_help))){
+                f = HelpFragment.newInstance();
+            }
         }
-
         return f;
     }
 
@@ -135,5 +155,10 @@ public class MainActivity extends BaseMenuActivity {
         }
 
         super.onBackPressed();
+    }
+
+    @Override
+    public void toggle() {
+        mMenuDrawer.toggleMenu();
     }
 }

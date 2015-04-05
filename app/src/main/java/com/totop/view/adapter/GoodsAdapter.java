@@ -56,10 +56,10 @@ public class GoodsAdapter extends BaseAdapter{
             holder = new ViewHolder(convertView);
 
             UILHelper.displayImage(goods.icon,holder.goodsPicImage);
-            holder.titleText.setText(goods.title);
+            holder.titleText.setText(goods.name);
             holder.noticeText.setText(goods.description);
-            holder.priceText.setText(String.valueOf(goods.currentprice));
-            holder.originalPriceText.setText(String.valueOf(goods.originalprice));
+            holder.priceText.setText(String.valueOf(goods.currentPrice));
+            holder.originalPriceText.setText(String.valueOf(goods.originalPrice));
             holder.originalPriceText.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
             holder.orderCountText.setText(String.valueOf(goods.salesvolume));
             holder.goods = goods;

@@ -138,4 +138,14 @@
     <string name="str_goods_detail_title">手机淘宝</string>
     <string name="str_back">返回</string>
     <string name="str_title">红丫帽九块九</string>
+
+    <string name="menu_home">首页</string>
+    <string name="menu_share">分享</string>
+    <string name="menu_hot">热门应用推荐</string>
+    <string name="menu_contact">联系我们</string>
+    <string name="menu_version">版本更新</string>
+    <string name="menu_help">使用帮助</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

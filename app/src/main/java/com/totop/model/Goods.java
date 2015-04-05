@@ -10,7 +10,7 @@ public class Goods {
     /**
      * 标题
      */
-    public String title;
+    public String name;
     /**
      * 描述
      */
@@ -18,19 +18,15 @@ public class Goods {
     /**
      * 现价
      */
-    public float currentprice;
+    public float currentPrice;
     /**
      * 原价
      */
-    public float originalprice;
+    public float originalPrice;
     /**
      * 来源 0淘宝 1天猫 2京东
      */
     public int source;
-    /**
-     * 剩下展示时间
-     */
-    public int lefttime;
     /**
      * 图片地址
      */
@@ -42,7 +38,10 @@ public class Goods {
     /**
      * 商品地址
      */
-    public String url;
+    public String link;
 
-    //TODO 性别，排序，热度,分类，跳转地址
+    public String priceType;
+    public String objectType;
+    public String heat;
+    public String sourceName;
 }
