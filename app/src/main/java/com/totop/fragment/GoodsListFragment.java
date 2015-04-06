@@ -30,6 +30,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.ListUtils;
 
 public class GoodsListFragment extends Fragment {
 
@@ -142,13 +143,14 @@ public class GoodsListFragment extends Fragment {
                     }
                     mPullRefreshListView.onRefreshComplete();
                 }else{
-                    mList.addAll(result.data);
+                    //去重复
+                    ListUtils.addDistinctList(mList,result.data);
                     mGoodsAdapter.notifyDataSetChanged();
                     mPullRefreshListView.onRefreshComplete();
 
                     //是否有下一页
                     if(mList.size() >= result.total){
-                        mPullRefreshListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                        //mPullRefreshListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                     }
                 }
             }else{
