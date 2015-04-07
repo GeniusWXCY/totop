@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
+import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +26,9 @@ import com.totop.model.Goods;
 import com.totop.view.adapter.GoodsAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -36,8 +39,6 @@ public class GoodsListFragment extends Fragment {
 
     @InjectView(R.id.listView_goods)PullToRefreshListView mPullRefreshListView;
 
-    List<Goods> mList = new ArrayList<Goods>();
-
     private Context mContext;
     private GoodsAdapter mGoodsAdapter;
     private OnFragmentSettingListener mListener;
@@ -45,10 +46,20 @@ public class GoodsListFragment extends Fragment {
      * 当前页数
      */
     private int currentPageNo = 1;
+
+    /** 上新-价格 */
+    SparseArray<List<Goods>> priceNewSparseArray = new SparseArray<List<Goods>>();
+    /** 上新-对象 */
+    SparseArray<List<Goods>> objectNewSparseArray = new SparseArray<List<Goods>>();
+    /** 人气-价格 */
+    SparseArray<List<Goods>> priceHotSparseArray = new SparseArray<List<Goods>>();
+    /** 人气-对象 */
+    SparseArray<List<Goods>> objectHotSparseArray = new SparseArray<List<Goods>>();
+
     /**
      * 当前排序方式 0 按时间排序 1 按照热度排序
      */
-    private int currentSortType = 1;
+    private int currentSortType = GoodsManager.SORT_BY_NEW;
     /**
      * 当前模式：价格模式或对象模式
      */
@@ -57,6 +68,12 @@ public class GoodsListFragment extends Fragment {
      * 当前模式的值
      */
     private int currentModeValue = 1;
+    /**
+     * 当前产品集合
+     */
+    List<Goods> currentList = new ArrayList<Goods>();
+
+    SparseArray<List<Goods>> currentSparseArray = priceNewSparseArray;
 
     private boolean isRefresh = false;
 
@@ -75,7 +92,7 @@ public class GoodsListFragment extends Fragment {
 
         ButterKnife.inject(this,view);
         mContext = getActivity();
-        mGoodsAdapter = new GoodsAdapter(mContext,mList);
+        mGoodsAdapter = new GoodsAdapter(mContext, currentList);
 
         mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
         mPullRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -119,7 +136,7 @@ public class GoodsListFragment extends Fragment {
             }
         });
         //加载数据
-        new GetDataTask().execute(currentPageNo,currentSortType);
+        new GetDataTask().execute();
         return view;
     }
 
@@ -138,27 +155,38 @@ public class GoodsListFragment extends Fragment {
 
         @Override
         protected void onPostExecute(DataRes<Goods> result) {
-
+            mPullRefreshListView.onRefreshComplete();
             if(result.success){
 
                 List<Goods> list = result.data;
+
+                //以下逻辑缓存数据--TODO 切换时执行此逻辑
+                List<Goods> cacheList = currentSparseArray.get(currentModeValue);
+                if (cacheList == null){
+                    cacheList = new ArrayList<Goods>();
+                    currentSparseArray.put(currentModeValue,cacheList);
+                }
 
                 if(isRefresh){ //刷新数据
                     isRefresh = false;
                     List<Goods> tempList = new ArrayList<Goods>();
                     for(Goods goods: list){
-                        if (!mList.contains(goods)){
+                        if (!cacheList.contains(goods)){
                             tempList.add(goods);
                         }
                     }
                     if(tempList.size() > 0){
-                        mList.addAll(0,tempList);
+                        cacheList.addAll(0, tempList);
+                        currentList.clear();
+                        currentList.addAll(cacheList);
                         mGoodsAdapter.notifyDataSetChanged();
                     }
                 }else{
                     if(list != null){
                         //去重复
-                        ListUtils.addDistinctList(mList,result.data);
+                        ListUtils.addDistinctList(cacheList,result.data);
+                        currentList.clear();
+                        currentList.addAll(cacheList);
                         mGoodsAdapter.notifyDataSetChanged();
                     }
 
@@ -170,7 +198,6 @@ public class GoodsListFragment extends Fragment {
             }else{
                 Toast.makeText(App.getContext(),"网络请求失败，请稍后再试",Toast.LENGTH_SHORT).show();
             }
-            mPullRefreshListView.onRefreshComplete();
             //TODO 关闭进度条
             super.onPostExecute(result);
         }
@@ -192,6 +219,40 @@ public class GoodsListFragment extends Fragment {
     void setting(){
         if(mListener != null){
             mListener.toggle();
+        }
+    }
+
+    @OnClick(R.id.radiobutton_new_goods)
+    void changeNewGoods(){
+        currentSortType = GoodsManager.SORT_BY_NEW;
+        if (currentModeType == GoodsManager.MODE_PRICE){
+            currentSparseArray = priceNewSparseArray;
+        }else{
+            currentSparseArray = objectNewSparseArray;
+        }
+
+        changeView();
+    }
+
+    @OnClick(R.id.radiobutton_hot_goods)
+    void changeHotGoods(){
+        currentSortType = GoodsManager.SORT_BY_HOT;
+        if (currentModeType == GoodsManager.MODE_PRICE){
+            currentSparseArray = priceHotSparseArray;
+        }else{
+            currentSparseArray = objectHotSparseArray;
+        }
+        changeView();
+    }
+
+    private void changeView(){
+        List<Goods> cacheList = currentSparseArray.get(currentModeValue);
+        if (cacheList == null){
+            new GetDataTask().execute();
+        }else{
+            currentList.clear();
+            currentList.addAll(cacheList);
+            mGoodsAdapter.notifyDataSetChanged();
         }
     }
 }

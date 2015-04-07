@@ -20,6 +20,9 @@ public class GoodsManager {
      * 对象模式
      */
     public static final String MODE_OBJECT = "object";
+
+    public static final int SORT_BY_NEW = 0;
+    public static final int SORT_BY_HOT = 1;
     private static NetApi service = null;
 
     static{

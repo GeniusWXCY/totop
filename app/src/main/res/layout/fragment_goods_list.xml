@@ -32,7 +32,7 @@
             android:orientation="horizontal">
 
             <RadioButton
-                android:id="@+id/radiobutton_boy_goods"
+                android:id="@+id/radiobutton_new_goods"
                 android:layout_width="60dp"
                 android:layout_height="fill_parent"
                 android:background="@drawable/radio_selector_top"
@@ -44,7 +44,7 @@
                 android:textColor="@drawable/radio_selector_top_text" />
 
             <RadioButton
-                android:id="@+id/radiobutton_girl_goods"
+                android:id="@+id/radiobutton_hot_goods"
                 android:layout_width="60dp"
                 android:layout_height="fill_parent"
                 android:background="@drawable/radio_selector_top"
