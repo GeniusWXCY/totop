@@ -11,7 +11,15 @@ public class GoodsManager {
     /**
      * 每页显示个数
      */
-    public static final int PAGE_COUNT = 5;
+    public static final int PAGE_COUNT = 10;
+    /**
+     * 价格模式
+     */
+    public static final String MODE_PRICE = "price";
+    /**
+     * 对象模式
+     */
+    public static final String MODE_OBJECT = "object";
     private static NetApi service = null;
 
     static{
@@ -22,11 +30,17 @@ public class GoodsManager {
         service = restAdapter.create(NetApi.class);
     }
 
-    public static DataRes<Goods> findGoods(int pageNo,int pageCount,int sortType){
-        return service.findGoods(pageNo, pageCount, sortType);
+    public static DataRes<Goods> findGoods(int pageNo,int pageCount,int sortType,String typeKey,int typeValue){
+
+        if(MODE_PRICE.equals(typeKey)){
+            return service.findGoodsByPrice(pageNo, pageCount, sortType, typeValue);
+        }else if(MODE_OBJECT.equals(typeKey)){
+            return service.findGoodsByObject(pageNo,pageCount,sortType,typeValue);
+        }
+        return null;
     }
 
-    public static DataRes<Goods> findGoods(int pageNo,int sortType){
-        return service.findGoods(pageNo,PAGE_COUNT,sortType);
+    public static DataRes<Goods> findGoods(int pageNo,int sortType,String typeKey,int typeValue){
+        return findGoods(pageNo,PAGE_COUNT,sortType,typeKey,typeValue);
     }
 }

@@ -44,11 +44,19 @@ public class GoodsListFragment extends Fragment {
     /**
      * 当前页数
      */
-    private int currentNo = 1;
+    private int currentPageNo = 1;
     /**
-     * 1 价格属性（默认值） 2 对象属性
+     * 当前排序方式 0 按时间排序 1 按照热度排序
      */
     private int currentSortType = 1;
+    /**
+     * 当前模式：价格模式或对象模式
+     */
+    private String currentModeType = GoodsManager.MODE_PRICE;
+    /**
+     * 当前模式的值
+     */
+    private int currentModeValue = 1;
 
     private boolean isRefresh = false;
 
@@ -82,12 +90,12 @@ public class GoodsListFragment extends Fragment {
 
                 //TODO 如何处理刷新的时机
                 isRefresh = true;
-                new GetDataTask().execute(1,currentSortType);
+                new GetDataTask().execute();
             }
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                currentNo++;
-                new GetDataTask().execute(currentNo,currentSortType);
+                currentPageNo++;
+                new GetDataTask().execute();
             }
         });
 
@@ -111,7 +119,7 @@ public class GoodsListFragment extends Fragment {
             }
         });
         //加载数据
-        new GetDataTask().execute(currentNo,currentSortType);
+        new GetDataTask().execute(currentPageNo,currentSortType);
         return view;
     }
 
@@ -119,8 +127,13 @@ public class GoodsListFragment extends Fragment {
 
         @Override
         protected DataRes<Goods> doInBackground(Integer... params) {
+            //int pageNo,int sortType,String typeKey,int typeValue
+            int pageNo = currentPageNo;
+            if(isRefresh){
+                pageNo = 1;
+            }
             //TODO 进度条
-            return GoodsManager.findGoods(params[0], params[1]);
+            return GoodsManager.findGoods(pageNo,currentSortType,currentModeType,currentModeValue);
         }
 
         @Override
@@ -129,6 +142,7 @@ public class GoodsListFragment extends Fragment {
             if(result.success){
 
                 List<Goods> list = result.data;
+
                 if(isRefresh){ //刷新数据
                     isRefresh = false;
                     List<Goods> tempList = new ArrayList<Goods>();
@@ -141,21 +155,22 @@ public class GoodsListFragment extends Fragment {
                         mList.addAll(0,tempList);
                         mGoodsAdapter.notifyDataSetChanged();
                     }
-                    mPullRefreshListView.onRefreshComplete();
                 }else{
-                    //去重复
-                    ListUtils.addDistinctList(mList,result.data);
-                    mGoodsAdapter.notifyDataSetChanged();
-                    mPullRefreshListView.onRefreshComplete();
+                    if(list != null){
+                        //去重复
+                        ListUtils.addDistinctList(mList,result.data);
+                        mGoodsAdapter.notifyDataSetChanged();
+                    }
 
                     //是否有下一页
-                    if(mList.size() >= result.total){
-                        //mPullRefreshListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                    if( list == null || list.size() < GoodsManager.PAGE_COUNT){
+                        mPullRefreshListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
                     }
                 }
             }else{
                 Toast.makeText(App.getContext(),"网络请求失败，请稍后再试",Toast.LENGTH_SHORT).show();
             }
+            mPullRefreshListView.onRefreshComplete();
             //TODO 关闭进度条
             super.onPostExecute(result);
         }
