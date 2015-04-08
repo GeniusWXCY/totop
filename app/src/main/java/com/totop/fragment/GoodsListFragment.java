@@ -7,12 +7,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -26,12 +28,11 @@ import com.totop.model.Goods;
 import com.totop.view.adapter.GoodsAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ListUtils;
 
@@ -222,8 +223,9 @@ public class GoodsListFragment extends Fragment {
         }
     }
 
-    @OnClick(R.id.radiobutton_new_goods)
+    @OnCheckedChanged(R.id.radiobutton_new_goods)
     void changeNewGoods(){
+        Log.e("Genius","changeNewGoods");
         currentSortType = GoodsManager.SORT_BY_NEW;
         if (currentModeType == GoodsManager.MODE_PRICE){
             currentSparseArray = priceNewSparseArray;
@@ -233,9 +235,9 @@ public class GoodsListFragment extends Fragment {
 
         changeView();
     }
-
-    @OnClick(R.id.radiobutton_hot_goods)
+    @OnCheckedChanged(R.id.radiobutton_hot_goods)
     void changeHotGoods(){
+        Log.e("Genius","changeHotGoods");
         currentSortType = GoodsManager.SORT_BY_HOT;
         if (currentModeType == GoodsManager.MODE_PRICE){
             currentSparseArray = priceHotSparseArray;
@@ -243,6 +245,51 @@ public class GoodsListFragment extends Fragment {
             currentSparseArray = objectHotSparseArray;
         }
         changeView();
+    }
+
+    //TODO 切换价格/对象的事件
+    @OnCheckedChanged(R.id.layout_bottom_radio)
+    void changePriceOrObjectd(RadioButton rb,boolean flag){
+        switch (rb.getId()){
+            case R.id.radio_level_one:
+                currentModeValue = 1;
+                break;
+            case R.id.radio_level_two:
+                currentModeValue = 2;
+                break;
+            case R.id.radio_level_three:
+                currentModeValue = 3;
+                break;
+            case R.id.radio_level_four:
+                currentModeValue = 4;
+                break;
+        }
+        changeView();
+    }
+
+    //TODO 切换模式的事件
+    void changeMode(){
+
+        if(currentModeType == GoodsManager.MODE_OBJECT){
+            //价格模式
+            currentModeType = GoodsManager.MODE_PRICE;
+            currentModeValue = 1;//赋初始值
+            if(currentSortType == GoodsManager.SORT_BY_HOT){
+                currentSparseArray = priceHotSparseArray;
+            }else{
+                currentSparseArray = priceNewSparseArray;
+            }
+        }else {
+            currentModeType = GoodsManager.MODE_OBJECT;
+            currentModeValue = 1;//赋初始值
+            if(currentSortType == GoodsManager.SORT_BY_HOT){
+                currentSparseArray = objectHotSparseArray;
+            }else{
+                currentSparseArray = objectNewSparseArray;
+            }
+        }
+        changeView();
+
     }
 
     private void changeView(){
