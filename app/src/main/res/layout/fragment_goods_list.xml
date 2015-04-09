@@ -151,21 +151,6 @@
 
         </RadioGroup>
 
-        <!--<ListView
-            android:id="@+id/listView_goods"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_below="@id/layout_main_head"
-            android:layout_above="@id/layout_bottom_radio"
-            android:listSelector="@color/transparent"
-            android:cacheColorHint="@color/transparent"
-            android:divider="@null"
-            android:dividerHeight="0.0dip"
-            android:fadingEdge="none"
-            android:fastScrollEnabled="false"
-            android:footerDividersEnabled="false"
-            android:headerDividersEnabled="false"
-            android:smoothScrollbar="true" />-->
         <com.handmark.pulltorefresh.library.PullToRefreshListView
             android:id="@+id/listView_goods"
             android:layout_width="match_parent"

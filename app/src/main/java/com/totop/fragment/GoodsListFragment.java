@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
@@ -39,6 +39,7 @@ import cn.trinea.android.common.util.ListUtils;
 public class GoodsListFragment extends Fragment {
 
     @InjectView(R.id.listView_goods)PullToRefreshListView mPullRefreshListView;
+    @InjectView(R.id.layout_bottom_radio) RadioGroup mRadioGroup;
 
     private Context mContext;
     private GoodsAdapter mGoodsAdapter;
@@ -224,50 +225,57 @@ public class GoodsListFragment extends Fragment {
     }
 
     @OnCheckedChanged(R.id.radiobutton_new_goods)
-    void changeNewGoods(){
-        Log.e("Genius","changeNewGoods");
-        currentSortType = GoodsManager.SORT_BY_NEW;
-        if (currentModeType == GoodsManager.MODE_PRICE){
-            currentSparseArray = priceNewSparseArray;
-        }else{
-            currentSparseArray = objectNewSparseArray;
-        }
+    void changeNewGoods(RadioButton rb , boolean isCheck){
+        if(isCheck){
+            currentSortType = GoodsManager.SORT_BY_NEW;
+            if (currentModeType == GoodsManager.MODE_PRICE){
+                currentSparseArray = priceNewSparseArray;
+            }else{
+                currentSparseArray = objectNewSparseArray;
+            }
 
-        changeView();
+            changeView();
+        }
     }
     @OnCheckedChanged(R.id.radiobutton_hot_goods)
-    void changeHotGoods(){
-        Log.e("Genius","changeHotGoods");
-        currentSortType = GoodsManager.SORT_BY_HOT;
-        if (currentModeType == GoodsManager.MODE_PRICE){
-            currentSparseArray = priceHotSparseArray;
-        }else{
-            currentSparseArray = objectHotSparseArray;
+    void changeHotGoods(RadioButton rb , boolean isCheck){
+        if(isCheck){
+            currentSortType = GoodsManager.SORT_BY_HOT;
+            if (currentModeType == GoodsManager.MODE_PRICE){
+                currentSparseArray = priceHotSparseArray;
+            }else{
+                currentSparseArray = objectHotSparseArray;
+            }
+            changeView();
         }
-        changeView();
     }
 
-    //TODO 切换价格/对象的事件
-    @OnCheckedChanged(R.id.layout_bottom_radio)
-    void changePriceOrObjectd(RadioButton rb,boolean flag){
-        switch (rb.getId()){
-            case R.id.radio_level_one:
-                currentModeValue = 1;
-                break;
-            case R.id.radio_level_two:
-                currentModeValue = 2;
-                break;
-            case R.id.radio_level_three:
-                currentModeValue = 3;
-                break;
-            case R.id.radio_level_four:
-                currentModeValue = 4;
-                break;
+    /**
+     * 切换价格(对象)的事件
+     */
+    @OnCheckedChanged({R.id.radio_level_one,R.id.radio_level_two,R.id.radio_level_three,R.id.radio_level_four})
+    void changePriceOrObjectd(RadioButton rb,boolean isCheck){
+        if(isCheck){
+            switch (rb.getId()){
+                case R.id.radio_level_one:
+                    currentModeValue = 1;
+                    break;
+                case R.id.radio_level_two:
+                    currentModeValue = 2;
+                    break;
+                case R.id.radio_level_three:
+                    currentModeValue = 3;
+                    break;
+                case R.id.radio_level_four:
+                    currentModeValue = 4;
+                    break;
+            }
+            changeView();
         }
-        changeView();
     }
 
     //TODO 切换模式的事件
+    @OnClick(R.id.button_search)
     void changeMode(){
 
         if(currentModeType == GoodsManager.MODE_OBJECT){
@@ -288,7 +296,8 @@ public class GoodsListFragment extends Fragment {
                 currentSparseArray = objectNewSparseArray;
             }
         }
-        changeView();
+        //切换价格-对象的栏目,默认选中第一个栏目
+        changeCategoryBar();
 
     }
 
@@ -302,4 +311,28 @@ public class GoodsListFragment extends Fragment {
             mGoodsAdapter.notifyDataSetChanged();
         }
     }
+
+    private void changeCategoryBar(){
+
+        RadioButton radioButton1 = (RadioButton) mRadioGroup.findViewById(R.id.radio_level_one);
+        RadioButton radioButton2 = (RadioButton) mRadioGroup.findViewById(R.id.radio_level_two);
+        RadioButton radioButton3 = (RadioButton) mRadioGroup.findViewById(R.id.radio_level_three);
+        RadioButton radioButton4 = (RadioButton) mRadioGroup.findViewById(R.id.radio_level_four);
+
+        //TODO 动画效果
+        if(currentModeType == GoodsManager.MODE_OBJECT){
+            radioButton1.setText("老人");
+            radioButton2.setText("小孩");
+            radioButton3.setText("女人");
+            radioButton4.setText("男人");
+        }else{
+            radioButton1.setText("9块9");
+            radioButton2.setText("19块9");
+            radioButton3.setText("29块9");
+            radioButton4.setText("39块9");
+        }
+        mRadioGroup.clearCheck();
+        radioButton1.setChecked(true);
+    }
+
 }

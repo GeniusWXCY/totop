@@ -11,7 +11,7 @@ public class GoodsManager {
     /**
      * 每页显示个数
      */
-    public static final int PAGE_COUNT = 10;
+    public static final int PAGE_COUNT = 3;
     /**
      * 价格模式
      */
