@@ -33,7 +33,7 @@ public class GoodsManager {
         service = restAdapter.create(NetApi.class);
     }
 
-    public static DataRes<Goods> findGoods(int pageNo,int pageCount,int sortType,String typeKey,int typeValue){
+    public static DataRes<Goods> findGoods(int pageNo,int pageCount,int sortType,String typeKey,int typeValue) throws Exception{
 
         if(MODE_PRICE.equals(typeKey)){
             return service.findGoodsByPrice(pageNo, pageCount, sortType, typeValue);
@@ -43,7 +43,7 @@ public class GoodsManager {
         return null;
     }
 
-    public static DataRes<Goods> findGoods(int pageNo,int sortType,String typeKey,int typeValue){
+    public static DataRes<Goods> findGoods(int pageNo,int sortType,String typeKey,int typeValue) throws Exception{
         return findGoods(pageNo,PAGE_COUNT,sortType,typeKey,typeValue);
     }
 }

@@ -38,7 +38,8 @@ public class MenuAdapter extends BaseAdapter {
         mListener = listener;
     }
 
-    public void setActivePosition(int activePosition) {
+    public void
+    setActivePosition(int activePosition) {
         mActivePosition = activePosition;
     }
 

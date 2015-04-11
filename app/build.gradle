@@ -5,7 +5,7 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        applicationId "com.example.administrator.app"
+        applicationId "com.genius.totop.nine"
         minSdkVersion 16
         targetSdkVersion 21
         versionCode 1
@@ -22,6 +22,7 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':lib-pulltorefresh')
+    compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile 'com.jakewharton:butterknife:6.1.0'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.3'
     compile 'cn.trinea.android.common:trinea-android-common:4.2.15'
@@ -29,5 +30,6 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'net.simonvt.menudrawer:menudrawer:3.0.+@aar'
     compile 'com.squareup.okhttp:okhttp:2.3.0'
+    compile 'com.github.xiprox.errorview:library:2.0.0'
     compile 'com.android.support:support-v4:21.0.2+'
 }

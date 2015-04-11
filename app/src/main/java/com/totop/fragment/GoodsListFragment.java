@@ -13,9 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -35,11 +35,15 @@ import butterknife.InjectView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ListUtils;
+import tr.xip.errorview.ErrorView;
 
 public class GoodsListFragment extends Fragment {
 
     @InjectView(R.id.listView_goods)PullToRefreshListView mPullRefreshListView;
     @InjectView(R.id.layout_bottom_radio) RadioGroup mRadioGroup;
+    @InjectView(R.id.progressBar) ProgressBar mProgressBar;
+    @InjectView(R.id.error_view) ErrorView mErrorView;
+    @InjectView(R.id.empty_view)View mEmptyView;
 
     private Context mContext;
     private GoodsAdapter mGoodsAdapter;
@@ -137,12 +141,38 @@ public class GoodsListFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+        mErrorView.setOnRetryListener(new ErrorView.RetryListener(){
+
+            @Override
+            public void onRetry() {
+                toggleErrorView(false);
+                new GetDataTask().execute();
+            }
+        });
         //加载数据
-        new GetDataTask().execute();
+        loadView();
         return view;
     }
 
+    private void toggleErrorView(boolean isShow){
+        if(isShow){
+            mErrorView.setVisibility(View.VISIBLE);
+            mPullRefreshListView.setVisibility(View.GONE);
+        }else{
+            mErrorView.setVisibility(View.GONE);
+            mPullRefreshListView.setVisibility(View.VISIBLE);
+        }
+    }
+
     private class GetDataTask extends AsyncTask<Integer, Void, DataRes<Goods>> {
+
+        @Override
+        protected void onPreExecute() {
+            //判断是否有网络连接
+            mProgressBar.setVisibility(View.VISIBLE);
+            super.onPreExecute();
+        }
 
         @Override
         protected DataRes<Goods> doInBackground(Integer... params) {
@@ -151,18 +181,24 @@ public class GoodsListFragment extends Fragment {
             if(isRefresh){
                 pageNo = 1;
             }
-            //TODO 进度条
-            return GoodsManager.findGoods(pageNo,currentSortType,currentModeType,currentModeValue);
+            //TODO 异常处理 参考开源
+            try {
+                return GoodsManager.findGoods(pageNo,currentSortType,currentModeType,currentModeValue);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return null;
         }
 
         @Override
         protected void onPostExecute(DataRes<Goods> result) {
+
             mPullRefreshListView.onRefreshComplete();
-            if(result.success){
+            if(result != null && result.success){
 
                 List<Goods> list = result.data;
 
-                //以下逻辑缓存数据--TODO 切换时执行此逻辑
+                //以下逻辑缓存数据
                 List<Goods> cacheList = currentSparseArray.get(currentModeValue);
                 if (cacheList == null){
                     cacheList = new ArrayList<Goods>();
@@ -189,6 +225,12 @@ public class GoodsListFragment extends Fragment {
                         ListUtils.addDistinctList(cacheList,result.data);
                         currentList.clear();
                         currentList.addAll(cacheList);
+
+                        if(currentList.isEmpty()){
+                            mEmptyView.setVisibility(View.VISIBLE);
+                            mPullRefreshListView.setVisibility(View.GONE);
+                        }
+
                         mGoodsAdapter.notifyDataSetChanged();
                     }
 
@@ -198,10 +240,11 @@ public class GoodsListFragment extends Fragment {
                     }
                 }
             }else{
-                Toast.makeText(App.getContext(),"网络请求失败，请稍后再试",Toast.LENGTH_SHORT).show();
+                //网络请求失败
+                toggleErrorView(true);
             }
-            //TODO 关闭进度条
             super.onPostExecute(result);
+            mProgressBar.setVisibility(View.GONE);
         }
     }
 
@@ -234,7 +277,7 @@ public class GoodsListFragment extends Fragment {
                 currentSparseArray = objectNewSparseArray;
             }
 
-            changeView();
+            loadView();
         }
     }
     @OnCheckedChanged(R.id.radiobutton_hot_goods)
@@ -246,7 +289,7 @@ public class GoodsListFragment extends Fragment {
             }else{
                 currentSparseArray = objectHotSparseArray;
             }
-            changeView();
+            loadView();
         }
     }
 
@@ -270,7 +313,7 @@ public class GoodsListFragment extends Fragment {
                     currentModeValue = 4;
                     break;
             }
-            changeView();
+            loadView();
         }
     }
 
@@ -301,9 +344,12 @@ public class GoodsListFragment extends Fragment {
 
     }
 
-    private void changeView(){
+    private void loadView(){
+        toggleErrorView(false);
+        mEmptyView.setVisibility(View.GONE);
+        mPullRefreshListView.setVisibility(View.VISIBLE);
         List<Goods> cacheList = currentSparseArray.get(currentModeValue);
-        if (cacheList == null){
+        if (cacheList == null || cacheList.isEmpty()){
             new GetDataTask().execute();
         }else{
             currentList.clear();

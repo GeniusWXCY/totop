@@ -26,8 +26,6 @@
     <string name="str_chaozhi">精品街</string>
     <string name="str_personal_center">个人中心</string>
     <string name="str_loading">玩命加载中，请稍后...</string>
-    <string name="str_net_error">"你的网络有点问题
-检查网络或下拉刷新试一试"</string>
     <string name="str_free_shipping">包邮</string>
     <string name="str_person_buy">人已买</string>
     <string name="str_share">分享</string>
@@ -64,9 +62,9 @@
     <string name="str_confirm">确认</string>
     <string name="str_cancel">取消</string>
     <string name="str_kefu_qq">客服QQ： %s</string>
-    <string name="str_connect_us">商务合作和商家报名QQ：2334147374</string>
-    <string name="str_company_name">上海小鬼网络科技有限公司 版权所有</string>
-    <string name="str_copyright_info">Copyright © 2013 - 2014 jpjie.com.</string>
+    <string name="str_connect_us">商务合作和商家报名QQ：88888888888</string>
+    <string name="str_company_name">郭大爷网络科技有限公司 版权所有</string>
+    <string name="str_copyright_info">Copyright © 2013 - 2015 www.ladgift.com.</string>
     <string name="str_all_right">All Rights Reserved</string>
     <string name="str_empty_warnning">亲，写点东西再提交吧</string>
     <string name="str_mobile_taobao">手机淘宝</string>
@@ -138,6 +136,9 @@
     <string name="str_goods_detail_title">手机淘宝</string>
     <string name="str_back">返回</string>
     <string name="str_title">红丫帽九块九</string>
+    <string name="str_sorry">对不起</string>
+    <string name="str_net_error">网络请求失败</string>
+    <string name="str_retry">重试</string>
 
     <string name="menu_home">首页</string>
     <string name="menu_share">分享</string>

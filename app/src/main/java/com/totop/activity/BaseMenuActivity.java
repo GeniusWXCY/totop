@@ -38,12 +38,12 @@ public abstract class BaseMenuActivity extends FragmentActivity implements MenuA
         mMenuDrawer = MenuDrawer.attach(this, MenuDrawer.Type.BEHIND, getDrawerPosition(), getDragMode());
 
         List<Object> items = new ArrayList<Object>();
-        items.add(new Item(getString(R.string.menu_home), R.drawable.ic_action_refresh_dark));
-        items.add(new Item(getString(R.string.menu_share), R.drawable.ic_action_select_all_dark));
-        items.add(new Item(getString(R.string.menu_hot), R.drawable.ic_action_refresh_dark));
-        items.add(new Item(getString(R.string.menu_contact), R.drawable.ic_action_select_all_dark));
-        items.add(new Item(getString(R.string.menu_version), R.drawable.ic_action_refresh_dark));
-        items.add(new Item(getString(R.string.menu_help), R.drawable.ic_action_select_all_dark));
+        items.add(new Item(getString(R.string.menu_home), R.drawable.menu_home));
+        items.add(new Item(getString(R.string.menu_share), R.drawable.menu_share));
+        items.add(new Item(getString(R.string.menu_hot), R.drawable.menu_recommand));
+        items.add(new Item(getString(R.string.menu_contact), R.drawable.menu_contact));
+        items.add(new Item(getString(R.string.menu_version), R.drawable.menu_update));
+        items.add(new Item(getString(R.string.menu_help), R.drawable.menu_help));
 
         mList = new ListView(this);
 

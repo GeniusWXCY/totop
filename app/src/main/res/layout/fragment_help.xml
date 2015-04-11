@@ -1,9 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.totop.fragment.HelpFragment">
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@color/white"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <RelativeLayout
+        android:id="@+id/layout_head_title"
+        android:background="@color/title_bg_color"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/title_height">
 
-</FrameLayout>
+        <include
+            android:id="@+id/layout_title"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            layout="@layout/title_normal_layout" />
+    </RelativeLayout>
+
+</RelativeLayout>

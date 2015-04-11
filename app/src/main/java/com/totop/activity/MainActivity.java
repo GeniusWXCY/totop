@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.totop.fragment.ContactUsFragment;
@@ -27,6 +28,7 @@ public class MainActivity extends BaseMenuActivity implements OnFragmentSettingL
     private String mCurrentFragmentTag;
 
     private static final String STATE_CURRENT_FRAGMENT = "com.totop.activity.MainActivity";
+    private long exitTime = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,14 +149,37 @@ public class MainActivity extends BaseMenuActivity implements OnFragmentSettingL
     }
 
     @Override
-    public void onBackPressed() {
-        final int drawerState = mMenuDrawer.getDrawerState();
-        if (drawerState == MenuDrawer.STATE_OPEN || drawerState == MenuDrawer.STATE_OPENING) {
-            mMenuDrawer.closeMenu();
-            return;
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            final int drawerState = mMenuDrawer.getDrawerState();
+            if (drawerState == MenuDrawer.STATE_OPEN || drawerState == MenuDrawer.STATE_OPENING) {
+                mMenuDrawer.closeMenu();
+            }else{
+//                String title = getString(R.string.menu_home);
+//                if(!title.equals(mCurrentFragmentTag)){
+//                    if (mCurrentFragmentTag != null){
+//                        detachFragment(getFragment(mCurrentFragmentTag));
+//                    }
+//                    attachFragment(mMenuDrawer.getContentContainer().getId(), getFragment(title), title);
+//                    mCurrentFragmentTag = title;
+//                }else{
+                    exit();
+//                }
+            }
+            return false;
         }
+        return super.onKeyDown(keyCode, event);
+    }
 
-        super.onBackPressed();
+    private void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+                    Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        } else {
+            finish();
+            System.exit(0);
+        }
     }
 
     @Override
