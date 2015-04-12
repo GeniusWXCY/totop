@@ -171,7 +171,7 @@
             app:ptrHeaderTextColor="@color/black" />
 
         <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/fab"
+            android:id="@+id/fab_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|right"
@@ -180,19 +180,21 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="60dip"
             android:src="@drawable/fab_top"
+            app:fab_type="mini"
             app:fab_colorNormal="@color/accent"
             app:fab_colorPressed="@color/accent_pressed"
             app:fab_colorRipple="@color/ripple"/>
 
         <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/fab1"
+            android:id="@+id/fab_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_above="@id/fab"
-            android:layout_gravity="bottom|right"
-            android:layout_alignRight ="@id/fab"
-            android:layout_margin="16dp"
+            android:layout_toLeftOf="@id/fab_top"
+            android:layout_marginBottom="60dip"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentBottom="true"
             android:src="@drawable/fab_money"
+            app:fab_type="mini"
             app:fab_colorNormal="@color/accent"
             app:fab_colorPressed="@color/accent_pressed"
             app:fab_colorRipple="@color/ripple"/>

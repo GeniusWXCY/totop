@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -45,7 +47,9 @@ public class GoodsListFragment extends Fragment {
     @InjectView(R.id.progressBar) ProgressBar mProgressBar;
     @InjectView(R.id.error_view) ErrorView mErrorView;
     @InjectView(R.id.empty_view)View mEmptyView;
-    @InjectView(R.id.fab) FloatingActionButton mFab;
+    @InjectView(R.id.fab_top) FloatingActionButton mFabTop;
+    @InjectView(R.id.fab_type) FloatingActionButton mFabType;
+
 
     private Context mContext;
     private GoodsAdapter mGoodsAdapter;
@@ -138,8 +142,8 @@ public class GoodsListFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 GoodsAdapter.ViewHolder viewHolder = (GoodsAdapter.ViewHolder) view.getTag();
-                Intent intent = new Intent(mContext,GoodsDetailActivity.class);
-                intent.putExtra(GoodsDetailActivity.EXTRA_IMAGE_URL,viewHolder.goods.link);
+                Intent intent = new Intent(mContext, GoodsDetailActivity.class);
+                intent.putExtra(GoodsDetailActivity.EXTRA_IMAGE_URL, viewHolder.goods.link);
                 startActivity(intent);
             }
         });
@@ -382,4 +386,8 @@ public class GoodsListFragment extends Fragment {
         radioButton1.setChecked(true);
     }
 
+    @OnClick(R.id.fab_type)
+    public void changeType(ImageButton view){
+        view.setImageResource(R.drawable.fab_group);
+    }
 }
