@@ -19,6 +19,7 @@ import android.widget.RadioGroup;
 
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
+import com.melnykov.fab.FloatingActionButton;
 import com.totop.App;
 import com.totop.activity.GoodsDetailActivity;
 import com.totop.activity.R;
@@ -44,6 +45,7 @@ public class GoodsListFragment extends Fragment {
     @InjectView(R.id.progressBar) ProgressBar mProgressBar;
     @InjectView(R.id.error_view) ErrorView mErrorView;
     @InjectView(R.id.empty_view)View mEmptyView;
+    @InjectView(R.id.fab) FloatingActionButton mFab;
 
     private Context mContext;
     private GoodsAdapter mGoodsAdapter;
@@ -141,7 +143,6 @@ public class GoodsListFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
         mErrorView.setOnRetryListener(new ErrorView.RetryListener(){
 
             @Override
