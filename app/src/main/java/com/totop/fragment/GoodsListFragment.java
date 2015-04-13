@@ -7,13 +7,14 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
@@ -79,7 +80,7 @@ public class GoodsListFragment extends Fragment {
     /**
      * 当前模式的值
      */
-    private int currentModeValue = 1;
+    private int currentModeValue = MODE_VALUE_PRICE_INIT;
     /**
      * 当前产品集合
      */
@@ -121,6 +122,7 @@ public class GoodsListFragment extends Fragment {
                 isRefresh = true;
                 new GetDataTask().execute();
             }
+
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 currentPageNo++;
@@ -147,7 +149,25 @@ public class GoodsListFragment extends Fragment {
                 startActivity(intent);
             }
         });
-        mErrorView.setOnRetryListener(new ErrorView.RetryListener(){
+
+        mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if(firstVisibleItem == 0){
+                    //滑到顶部
+                    mFabTop.hide();
+                }else{
+                    mFabTop.show();
+                }
+            }
+        });
+
+        mErrorView.setOnRetryListener(new ErrorView.RetryListener() {
 
             @Override
             public void onRetry() {
@@ -155,6 +175,11 @@ public class GoodsListFragment extends Fragment {
                 new GetDataTask().execute();
             }
         });
+
+        //设置透明度
+        mFabTop.getBackground().setAlpha(100);
+        mFabType.getBackground().setAlpha(100);
+
         //加载数据
         loadView();
         return view;
@@ -298,6 +323,10 @@ public class GoodsListFragment extends Fragment {
         }
     }
 
+    //TODO
+    public static final int MODE_VALUE_PRICE_INIT = 1;
+    public static final int MODE_VALUE_OBJECT_INIT = 5;
+
     /**
      * 切换价格(对象)的事件
      */
@@ -306,16 +335,16 @@ public class GoodsListFragment extends Fragment {
         if(isCheck){
             switch (rb.getId()){
                 case R.id.radio_level_one:
-                    currentModeValue = 1;
+                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?1:5;
                     break;
                 case R.id.radio_level_two:
-                    currentModeValue = 2;
+                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?2:6;
                     break;
                 case R.id.radio_level_three:
-                    currentModeValue = 3;
+                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?3:7;
                     break;
                 case R.id.radio_level_four:
-                    currentModeValue = 4;
+                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?4:8;
                     break;
             }
             loadView();
@@ -329,7 +358,7 @@ public class GoodsListFragment extends Fragment {
         if(currentModeType == GoodsManager.MODE_OBJECT){
             //价格模式
             currentModeType = GoodsManager.MODE_PRICE;
-            currentModeValue = 1;//赋初始值
+            currentModeValue = MODE_VALUE_PRICE_INIT;//赋初始值
             if(currentSortType == GoodsManager.SORT_BY_HOT){
                 currentSparseArray = priceHotSparseArray;
             }else{
@@ -337,7 +366,7 @@ public class GoodsListFragment extends Fragment {
             }
         }else {
             currentModeType = GoodsManager.MODE_OBJECT;
-            currentModeValue = 1;//赋初始值
+            currentModeValue = MODE_VALUE_OBJECT_INIT;//赋初始值
             if(currentSortType == GoodsManager.SORT_BY_HOT){
                 currentSparseArray = objectHotSparseArray;
             }else{
@@ -390,4 +419,10 @@ public class GoodsListFragment extends Fragment {
     public void changeType(ImageButton view){
         view.setImageResource(R.drawable.fab_group);
     }
+
+    @OnClick(R.id.fab_top)
+    public void moveToTop(ImageButton view){
+        mPullRefreshListView.getRefreshableView().setSelection(0);
+    }
+
 }
