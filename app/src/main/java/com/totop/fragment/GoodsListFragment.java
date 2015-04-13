@@ -351,33 +351,6 @@ public class GoodsListFragment extends Fragment {
         }
     }
 
-    //TODO 切换模式的事件
-    @OnClick(R.id.button_search)
-    void changeMode(){
-
-        if(currentModeType == GoodsManager.MODE_OBJECT){
-            //价格模式
-            currentModeType = GoodsManager.MODE_PRICE;
-            currentModeValue = MODE_VALUE_PRICE_INIT;//赋初始值
-            if(currentSortType == GoodsManager.SORT_BY_HOT){
-                currentSparseArray = priceHotSparseArray;
-            }else{
-                currentSparseArray = priceNewSparseArray;
-            }
-        }else {
-            currentModeType = GoodsManager.MODE_OBJECT;
-            currentModeValue = MODE_VALUE_OBJECT_INIT;//赋初始值
-            if(currentSortType == GoodsManager.SORT_BY_HOT){
-                currentSparseArray = objectHotSparseArray;
-            }else{
-                currentSparseArray = objectNewSparseArray;
-            }
-        }
-        //切换价格-对象的栏目,默认选中第一个栏目
-        changeCategoryBar();
-
-    }
-
     private void loadView(){
         toggleErrorView(false);
         mEmptyView.setVisibility(View.GONE);
@@ -417,7 +390,30 @@ public class GoodsListFragment extends Fragment {
 
     @OnClick(R.id.fab_type)
     public void changeType(ImageButton view){
-        view.setImageResource(R.drawable.fab_group);
+
+        if(currentModeType == GoodsManager.MODE_OBJECT){
+            //切换成价格模式
+            currentModeType = GoodsManager.MODE_PRICE;
+            currentModeValue = MODE_VALUE_PRICE_INIT;//赋初始值
+            if(currentSortType == GoodsManager.SORT_BY_HOT){
+                currentSparseArray = priceHotSparseArray;
+            }else{
+                currentSparseArray = priceNewSparseArray;
+            }
+            view.setImageResource(R.drawable.fab_money);
+        }else {
+            currentModeType = GoodsManager.MODE_OBJECT;
+            currentModeValue = MODE_VALUE_OBJECT_INIT;//赋初始值
+            if(currentSortType == GoodsManager.SORT_BY_HOT){
+                currentSparseArray = objectHotSparseArray;
+            }else{
+                currentSparseArray = objectNewSparseArray;
+            }
+            view.setImageResource(R.drawable.fab_group);
+        }
+        //切换价格-对象的栏目,默认选中第一个栏目
+        changeCategoryBar();
+
     }
 
     @OnClick(R.id.fab_top)
