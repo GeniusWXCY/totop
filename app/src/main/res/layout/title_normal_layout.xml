@@ -10,7 +10,6 @@
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:onClick="onBackAction"
         android:scaleType="center"
         android:src="@drawable/btn_selector_back" />
 

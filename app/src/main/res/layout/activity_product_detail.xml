@@ -5,31 +5,15 @@
     <RelativeLayout
         android:id="@+id/layout_main_head"
         android:layout_alignParentTop="true"
+        android:background="@color/title_bg_color"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/title_height"
-        android:background="@color/title_bg_color">
+        android:layout_height="@dimen/title_height">
 
-        <TextView
-            android:id="@+id/text_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dip"
-            android:layout_alignParentLeft="true"
-            android:gravity="center_vertical"
-            android:drawableLeft="@drawable/top_back_white"
-            android:layout_centerVertical="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/title_text_size"
-            android:text="@string/str_back" />
-
-        <TextView
-            android:id="@+id/text_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:textColor="@color/white"
-            android:textSize="@dimen/title_text_size"
-            android:text="@string/str_goods_detail_title" />
+        <include
+            android:id="@+id/layout_title"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            layout="@layout/title_normal_layout" />
     </RelativeLayout>
 
     <LinearLayout

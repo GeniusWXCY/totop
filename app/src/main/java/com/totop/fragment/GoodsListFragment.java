@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -177,8 +176,8 @@ public class GoodsListFragment extends Fragment {
         });
 
         //设置透明度
-        mFabTop.getBackground().setAlpha(100);
-        mFabType.getBackground().setAlpha(100);
+        mFabTop.getBackground().setAlpha(200);
+        mFabType.getBackground().setAlpha(200);
 
         //加载数据
         loadView();

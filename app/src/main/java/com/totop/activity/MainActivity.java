@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
@@ -16,8 +15,6 @@ import com.totop.model.Item;
 
 import net.simonvt.menudrawer.MenuDrawer;
 import net.simonvt.menudrawer.Position;
-
-import butterknife.OnClick;
 
 
 public class MainActivity extends BaseMenuActivity implements OnFragmentSettingListener{
@@ -69,7 +66,7 @@ public class MainActivity extends BaseMenuActivity implements OnFragmentSettingL
             if(title.equals(getString(R.string.menu_share))){
                 Toast.makeText(this,"分享",Toast.LENGTH_SHORT).show();
             }else if(title.equals(getString(R.string.menu_version))){
-                Toast.makeText(this,"升级",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"当前版本为最新版本，无需更新！",Toast.LENGTH_SHORT).show();
             }else if(title.equals(getString(R.string.menu_hot))){
                 Toast.makeText(this,"热门",Toast.LENGTH_SHORT).show();
             }else {

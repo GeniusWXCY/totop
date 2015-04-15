@@ -27,7 +27,6 @@
     <string name="str_personal_center">个人中心</string>
     <string name="str_loading">玩命加载中，请稍后...</string>
     <string name="str_free_shipping">包邮</string>
-    <string name="str_person_buy">人已买</string>
     <string name="str_share">分享</string>
     <string name="str_qq_account">QQ账号</string>
     <string name="str_qq_account_had_login">QQ账号(已登录)</string>
@@ -139,6 +138,9 @@
     <string name="str_sorry">对不起</string>
     <string name="str_net_error">网络请求失败</string>
     <string name="str_retry">重试</string>
+    <string name="str_new_text">新鲜指数:</string>
+    <string name="str_heat_text">人气值:</string>
+    <string name="str_from">来自</string>
 
     <string name="menu_home">首页</string>
     <string name="menu_share">分享</string>
@@ -147,6 +149,4 @@
     <string name="menu_version">版本更新</string>
     <string name="menu_help">使用帮助</string>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

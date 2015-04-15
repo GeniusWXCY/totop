@@ -31,7 +31,7 @@
             android:gravity="center"
             android:paddingTop="@dimen/main_bottom_line_padding_bottom"
             android:paddingBottom="@dimen/main_bottom_line_padding_bottom"
-            android:background="@color/gray"
+            android:background="@drawable/ic_item_pic_bg"
             android:orientation="horizontal">
 
             <RadioButton
@@ -174,11 +174,10 @@
             android:id="@+id/fab_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="60dip"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="40dip"
             android:src="@drawable/fab_top"
             app:fab_type="mini"
             app:fab_colorNormal="@color/accent"
@@ -190,8 +189,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toLeftOf="@id/fab_top"
-            android:layout_marginBottom="60dip"
-            android:layout_marginRight="10dp"
+            android:layout_marginBottom="40dip"
+            android:layout_marginRight="5dp"
             android:layout_alignParentBottom="true"
             android:src="@drawable/fab_money"
             app:fab_type="mini"

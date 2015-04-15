@@ -4,6 +4,7 @@
     android:descendantFocusability="blocksDescendants"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
@@ -83,17 +84,41 @@
                     android:singleLine="true"
                     android:text="折叠布简易衣柜" />
 
-                <TextView
-                    android:textColor="@color/gray"
-                    android:gravity="center_vertical"
-                    android:id="@+id/textview_notice"
+                <RelativeLayout
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    android:layout_marginLeft="@dimen/item_goods_list_r_margin_left"
-                    android:layout_marginTop="1.0dip"
-                    android:layout_marginRight="@dimen/item_goods_list_r_margin_right"
-                    android:text="小编说：送女朋友送女朋友送女朋友送女朋友送女朋友送女朋友送女朋友"
-                    android:layout_weight="1.0" />
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1.0">
+
+                    <TextView
+                        android:id="@+id/textview_goods_hot_label"
+                        android:textColor="@color/gray"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/item_goods_list_r_margin_left"
+                        android:layout_marginTop="10.0dip"
+                        android:layout_marginRight="@dimen/item_goods_list_r_margin_right"
+                        android:text="@string/str_new_text" />
+
+                    <com.totop.view.widget.ColoredRatingBar
+                        android:id="@+id/ratingbar_refresh"
+                        style="@style/coloredRatingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/textview_goods_hot_label"
+                        android:layout_alignTop="@id/textview_goods_hot_label"
+                        app:indicator="false"
+                        app:rating="1.2" />
+
+                    <ImageButton
+                        android:id="@+id/imagebutton_new"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/textview_goods_hot_label"
+                        android:layout_marginLeft="10dip"
+                        android:layout_gravity="center"
+                        android:visibility="gone"/>
+
+                </RelativeLayout>
 
                 <RelativeLayout
                     android:background="@color/item_goods_price_bg"
@@ -179,20 +204,19 @@
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@id/button_buy_now"
                         android:layout_centerVertical="true">
-
-                        <TextView
-                            android:textStyle="bold"
-                            android:textColor="@color/text_order_count"
-                            android:id="@+id/text_order_count"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="1122" />
-
                         <TextView
                             android:textColor="@color/gray"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/str_person_buy" />
+                            android:text="@string/str_from" />
+
+                        <TextView
+                            android:textStyle="bold"
+                            android:textColor="@color/text_order_count"
+                            android:id="@+id/text_source"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
                     </LinearLayout>
                 </RelativeLayout>
 

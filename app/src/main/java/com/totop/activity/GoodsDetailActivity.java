@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Window;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.totop.utils.ShareUtils;
@@ -28,6 +29,10 @@ public class GoodsDetailActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_product_detail);
         ButterKnife.inject(this);
+
+        TextView textView = (TextView) findViewById(R.id.text_title);
+        textView.setText(getString(R.string.str_mobile_taobao));
+
         String url = getIntent().getStringExtra(EXTRA_IMAGE_URL);
         mWebView.setWebViewClient(new WebViewClient(){
             @Override
@@ -49,10 +54,10 @@ public class GoodsDetailActivity extends Activity {
         return super.onKeyDown(keyCode,event);
     }
 
-    @OnClick({R.id.text_back,R.id.webview_back,R.id.webview_forward,R.id.webview_share,R.id.webview_favor,R.id.webview_close})
+    @OnClick({R.id.imageview_btn_back,R.id.webview_back,R.id.webview_forward,R.id.webview_share,R.id.webview_favor,R.id.webview_close})
     public void bkClick(View view){
         switch (view.getId()){
-            case R.id.text_back:
+            case R.id.imageview_btn_back:
             case R.id.webview_close:
                 finish();
                 break;
