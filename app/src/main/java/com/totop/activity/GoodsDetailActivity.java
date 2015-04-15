@@ -20,6 +20,7 @@ import butterknife.OnClick;
 public class GoodsDetailActivity extends Activity {
 
     public static final String EXTRA_IMAGE_URL = "extra_image_url";
+    public static final String EXTRA_GOODS_SOURCE = "extra_goods_source";
 
     @InjectView(R.id.webView)WebView mWebView;
 
@@ -31,9 +32,12 @@ public class GoodsDetailActivity extends Activity {
         ButterKnife.inject(this);
 
         TextView textView = (TextView) findViewById(R.id.text_title);
-        textView.setText(getString(R.string.str_mobile_taobao));
 
         String url = getIntent().getStringExtra(EXTRA_IMAGE_URL);
+        String source = getIntent().getStringExtra(EXTRA_GOODS_SOURCE);
+
+        textView.setText(getString(R.string.str_mobile) + source);
+
         mWebView.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {

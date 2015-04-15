@@ -25,7 +25,6 @@ public class GoodsAdapter extends BaseAdapter{
     private List<Goods> list;
     private LayoutInflater mInflater;
     private Context mContext;
-    private int currentSortType;
 
     public GoodsAdapter(Context context,List<Goods> list){
         this.list = list;

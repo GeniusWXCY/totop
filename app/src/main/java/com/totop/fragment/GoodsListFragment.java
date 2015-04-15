@@ -145,6 +145,7 @@ public class GoodsListFragment extends Fragment {
                 GoodsAdapter.ViewHolder viewHolder = (GoodsAdapter.ViewHolder) view.getTag();
                 Intent intent = new Intent(mContext, GoodsDetailActivity.class);
                 intent.putExtra(GoodsDetailActivity.EXTRA_IMAGE_URL, viewHolder.goods.link);
+                intent.putExtra(GoodsDetailActivity.EXTRA_GOODS_SOURCE,viewHolder.goods.sourceName);
                 startActivity(intent);
             }
         });
