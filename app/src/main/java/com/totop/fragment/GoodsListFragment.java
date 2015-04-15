@@ -25,6 +25,7 @@ import com.melnykov.fab.FloatingActionButton;
 import com.totop.App;
 import com.totop.activity.GoodsDetailActivity;
 import com.totop.activity.R;
+import com.totop.activity.SearchActivity;
 import com.totop.manager.GoodsManager;
 import com.totop.model.DataRes;
 import com.totop.model.Goods;
@@ -295,6 +296,12 @@ public class GoodsListFragment extends Fragment {
         if(mListener != null){
             mListener.toggle();
         }
+    }
+
+    @OnClick(R.id.button_search)
+    void search(){
+        Intent intent = new Intent(mContext, SearchActivity.class);
+        startActivity(intent);
     }
 
     @OnCheckedChanged(R.id.radiobutton_new_goods)

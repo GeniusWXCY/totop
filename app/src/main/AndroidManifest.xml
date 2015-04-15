@@ -20,6 +20,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".GoodsDetailActivity" />
+        <activity
+            android:name=".SearchActivity"
+            android:label="@string/title_activity_search" >
+        </activity>
     </application>
 
 </manifest>

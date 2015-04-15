@@ -149,5 +149,9 @@
     <string name="menu_version">版本更新</string>
     <string name="menu_help">使用帮助</string>
     <string name="str_mobile">手机</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="str_search">搜索</string>
 
 </resources>
