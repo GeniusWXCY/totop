@@ -1,37 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@drawable/search_topbar_bg"
+        android:paddingLeft="14.0dip"
+        android:paddingRight="14.0dip"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/title_height"
-        android:gravity="center"
-        android:background="@color/gray">
+        android:layout_height="50.0dip">
 
         <ImageView
-            android:id="@+id/imageview_btn_back"
-            android:layout_width="54.0dip"
-            android:layout_height="fill_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:scaleType="center"
-            android:src="@drawable/btn_selector_back" />
-
-        <TextView
+            android:id="@+id/searchTopbarReturn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textSize="@dimen/normal_text_size"
-            android:text="@string/str_search"/>
+            android:src="@drawable/search_topbar_return" />
 
-    </RelativeLayout>
+        <EditText
+            android:textSize="15.0sp"
+            android:textColor="@color/color_red"
+            android:textColorHint="@color/color_cccccc"
+            android:id="@+id/searchInput"
+            android:background="@drawable/search_edittext_bg"
+            android:layout_width="0.0dip"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14.0dip"
+            android:layout_marginRight="14.0dip"
+            android:hint="@string/str_search_input_hint"
+            android:singleLine="true"
+            android:drawableLeft="@drawable/search_edittext_search"
+            android:drawablePadding="5.0dip"
+            android:layout_weight="1.0"
+            android:imeOptions="actionSearch" />
 
-    <fragment
+        <TextView
+            android:textSize="16.0sp"
+            android:textColor="@color/color_red"
+            android:id="@+id/searchText"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/str_search" />
+    </LinearLayout>
+
+    <FrameLayout
         android:id="@+id/fragment"
-        android:name="com.totop.fragment.SearchActivityFragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" />
 </LinearLayout>

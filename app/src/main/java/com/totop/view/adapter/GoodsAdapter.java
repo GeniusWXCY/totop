@@ -63,13 +63,13 @@ public class GoodsAdapter extends BaseAdapter{
         UILHelper.displayImage(goods.icon, holder.goodsPicImage);
         holder.titleText.setText(goods.name);
 
-        if(Float.valueOf(goods.heat) - 0.5 < 0){//ÐÂÏÊ¶È
-            //TODO Ã»ÓÐÐÂÏÊ¶ÈµÄ×Ö¶Î
+        if(Float.valueOf(goods.heat) - 0.5 < 0){//æ–°é²œåº¦
+            //TODO æ²¡æœ‰æ–°é²œåº¦çš„å­—æ®µ
             holder.ratingBar.setRating(Float.valueOf(Math.random() * 5 + ""));
             holder.ratingBar.setVisibility(View.VISIBLE);
             holder.hotImage.setVisibility(View.GONE);
             holder.hotLabelText.setText(mContext.getString(R.string.str_new_text));
-        }else{//ÈËÆø
+        }else{//äººæ°”
             holder.ratingBar.setVisibility(View.GONE);
             holder.hotImage.setVisibility(View.VISIBLE);
             holder.hotLabelText.setText(mContext.getString(R.string.str_heat_text));

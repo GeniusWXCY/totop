@@ -84,9 +84,9 @@ public class GoodsListFragment extends Fragment {
     /**
      * 当前产品集合
      */
-    List<Goods> currentList = new ArrayList<Goods>();
+    private List<Goods> currentList = new ArrayList<Goods>();
 
-    SparseArray<List<Goods>> currentSparseArray = priceNewSparseArray;
+    private SparseArray<List<Goods>> currentSparseArray = priceNewSparseArray;
 
     private boolean isRefresh = false;
 

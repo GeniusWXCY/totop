@@ -2,6 +2,8 @@
 <resources>
 
     <dimen name="dimen_5">5.0dip</dimen>
+    <dimen name="dimen_10">10.0dip</dimen>
+    <dimen name="dimen_15">15.0dip</dimen>
 
     <dimen name="indicator_right_padding">10.0dip</dimen>
     <dimen name="indicator_corner_radius">12.0dip</dimen>

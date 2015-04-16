@@ -3,24 +3,45 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/white"
-    tools:context="com.totop.fragment.SearchActivityFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.totop.fragment.SearchFragment">
 
-    <TextView
+    <ListView
+        android:id="@+id/listView_goods"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:listSelector="@color/transparent"
+        android:cacheColorHint="@color/transparent"
+        android:divider="@null"
+        android:dividerHeight="0.0dip"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:smoothScrollbar="true" />
+
+    <tr.xip.errorview.ErrorView
+        android:id="@+id/error_view"
+        android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Text"
-        android:id="@+id/textView"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:visibility="gone"
+        app:ev_title="@string/str_sorry"
+        app:ev_subtitle="@string/str_net_error"
+        app:ev_showTitle="true"
+        app:ev_showSubtitle="true"
+        app:ev_showRetryButton="true"
+        app:ev_retryButtonText="@string/str_retry" />
 
-    <Button
+    <ProgressBar
+        style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Button"
-        android:id="@+id/button"
-        android:layout_below="@+id/textView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="48dp" />
+        android:layout_centerInParent="true"
+        android:id="@+id/progressBar"
+        android:visibility="gone"
+        android:indeterminate="false" />
+
+    <include layout="@layout/include_no_result" />
+
 </RelativeLayout>

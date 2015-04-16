@@ -153,5 +153,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="str_search">搜索</string>
+    <string name="str_search_input_hint">输入商品关键字</string>
 
 </resources>
