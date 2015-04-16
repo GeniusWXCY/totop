@@ -70,7 +70,6 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        new GetDataTask().execute();
         return view;
     }
 
@@ -87,6 +86,11 @@ public class SearchFragment extends Fragment {
     private class GetDataTask extends AsyncTask<Integer, Void, DataRes<Goods>>{
         @Override
         protected void onPreExecute() {
+
+            toggleErrorView(false);
+            mEmptyView.setVisibility(View.GONE);
+            mListView.setVisibility(View.VISIBLE);
+
             //≈–∂œ «∑Ò”–Õ¯¬Á¡¨Ω”
             mProgressBar.setVisibility(View.VISIBLE);
             super.onPreExecute();
@@ -109,7 +113,13 @@ public class SearchFragment extends Fragment {
 
             if(result != null && result.success){
                 List<Goods> list = result.data;
-                currentList.addAll(list);
+                if(list.isEmpty()){
+                    mEmptyView.setVisibility(View.VISIBLE);
+                    mListView.setVisibility(View.GONE);
+                }else {
+                    currentList.addAll(list);
+                    mGoodsAdapter.notifyDataSetChanged();
+                }
             }else{
                 //Õ¯¬Á«Î«Û ß∞‹
                 toggleErrorView(true);
@@ -117,6 +127,10 @@ public class SearchFragment extends Fragment {
             super.onPostExecute(result);
             mProgressBar.setVisibility(View.GONE);
         }
+    }
+
+    public void search(String text){
+        new GetDataTask().execute();
     }
 
 }
