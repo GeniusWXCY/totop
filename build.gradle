@@ -3,7 +3,11 @@ apply plugin: 'java'
 
 buildscript {
     repositories {
-        jcenter()
+        //jcenter()
+        //mavenCentral()
+        jcenter {
+            url "http://jcenter.bintray.com/"
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
