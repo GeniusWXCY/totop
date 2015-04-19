@@ -155,5 +155,6 @@
     <string name="str_search">搜索</string>
     <string name="str_search_input_hint">输入商品关键字</string>
     <string name="str_search_input_empty">请输入商品关键字</string>
+    <string name="str_history">最近浏览</string>
 
 </resources>

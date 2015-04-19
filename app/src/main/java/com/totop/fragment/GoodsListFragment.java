@@ -24,6 +24,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.melnykov.fab.FloatingActionButton;
 import com.totop.App;
 import com.totop.activity.GoodsDetailActivity;
+import com.totop.activity.HistoryActivity;
 import com.totop.activity.R;
 import com.totop.activity.SearchActivity;
 import com.totop.manager.GoodsManager;
@@ -301,6 +302,12 @@ public class GoodsListFragment extends Fragment {
     @OnClick(R.id.button_search)
     void search(){
         Intent intent = new Intent(mContext, SearchActivity.class);
+        startActivity(intent);
+    }
+
+    @OnClick(R.id.button_history)
+    void history(){
+        Intent intent = new Intent(mContext, HistoryActivity.class);
         startActivity(intent);
     }
 

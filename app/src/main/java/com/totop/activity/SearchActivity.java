@@ -52,4 +52,9 @@ public class SearchActivity extends FragmentActivity {
 
         }
     }
+
+    @OnClick(R.id.searchTopbarReturn)
+    public void back(){
+        finish();
+    }
 }

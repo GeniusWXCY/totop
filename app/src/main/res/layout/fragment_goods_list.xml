@@ -63,7 +63,7 @@
             android:layout_alignParentBottom="true">
 
             <Button
-                android:id="@+id/tv_history"
+                android:id="@+id/button_history"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/main_bottom_line_padding_bottom"
@@ -79,7 +79,7 @@
                 android:id="@+id/layout_bottom_radio"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_toLeftOf="@id/tv_history"
+                android:layout_toLeftOf="@id/button_history"
                 android:gravity="center"
                 android:background="@drawable/ic_tab_radio_group_bg"
                 android:orientation="horizontal">
