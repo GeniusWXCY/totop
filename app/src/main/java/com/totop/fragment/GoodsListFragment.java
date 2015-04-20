@@ -55,7 +55,7 @@ public class GoodsListFragment extends Fragment {
 
     private Context mContext;
     private GoodsAdapter mGoodsAdapter;
-    private OnFragmentSettingListener mListener;
+    private OnHomeFragmentListener mListener;
     /**
      * 当前页数
      */
@@ -283,7 +283,7 @@ public class GoodsListFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        mListener = (OnFragmentSettingListener) activity;
+        mListener = (OnHomeFragmentListener) activity;
     }
 
     @Override

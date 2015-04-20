@@ -10,14 +10,14 @@ import android.widget.Toast;
 import com.totop.fragment.ContactUsFragment;
 import com.totop.fragment.GoodsListFragment;
 import com.totop.fragment.HelpFragment;
-import com.totop.fragment.OnFragmentSettingListener;
+import com.totop.fragment.OnHomeFragmentListener;
 import com.totop.model.Item;
 
 import net.simonvt.menudrawer.MenuDrawer;
 import net.simonvt.menudrawer.Position;
 
 
-public class MainActivity extends BaseMenuActivity implements OnFragmentSettingListener{
+public class MainActivity extends BaseMenuActivity implements OnHomeFragmentListener {
 
     private FragmentTransaction mFragmentTransaction;
     private FragmentManager mFragmentManager;
@@ -34,9 +34,7 @@ public class MainActivity extends BaseMenuActivity implements OnFragmentSettingL
         if (savedInstanceState != null) {
             mCurrentFragmentTag = savedInstanceState.getString(STATE_CURRENT_FRAGMENT);
         }else{
-            mCurrentFragmentTag = ((Item) mAdapter.getItem(0)).mTitle;
-            attachFragment(mMenuDrawer.getContentContainer().getId(),getFragment(mCurrentFragmentTag),mCurrentFragmentTag);
-            commitTransactions();
+            openHome();
         }
 
         mMenuDrawer.setTouchMode(MenuDrawer.TOUCH_MODE_FULLSCREEN);
@@ -55,6 +53,12 @@ public class MainActivity extends BaseMenuActivity implements OnFragmentSettingL
             }
         });
 
+    }
+
+    private void openHome(){
+        mCurrentFragmentTag = ((Item) mAdapter.getItem(0)).mTitle;
+        attachFragment(mMenuDrawer.getContentContainer().getId(),getFragment(mCurrentFragmentTag),mCurrentFragmentTag);
+        commitTransactions();
     }
 
     @Override
@@ -152,16 +156,13 @@ public class MainActivity extends BaseMenuActivity implements OnFragmentSettingL
             if (drawerState == MenuDrawer.STATE_OPEN || drawerState == MenuDrawer.STATE_OPENING) {
                 mMenuDrawer.closeMenu();
             }else{
-//                String title = getString(R.string.menu_home);
-//                if(!title.equals(mCurrentFragmentTag)){
-//                    if (mCurrentFragmentTag != null){
-//                        detachFragment(getFragment(mCurrentFragmentTag));
-//                    }
-//                    attachFragment(mMenuDrawer.getContentContainer().getId(), getFragment(title), title);
-//                    mCurrentFragmentTag = title;
-//                }else{
+                //首页
+                String title = getString(R.string.menu_home);
+                if(!title.equals(mCurrentFragmentTag)){
+                    back();
+                }else{
                     exit();
-//                }
+                }
             }
             return false;
         }
@@ -182,5 +183,13 @@ public class MainActivity extends BaseMenuActivity implements OnFragmentSettingL
     @Override
     public void toggle() {
         mMenuDrawer.toggleMenu();
+    }
+
+    @Override
+    public void back(){
+        if (mCurrentFragmentTag != null){
+            detachFragment(getFragment(mCurrentFragmentTag));
+        }
+        openHome();
     }
 }
