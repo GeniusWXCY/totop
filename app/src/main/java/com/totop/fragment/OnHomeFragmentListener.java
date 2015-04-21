@@ -3,12 +3,12 @@ package com.totop.fragment;
 public interface OnHomeFragmentListener {
 
     /**
-     * ÏÔÊ¾/Òş²Ø²à»¬²Ëµ¥
+     * æ˜¾ç¤º/éšè—ä¾§æ»‘èœå•
      */
     void toggle();
 
     /**
-     * FramgentµÄ·µ»Ø²Ù×÷
+     * Framgentçš„è¿”å›æ“ä½œ
      */
     void back();
 }

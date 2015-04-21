@@ -91,7 +91,7 @@ public class SearchFragment extends Fragment {
             mEmptyView.setVisibility(View.GONE);
             mListView.setVisibility(View.VISIBLE);
 
-            //ÅĞ¶ÏÊÇ·ñÓĞÍøÂçÁ¬½Ó
+            //åˆ¤æ–­æ˜¯å¦æœ‰ç½‘ç»œè¿æ¥
             mProgressBar.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
@@ -100,7 +100,7 @@ public class SearchFragment extends Fragment {
         protected DataRes<Goods> doInBackground(Integer... params) {
 
             try {
-                //TODO ËÑË÷½Ó¿Ú
+                //TODO æœç´¢æ¥å£
                 return GoodsManager.findGoods(1, 1, GoodsManager.MODE_PRICE, 1);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -121,7 +121,7 @@ public class SearchFragment extends Fragment {
                     mGoodsAdapter.notifyDataSetChanged();
                 }
             }else{
-                //ÍøÂçÇëÇóÊ§°Ü
+                //ç½‘ç»œè¯·æ±‚å¤±è´¥
                 toggleErrorView(true);
             }
             super.onPostExecute(result);
