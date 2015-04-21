@@ -91,7 +91,7 @@ public class SearchFragment extends Fragment {
             mEmptyView.setVisibility(View.GONE);
             mListView.setVisibility(View.VISIBLE);
 
-            //判断是否有网络连接
+            //TODO 判断是否有网络连接
             mProgressBar.setVisibility(View.VISIBLE);
             super.onPreExecute();
         }
