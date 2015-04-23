@@ -1,5 +1,8 @@
 package com.totop.model;
 
+/**
+ * 菜单项--侧滑菜单使用
+ */
 public class Item {
 
     public String mTitle;

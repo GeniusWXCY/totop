@@ -3,11 +3,7 @@ apply plugin: 'java'
 
 buildscript {
     repositories {
-        //jcenter()
-        //mavenCentral()
-        jcenter {
-            url "http://jcenter.bintray.com/"
-        }
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.0.0'
@@ -17,6 +13,9 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        jcenter { url "http://jcenter.bintray.com/" }
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
 }
 

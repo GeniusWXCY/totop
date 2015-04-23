@@ -156,5 +156,10 @@
     <string name="str_search_input_hint">输入商品关键字</string>
     <string name="str_search_input_empty">请输入商品关键字</string>
     <string name="str_history">最近浏览</string>
+    <string name="str_no_update">当前版本是最新版本，无需更新!</string>
+    <string name="str_update_title">\\软件更新</string>
+    <string name="str_update_found">发现新版本，是否更新?</string>
+    <string name="str_update_ok">更新</string>
+    <string name="str_update_no">取消</string>
 
 </resources>

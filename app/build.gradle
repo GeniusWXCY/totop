@@ -32,4 +32,5 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.3.0'
     compile 'com.github.xiprox.errorview:library:2.0.0'
     compile 'com.android.support:support-v4:21.0.2+'
+    compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
 }

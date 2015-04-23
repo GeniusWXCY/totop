@@ -11,6 +11,7 @@ import com.totop.fragment.ContactUsFragment;
 import com.totop.fragment.GoodsListFragment;
 import com.totop.fragment.HelpFragment;
 import com.totop.fragment.OnHomeFragmentListener;
+import com.totop.manager.VersionManager;
 import com.totop.model.Item;
 
 import net.simonvt.menudrawer.MenuDrawer;
@@ -52,6 +53,8 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
                 // Do nothing
             }
         });
+        VersionManager.getInstance(this).checkVersion(false);
+
 
     }
 
@@ -70,7 +73,7 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
             if(title.equals(getString(R.string.menu_share))){
                 Toast.makeText(this,"分享",Toast.LENGTH_SHORT).show();
             }else if(title.equals(getString(R.string.menu_version))){
-                Toast.makeText(this,"当前版本为最新版本，无需更新！",Toast.LENGTH_SHORT).show();
+                VersionManager.getInstance(this).checkVersion(true);
             }else if(title.equals(getString(R.string.menu_hot))){
                 Toast.makeText(this,"热门",Toast.LENGTH_SHORT).show();
             }else {

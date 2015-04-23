@@ -2,6 +2,7 @@ package com.totop.network;
 
 import com.totop.model.DataRes;
 import com.totop.model.Goods;
+import com.totop.model.Version;
 
 import retrofit.http.GET;
 import retrofit.http.Query;
@@ -35,5 +36,6 @@ public interface NetApi {
     //按时间获取产品列表
 
     //系统更新
+    DataRes<Version> getVersion();
 
 }

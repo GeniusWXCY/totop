@@ -119,7 +119,7 @@ public class GoodsListFragment extends Fragment {
 
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("最后加载时间:" + label);
 
-                //TODO 如何处理刷新的时机
+                //TODO 如何处理刷新的时机--刷新数据用另外的接口
                 isRefresh = true;
                 new GetDataTask().execute();
             }
