@@ -3,7 +3,6 @@ package com.totop.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
@@ -40,6 +39,9 @@ import butterknife.InjectView;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.ListUtils;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import tr.xip.errorview.ErrorView;
 
 public class GoodsListFragment extends Fragment {
@@ -121,13 +123,13 @@ public class GoodsListFragment extends Fragment {
 
                 //TODO 如何处理刷新的时机--刷新数据用另外的接口
                 isRefresh = true;
-                new GetDataTask().execute();
+                executeData();
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
                 currentPageNo++;
-                new GetDataTask().execute();
+                executeData();
             }
         });
 
@@ -174,7 +176,7 @@ public class GoodsListFragment extends Fragment {
             @Override
             public void onRetry() {
                 toggleErrorView(false);
-                new GetDataTask().execute();
+                executeData();
             }
         });
 
@@ -197,88 +199,79 @@ public class GoodsListFragment extends Fragment {
         }
     }
 
-    private class GetDataTask extends AsyncTask<Integer, Void, DataRes<Goods>> {
+    public void executeData(){
 
-        @Override
-        protected void onPreExecute() {
-            //判断是否有网络连接
-            mProgressBar.setVisibility(View.VISIBLE);
-            super.onPreExecute();
+        //判断是否有网络连接
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        int pageNo = currentPageNo;
+        //TODO 刷新
+        if(isRefresh){
+            pageNo = 1;
         }
+        GoodsManager.findGoods(pageNo, currentSortType, currentModeType, currentModeValue, new Callback<DataRes<Goods>>() {
+            @Override
+            public void success(DataRes<Goods> goodsDataRes, Response response) {
 
-        @Override
-        protected DataRes<Goods> doInBackground(Integer... params) {
-            //int pageNo,int sortType,String typeKey,int typeValue
-            int pageNo = currentPageNo;
-            if(isRefresh){
-                pageNo = 1;
-            }
-            //TODO 异常处理 参考开源
-            try {
-                return GoodsManager.findGoods(pageNo,currentSortType,currentModeType,currentModeValue);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
+                mPullRefreshListView.onRefreshComplete();
 
-        @Override
-        protected void onPostExecute(DataRes<Goods> result) {
+                if(goodsDataRes != null) {
 
-            mPullRefreshListView.onRefreshComplete();
-            if(result != null && result.success){
+                    List<Goods> list = goodsDataRes.data;
 
-                List<Goods> list = result.data;
+                    //以下逻辑缓存数据
+                    List<Goods> cacheList = currentSparseArray.get(currentModeValue);
+                    if (cacheList == null) {
+                        cacheList = new ArrayList<Goods>();
+                        currentSparseArray.put(currentModeValue, cacheList);
+                    }
 
-                //以下逻辑缓存数据
-                List<Goods> cacheList = currentSparseArray.get(currentModeValue);
-                if (cacheList == null){
-                    cacheList = new ArrayList<Goods>();
-                    currentSparseArray.put(currentModeValue,cacheList);
-                }
-
-                if(isRefresh){ //刷新数据
-                    isRefresh = false;
-                    List<Goods> tempList = new ArrayList<Goods>();
-                    for(Goods goods: list){
-                        if (!cacheList.contains(goods)){
-                            tempList.add(goods);
+                    if (isRefresh) { //刷新数据
+                        isRefresh = false;
+                        List<Goods> tempList = new ArrayList<Goods>();
+                        for (Goods goods : list) {
+                            if (!cacheList.contains(goods)) {
+                                tempList.add(goods);
+                            }
                         }
-                    }
-                    if(tempList.size() > 0){
-                        cacheList.addAll(0, tempList);
-                        currentList.clear();
-                        currentList.addAll(cacheList);
-                        mGoodsAdapter.notifyDataSetChanged();
-                    }
-                }else{
-                    if(list != null){
-                        //去重复
-                        ListUtils.addDistinctList(cacheList,result.data);
-                        currentList.clear();
-                        currentList.addAll(cacheList);
+                        if (tempList.size() > 0) {
+                            cacheList.addAll(0, tempList);
+                            currentList.clear();
+                            currentList.addAll(cacheList);
+                            mGoodsAdapter.notifyDataSetChanged();
+                        }
+                    } else {
+                        if (list != null) {
+                            //去重复
+                            ListUtils.addDistinctList(cacheList, goodsDataRes.data);
+                            currentList.clear();
+                            currentList.addAll(cacheList);
 
-                        if(currentList.isEmpty()){
-                            mEmptyView.setVisibility(View.VISIBLE);
-                            mPullRefreshListView.setVisibility(View.GONE);
+                            if (currentList.isEmpty()) {
+                                mEmptyView.setVisibility(View.VISIBLE);
+                                mPullRefreshListView.setVisibility(View.GONE);
+                            }
+
+                            mGoodsAdapter.notifyDataSetChanged();
                         }
 
-                        mGoodsAdapter.notifyDataSetChanged();
-                    }
-
-                    //是否有下一页
-                    if( list == null || list.size() < GoodsManager.PAGE_COUNT){
-                        mPullRefreshListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                        //是否有下一页
+                        if (list == null || list.size() < GoodsManager.PAGE_COUNT) {
+                            mPullRefreshListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                        }
                     }
                 }
-            }else{
-                //网络请求失败
+                mProgressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
                 toggleErrorView(true);
+                mProgressBar.setVisibility(View.GONE);
             }
-            super.onPostExecute(result);
-            mProgressBar.setVisibility(View.GONE);
-        }
+        });
     }
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -371,7 +364,7 @@ public class GoodsListFragment extends Fragment {
         mPullRefreshListView.setVisibility(View.VISIBLE);
         List<Goods> cacheList = currentSparseArray.get(currentModeValue);
         if (cacheList == null || cacheList.isEmpty()){
-            new GetDataTask().execute();
+            executeData();
         }else{
             currentList.clear();
             currentList.addAll(cacheList);

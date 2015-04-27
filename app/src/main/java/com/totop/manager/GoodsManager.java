@@ -10,6 +10,7 @@ import com.totop.utils.Constants;
 
 import java.util.List;
 
+import retrofit.Callback;
 import retrofit.RestAdapter;
 
 public class GoodsManager {
@@ -43,18 +44,17 @@ public class GoodsManager {
         service = restAdapter.create(NetApi.class);
     }
 
-    public static DataRes<Goods> findGoods(int pageNo,int pageCount,int sortType,String typeKey,int typeValue) throws Exception{
+    public static void findGoods(int pageNo,int pageCount,int sortType,String typeKey,int typeValue, Callback<DataRes<Goods>> response){
 
         if(MODE_PRICE.equals(typeKey)){
-            return service.findGoodsByPrice(pageNo, pageCount, sortType, typeValue);
+            service.findGoodsByPrice(pageNo, pageCount, sortType, typeValue,response);
         }else if(MODE_OBJECT.equals(typeKey)){
-            return service.findGoodsByObject(pageNo,pageCount,sortType,typeValue);
+            service.findGoodsByObject(pageNo,pageCount,sortType,typeValue,response);
         }
-        return null;
     }
 
-    public static DataRes<Goods> findGoods(int pageNo,int sortType,String typeKey,int typeValue) throws Exception{
-        return findGoods(pageNo,PAGE_COUNT,sortType,typeKey,typeValue);
+    public static void findGoods(int pageNo,int sortType,String typeKey,int typeValue,Callback<DataRes<Goods>> response){
+        findGoods(pageNo,PAGE_COUNT,sortType,typeKey,typeValue,response);
     }
 
     /**

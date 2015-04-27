@@ -2,7 +2,6 @@ package com.totop.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -24,6 +23,9 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import tr.xip.errorview.ErrorView;
 
 public class SearchFragment extends Fragment {
@@ -55,7 +57,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onRetry() {
                 toggleErrorView(false);
-                new GetDataTask().execute();
+                executeData();
             }
         });
 
@@ -83,54 +85,42 @@ public class SearchFragment extends Fragment {
         }
     }
 
-    private class GetDataTask extends AsyncTask<Integer, Void, DataRes<Goods>>{
-        @Override
-        protected void onPreExecute() {
+    private void executeData(){
 
-            toggleErrorView(false);
-            mEmptyView.setVisibility(View.GONE);
-            mListView.setVisibility(View.VISIBLE);
+        toggleErrorView(false);
+        mEmptyView.setVisibility(View.GONE);
+        mListView.setVisibility(View.VISIBLE);
 
-            //TODO 判断是否有网络连接
-            mProgressBar.setVisibility(View.VISIBLE);
-            super.onPreExecute();
-        }
+        //TODO 判断是否有网络连接
+        mProgressBar.setVisibility(View.VISIBLE);
 
-        @Override
-        protected DataRes<Goods> doInBackground(Integer... params) {
-
-            try {
-                //TODO 搜索接口
-                return GoodsManager.findGoods(1, 1, GoodsManager.MODE_PRICE, 1);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(DataRes<Goods> result) {
-
-            if(result != null && result.success){
-                List<Goods> list = result.data;
-                if(list.isEmpty()){
-                    mEmptyView.setVisibility(View.VISIBLE);
-                    mListView.setVisibility(View.GONE);
-                }else {
-                    currentList.addAll(list);
-                    mGoodsAdapter.notifyDataSetChanged();
+        GoodsManager.findGoods(1, 1, GoodsManager.MODE_PRICE, 1, new Callback<DataRes<Goods>>() {
+            @Override
+            public void success(DataRes<Goods> goodsDataRes, Response response) {
+                if (goodsDataRes != null) {
+                    List<Goods> list = goodsDataRes.data;
+                    if (list.isEmpty()) {
+                        mEmptyView.setVisibility(View.VISIBLE);
+                        mListView.setVisibility(View.GONE);
+                    } else {
+                        currentList.addAll(list);
+                        mGoodsAdapter.notifyDataSetChanged();
+                    }
                 }
-            }else{
-                //网络请求失败
-                toggleErrorView(true);
+                mProgressBar.setVisibility(View.GONE);
             }
-            super.onPostExecute(result);
-            mProgressBar.setVisibility(View.GONE);
-        }
+
+            @Override
+            public void failure(RetrofitError error) {
+                toggleErrorView(true);
+                mProgressBar.setVisibility(View.GONE);
+            }
+        });
     }
 
+
     public void search(String text){
-        new GetDataTask().execute();
+        executeData();
     }
 
 }

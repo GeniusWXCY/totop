@@ -4,6 +4,7 @@ import com.totop.model.DataRes;
 import com.totop.model.Goods;
 import com.totop.model.Version;
 
+import retrofit.Callback;
 import retrofit.http.GET;
 import retrofit.http.Query;
 
@@ -18,7 +19,7 @@ public interface NetApi {
      * @return
      */
     @GET("/interface/api.do?sk=1000")
-    DataRes<Goods> findGoodsByPrice(@Query("pi") int pageNo, @Query("ps") int pageCount, @Query("sort") int sortType,@Query("ptype") int priceType);
+    void findGoodsByPrice(@Query("pi") int pageNo, @Query("ps") int pageCount, @Query("sort") int sortType,@Query("ptype") int priceType, Callback<DataRes<Goods>> response);
 
     /**
      * 根据对象类型获取商品信息
@@ -29,7 +30,7 @@ public interface NetApi {
      * @return
      */
     @GET("/interface/api.do?sk=1000")
-    DataRes<Goods> findGoodsByObject(@Query("pi") int pageNo, @Query("ps") int pageCount, @Query("sort") int sortType,@Query("otype") int objectType);
+    void findGoodsByObject(@Query("pi") int pageNo, @Query("ps") int pageCount, @Query("sort") int sortType,@Query("otype") int objectType,Callback<DataRes<Goods>> response);
 
     //搜索
 
