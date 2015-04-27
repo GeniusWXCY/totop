@@ -1,7 +1,9 @@
 package com.totop.manager;
 
 import com.activeandroid.ActiveAndroid;
+import com.activeandroid.Model;
 import com.activeandroid.query.Select;
+import com.activeandroid.query.Update;
 import com.totop.model.DataRes;
 import com.totop.model.Goods;
 import com.totop.model.db.GoodsDB;
@@ -64,12 +66,21 @@ public class GoodsManager {
     public static void saveHistory(Goods goods){
         GoodsDB goodsDB = goods.transfer();
         goodsDB.time = System.currentTimeMillis();
-        List<GoodsDB> list = new Select().from(GoodsDB.class).orderBy("time desc").execute();
+
+        //判断是否存在浏览记录
+        if(isExistHistory(goods)){
+            new Update(GoodsDB.class).set("time="+System.currentTimeMillis()).where("goodsid=" + goods.id).execute();
+            return;
+        }
+
+        List<GoodsDB> list = findHistory();
+
         //判断是否超过最大数
         if(list.size() >= MAX_HISTORY_COUNT){
             ActiveAndroid.beginTransaction();
 
             try {
+                //重复的定义
                 //删除最后一条
                 GoodsDB.delete(GoodsDB.class,list.get(list.size()-1).getId());
                 //保存当条数据
@@ -88,6 +99,21 @@ public class GoodsManager {
      * @return
      */
     public static List<GoodsDB> findHistory(){
-        return new Select().from(GoodsDB.class).execute();
+        return new Select().from(GoodsDB.class).orderBy("time desc").execute();
+    }
+
+    /**
+     * 判断是否存在浏览记录
+     * @param goods
+     * @return
+     */
+    public static boolean isExistHistory(Goods goods){
+        //判断是否存在浏览记录
+        List<Model> existList = new Select().from(GoodsDB.class).where("goodsid=" + goods.id).execute();
+        if(existList.isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
     }
 }

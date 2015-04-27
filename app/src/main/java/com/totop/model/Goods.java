@@ -72,7 +72,7 @@ public class Goods {
 
     public GoodsDB transfer(){
         GoodsDB goods =  new GoodsDB();
-        goods.id = this.id;
+        goods.goodsid = this.id;
         goods.name = this.name;
         goods.currentPrice = this.currentPrice;
         goods.originalPrice = this.originalPrice;

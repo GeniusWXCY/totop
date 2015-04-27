@@ -14,8 +14,9 @@ import android.widget.ProgressBar;
 
 import com.totop.activity.GoodsDetailActivity;
 import com.totop.activity.R;
-import com.totop.model.DataRes;
+import com.totop.manager.GoodsManager;
 import com.totop.model.Goods;
+import com.totop.model.db.GoodsDB;
 import com.totop.view.adapter.GoodsAdapter;
 
 import java.util.ArrayList;
@@ -58,10 +59,12 @@ public class HistoryFragment extends Fragment {
             }
         });
 
+        new GetDataTask().execute();
+
         return view;
     }
 
-    private class GetDataTask extends AsyncTask<Integer, Void, DataRes<Goods>>{
+    private class GetDataTask extends AsyncTask<Integer, Void, List<GoodsDB>>{
         @Override
         protected void onPreExecute() {
 
@@ -72,24 +75,24 @@ public class HistoryFragment extends Fragment {
         }
 
         @Override
-        protected DataRes<Goods> doInBackground(Integer... params) {
-            //TODO 搜索DB
-            return null;
+        protected List<GoodsDB> doInBackground(Integer... params) {
+            List<GoodsDB> goodsList = GoodsManager.findHistory();
+            return goodsList;
         }
 
         @Override
-        protected void onPostExecute(DataRes<Goods> result) {
+        protected void onPostExecute(List<GoodsDB> result) {
 
-            if(result != null && result.success){
-                List<Goods> list = result.data;
-                if(list.isEmpty()){
+            if(result != null ){
+                if(result.isEmpty()){
                     mEmptyView.setVisibility(View.VISIBLE);
                     mListView.setVisibility(View.GONE);
                 }else {
-                    currentList.addAll(list);
+                    currentList.addAll(transfer(result));
                     mGoodsAdapter.notifyDataSetChanged();
                 }
             }else{
+                mListView.setVisibility(View.GONE);
                 mEmptyView.setVisibility(View.VISIBLE);
             }
             super.onPostExecute(result);
@@ -99,4 +102,12 @@ public class HistoryFragment extends Fragment {
 
     }
 
+
+    private List<Goods> transfer(List<GoodsDB> list){
+        List<Goods> result = new ArrayList<Goods>();
+        for (GoodsDB goodsDB : list){
+            result.add(goodsDB.transfer());
+        }
+        return result;
+    }
 }

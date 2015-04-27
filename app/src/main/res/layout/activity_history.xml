@@ -17,10 +17,10 @@
             layout="@layout/title_normal_layout" />
     </RelativeLayout>
 
-    <FrameLayout
+    <fragment
         android:id="@+id/fragment"
+        android:name="com.totop.fragment.HistoryFragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@id/layout_main_head">
-    </FrameLayout>
+        android:layout_below="@id/layout_main_head" />
 </RelativeLayout>

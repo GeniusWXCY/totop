@@ -106,7 +106,7 @@
                         android:layout_height="wrap_content"
                         android:layout_toRightOf="@id/textview_goods_hot_label"
                         android:layout_alignTop="@id/textview_goods_hot_label"
-                        app:indicator="false"
+                        app:indicator="true"
                         app:rating="1.2" />
 
                     <ImageButton

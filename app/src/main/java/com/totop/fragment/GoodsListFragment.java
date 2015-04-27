@@ -151,6 +151,8 @@ public class GoodsListFragment extends Fragment {
                 intent.putExtra(GoodsDetailActivity.EXTRA_IMAGE_URL, viewHolder.goods.link);
                 intent.putExtra(GoodsDetailActivity.EXTRA_GOODS_SOURCE,viewHolder.goods.sourceName);
                 startActivity(intent);
+                //TODO 后台线程跑
+                GoodsManager.saveHistory(viewHolder.goods);
             }
         });
 

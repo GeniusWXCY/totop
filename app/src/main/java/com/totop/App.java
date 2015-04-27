@@ -18,6 +18,11 @@ public class App extends Application {
         ActiveAndroid.initialize(this);
     }
 
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        ActiveAndroid.dispose();
+    }
     public static Context getContext() {
         return sContext;
     }

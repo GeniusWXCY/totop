@@ -1,13 +1,13 @@
 package com.totop.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class HistoryActivity extends Activity {
+public class HistoryActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
