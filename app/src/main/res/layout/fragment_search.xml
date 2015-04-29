@@ -4,7 +4,7 @@
     android:layout_height="fill_parent"
     android:background="@color/main_bg_color"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.totop.fragment.SearchFragment">
+    tools:context="com.genius.totop.fragment.SearchFragment">
 
     <ListView
         android:id="@+id/listView_goods"

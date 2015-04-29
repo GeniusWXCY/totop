@@ -19,7 +19,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.totop.fragment.HistoryFragment"
+        android:name="com.genius.totop.fragment.HistoryFragment"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_below="@id/layout_main_head" />

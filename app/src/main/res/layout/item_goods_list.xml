@@ -99,7 +99,7 @@
                         android:layout_marginRight="@dimen/item_goods_list_r_margin_right"
                         android:text="@string/str_new_text" />
 
-                    <com.totop.view.widget.ColoredRatingBar
+                    <com.genius.totop.view.widget.ColoredRatingBar
                         android:id="@+id/ratingbar_refresh"
                         style="@style/coloredRatingBarStyleSmall"
                         android:layout_width="wrap_content"
