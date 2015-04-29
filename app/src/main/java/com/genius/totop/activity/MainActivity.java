@@ -15,10 +15,6 @@ import com.genius.totop.manager.VersionManager;
 import com.genius.totop.model.Item;
 import com.genius.totop.utils.UMengShareUtils;
 import com.totop.genius.R;
-import com.umeng.socialize.bean.SHARE_MEDIA;
-import com.umeng.socialize.controller.UMServiceFactory;
-import com.umeng.socialize.controller.UMSocialService;
-import com.umeng.socialize.media.UMImage;
 
 import net.simonvt.menudrawer.MenuDrawer;
 import net.simonvt.menudrawer.Position;
@@ -79,15 +75,7 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
 
         if(!title.equals(mCurrentFragmentTag)){
             if(title.equals(getString(R.string.menu_share))){
-                Toast.makeText(this,"分享",Toast.LENGTH_SHORT).show();
-                UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
-                mController.setShareContent("友盟社会化组件（SDK）让移动应用快速整合社交分享功能，http://www.umeng.com/social");
-                // 设置分享图片, 参数2为图片的url地址
-                mController.setShareMedia(new UMImage(this,
-                        "http://www.umeng.com/images/pic/banner_module_social.png"));
-                mController.getConfig().removePlatform(SHARE_MEDIA.SINA);
-                mController.getConfig().removePlatform(SHARE_MEDIA.TENCENT);
-                mController.openShare(this, false);
+                UMengShareUtils.share(this);
             }else if(title.equals(getString(R.string.menu_version))){
                 VersionManager.getInstance(this).checkVersion(true);
             }else if(title.equals(getString(R.string.menu_hot))){
@@ -211,4 +199,6 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
         }
         openHome();
     }
+
+
 }

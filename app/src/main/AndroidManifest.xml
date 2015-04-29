@@ -1,36 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.totop.genius" >
+    package="com.totop.genius">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <!--umeng social新增-->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:name="com.genius.totop.App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
 
         <!-- ActiveAndroid配置 -->
-        <meta-data android:name="AA_DB_NAME" android:value="product.db" />
-        <meta-data android:name="AA_DB_VERSION" android:value="1" />
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="product.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="1" />
 
         <!-- 友盟配置 TODO 根据不同渠道配置-->
-        <meta-data android:value="553e1fb3e0f55a314f001187" android:name="UMENG_APPKEY"></meta-data>
-        <meta-data android:value="Wandoujia" android:name="UMENG_CHANNEL"/>
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="553e1fb3e0f55a314f001187"></meta-data>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="Wandoujia" />
 
         <activity
             android:name="com.genius.totop.activity.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,14 +46,40 @@
             </intent-filter>
         </activity>
         <activity android:name="com.genius.totop.activity.GoodsDetailActivity" />
+        <activity android:name="com.genius.totop.activity.SearchActivity"></activity>
+        <activity android:name="com.genius.totop.activity.HistoryActivity"></activity>
         <activity
-            android:name="com.genius.totop.activity.SearchActivity">
-        </activity>
+            android:name="com.umeng.socialize.view.ShareActivity"
+            android:configChanges="orientation|keyboard"
+            android:launchMode="singleTask"
+            android:noHistory="true"
+            android:theme="@style/Theme.UMDialog"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
-            android:name="com.genius.totop.activity.HistoryActivity" >
+            android:name="com.genius.totop.wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
+        <activity
+            android:name="com.tencent.tauth.AuthActivity"
+            android:launchMode="singleTask"
+            android:noHistory="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID-->
+                <data android:scheme="tencent1104595382" />
+            </intent-filter>
         </activity>
-        <activity android:configChanges="orientation|keyboard" android:launchMode="singleTask" android:name="com.umeng.socialize.view.ShareActivity" android:noHistory="true" android:theme="@style/Theme.UMDialog" android:windowSoftInputMode="stateVisible|adjustResize"/>
-        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:exported="true" android:name="com.genius.totop.wxapi.WXEntryActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+        <activity android:name="com.tencent.connect.common.AssistActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

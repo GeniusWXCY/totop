@@ -2,6 +2,11 @@ package com.genius.totop.utils;
 
 import android.app.Activity;
 
+import com.totop.genius.R;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.UMImage;
 import com.umeng.socialize.sso.QZoneSsoHandler;
 import com.umeng.socialize.sso.UMQQSsoHandler;
 import com.umeng.socialize.weixin.controller.UMWXHandler;
@@ -35,12 +40,12 @@ public class UMengShareUtils {
      * @return
      */
     public static void addQQQZonePlatform(Activity activity) {
-        String appId = "100424468";
-        String appKey = "c7394704798a158208a74ab60104f0ba";
+        String appId = "1104595382";
+        String appKey = "AuYQNWEXY02oUpi2";
         // 添加QQ支持, 并且设置QQ分享内容的target url
         UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(activity,
                 appId, appKey);
-        qqSsoHandler.setTargetUrl("http://www.umeng.com/social");
+        qqSsoHandler.setTargetUrl("http://www.ladgift.com/");
         qqSsoHandler.addToSocialSDK();
 
         // 添加QZone平台
@@ -54,5 +59,27 @@ public class UMengShareUtils {
     public static void addCustomPlatforms(Activity activity){
         addQQQZonePlatform(activity);
         addWXPlatform(activity);
+    }
+
+    public static void share(Activity activity){
+        share(activity,null);
+    }
+
+    public static void share(Activity activity,String iconUrl){
+        UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
+        mController.setShareContent("红丫帽九块九包邮，便宜又实用，我正在购买产品，你也来吧！");
+        // 设置分享图片, 参数2为图片的url地址
+//        if(null == iconUrl){
+//            mController.setShareMedia(new UMImage(activity, R.drawable.ic_launcher));
+//        }else{
+//            mController.setShareMedia(new UMImage(activity, iconUrl));
+//        }
+
+        String url = "http://www.ladgift.com/upload/icon/20150411/60ecec11-654d-477e-b4a5-cd1f9c8ac387.jpg";
+        mController.setShareMedia(new UMImage(activity, url));
+        mController.setShareMedia(new UMImage(activity, R.drawable.ic_launcher));
+        mController.getConfig().removePlatform(SHARE_MEDIA.SINA);
+        mController.getConfig().removePlatform(SHARE_MEDIA.TENCENT);
+        mController.openShare(activity, false);
     }
 }

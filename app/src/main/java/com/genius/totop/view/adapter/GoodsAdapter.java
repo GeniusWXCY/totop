@@ -1,5 +1,6 @@
 package com.genius.totop.view.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
@@ -10,8 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.genius.totop.model.Goods;
-import com.genius.totop.utils.ShareUtils;
 import com.genius.totop.utils.UILHelper;
+import com.genius.totop.utils.UMengShareUtils;
 import com.genius.totop.view.widget.ColoredRatingBar;
 import com.totop.genius.R;
 
@@ -87,14 +88,14 @@ public class GoodsAdapter extends BaseAdapter{
 
         holder.priceText.setText(String.valueOf(goods.currentPrice));
         holder.originalPriceText.setText(String.valueOf(goods.originalPrice));
-        holder.originalPriceText.getPaint().setFlags(Paint. STRIKE_THRU_TEXT_FLAG);
+        holder.originalPriceText.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
         holder.sourceTexct.setText(goods.sourceName);
         holder.goods = goods;
-
+        holder.shareText.setTag(goods.icon);
         holder.shareText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShareUtils.share(mContext);
+                UMengShareUtils.share((Activity) mContext, (String) v.getTag());
             }
         });
 
