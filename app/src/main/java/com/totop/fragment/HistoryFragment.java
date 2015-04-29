@@ -29,6 +29,7 @@ public class HistoryFragment extends Fragment {
 
     @InjectView(R.id.listView_goods)ListView mListView;
     @InjectView(R.id.progressBar) ProgressBar mProgressBar;
+    //TODO 没有数据时的界面
     @InjectView(R.id.empty_view)View mEmptyView;
 
     private Context mContext;

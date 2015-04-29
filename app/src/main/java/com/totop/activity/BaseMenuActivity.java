@@ -1,7 +1,6 @@
 package com.totop.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -16,7 +15,7 @@ import net.simonvt.menudrawer.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class BaseMenuActivity extends FragmentActivity implements MenuAdapter.MenuListener {
+public abstract class BaseMenuActivity extends UMengActivity implements MenuAdapter.MenuListener {
 
     private static final String STATE_ACTIVE_POSITION =
             "net.simonvt.menudrawer.samples.LeftDrawerSample.activePosition";

@@ -4,18 +4,32 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <!--umeng social新增-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
     <application
-        android:name="com.totop.App"
+        android:name="com.genius.totop.App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
+        <!-- ActiveAndroid配置 -->
         <meta-data android:name="AA_DB_NAME" android:value="product.db" />
         <meta-data android:name="AA_DB_VERSION" android:value="1" />
 
+        <!-- 友盟配置 TODO 根据不同渠道配置-->
+        <meta-data android:value="553e1fb3e0f55a314f001187" android:name="UMENG_APPKEY"></meta-data>
+        <meta-data android:value="Wandoujia" android:name="UMENG_CHANNEL"/>
+
         <activity
-            android:name=".MainActivity"
+            android:name="com.genius.totop.activity.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,13 +37,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".GoodsDetailActivity" />
+        <activity android:name="com.genius.totop.activity.GoodsDetailActivity" />
         <activity
-            android:name=".SearchActivity">
+            android:name="com.genius.totop.activity.SearchActivity">
         </activity>
         <activity
-            android:name=".HistoryActivity" >
+            android:name="com.genius.totop.activity.HistoryActivity" >
         </activity>
+        <activity android:configChanges="orientation|keyboard" android:launchMode="singleTask" android:name="com.umeng.socialize.view.ShareActivity" android:noHistory="true" android:theme="@style/Theme.UMDialog" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity android:configChanges="keyboardHidden|orientation|screenSize" android:exported="true" android:name="com.genius.totop.activity.wxapi.WXEntryActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
     </application>
 
 </manifest>
