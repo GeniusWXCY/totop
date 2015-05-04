@@ -73,7 +73,7 @@
                 android:gravity="center"
                 android:textColor="@drawable/radio_selector_bottom_text"
                 android:textSize="@dimen/normal_text_size"
-                android:background="@drawable/button_selector_history"></Button>
+                android:background="@drawable/button_selector_history"/>
 
             <RadioGroup
                 android:id="@+id/layout_bottom_radio"
@@ -95,7 +95,7 @@
                     android:gravity="center"
                     android:textColor="@drawable/radio_selector_bottom_text"
                     android:textSize="@dimen/normal_text_size"
-                    android:background="@drawable/radio_selector_price"></RadioButton>
+                    android:background="@drawable/radio_selector_price"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -113,7 +113,7 @@
                     android:gravity="center"
                     android:textColor="@drawable/radio_selector_bottom_text"
                     android:textSize="@dimen/normal_text_size"
-                    android:background="@drawable/radio_selector_price"></RadioButton>
+                    android:background="@drawable/radio_selector_price"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -131,7 +131,7 @@
                     android:text="@string/str_twentynine_nine"
                     android:textColor="@drawable/radio_selector_bottom_text"
                     android:textSize="@dimen/normal_text_size"
-                    android:background="@drawable/radio_selector_price"></RadioButton>
+                    android:background="@drawable/radio_selector_price"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -149,7 +149,7 @@
                     android:gravity="center"
                     android:textColor="@drawable/radio_selector_bottom_text"
                     android:textSize="@dimen/normal_text_size"
-                    android:background="@drawable/radio_selector_price"></RadioButton>
+                    android:background="@drawable/radio_selector_price"/>
             </RadioGroup>
         </RelativeLayout>
 

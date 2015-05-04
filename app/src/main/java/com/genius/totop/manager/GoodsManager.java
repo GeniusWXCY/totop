@@ -110,10 +110,6 @@ public class GoodsManager {
     public static boolean isExistHistory(Goods goods){
         //判断是否存在浏览记录
         List<Model> existList = new Select().from(GoodsDB.class).where("goodsid=" + goods.id).execute();
-        if(existList.isEmpty()){
-            return false;
-        }else{
-            return true;
-        }
+        return !existList.isEmpty();
     }
 }

@@ -3,7 +3,6 @@ package com.genius.totop.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -19,13 +18,13 @@ import butterknife.InjectView;
 import butterknife.OnClick;
 import cn.trinea.android.common.util.StringUtils;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class SearchActivity extends FragmentActivity {
 
     @InjectView(R.id.searchText) TextView mSearchText;
     @InjectView(R.id.searchInput) EditText mSearchInputEditText;
 
     private SearchFragment mSearchFragment;
-    private FragmentManager mFragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +36,7 @@ public class SearchActivity extends FragmentActivity {
 
         mSearchFragment = new SearchFragment();
 
-        mFragmentManager = getSupportFragmentManager();
-        mFragmentManager.beginTransaction().add(R.id.fragment, mSearchFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment, mSearchFragment).commit();
     }
 
     @OnClick(R.id.searchText)

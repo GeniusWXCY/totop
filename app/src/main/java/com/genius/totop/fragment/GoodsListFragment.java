@@ -94,8 +94,7 @@ public class GoodsListFragment extends Fragment {
     private boolean isRefresh = false;
 
     public static GoodsListFragment newInstance() {
-        GoodsListFragment fragment = new GoodsListFragment();
-        return fragment;
+        return new GoodsListFragment();
     }
 
     public GoodsListFragment() {

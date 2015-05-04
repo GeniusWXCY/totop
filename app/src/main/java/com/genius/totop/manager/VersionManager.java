@@ -31,8 +31,7 @@ public class VersionManager {
     }
 
     public Version getVersion() {
-        Version version = new Version();
-        return version;
+        return new Version();
     }
 
     public void checkVersion(boolean isAlert) {
@@ -59,8 +58,7 @@ public class VersionManager {
 
         @Override
         protected Version doInBackground(Void... params) {
-            Version version = getVersion();
-            return version;
+            return getVersion();
         }
 
         @Override

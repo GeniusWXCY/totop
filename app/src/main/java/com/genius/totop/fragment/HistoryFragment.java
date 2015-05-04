@@ -77,8 +77,7 @@ public class HistoryFragment extends Fragment {
 
         @Override
         protected List<GoodsDB> doInBackground(Integer... params) {
-            List<GoodsDB> goodsList = GoodsManager.findHistory();
-            return goodsList;
+            return GoodsManager.findHistory();
         }
 
         @Override
