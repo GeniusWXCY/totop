@@ -10,8 +10,8 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.genius.totop.utils.UMengShareUtils;
 import com.totop.genius.R;
-import com.genius.totop.utils.ShareUtils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -22,8 +22,10 @@ public class GoodsDetailActivity extends Activity {
 
     public static final String EXTRA_IMAGE_URL = "extra_image_url";
     public static final String EXTRA_GOODS_SOURCE = "extra_goods_source";
+    public static final String EXTRA_ICON_URL = "extraqueding_icon_url";
 
     @InjectView(R.id.webView)WebView mWebView;
+    private String iconUrl ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class GoodsDetailActivity extends Activity {
 
         String url = getIntent().getStringExtra(EXTRA_IMAGE_URL);
         String source = getIntent().getStringExtra(EXTRA_GOODS_SOURCE);
-
+        iconUrl = getIntent().getStringExtra(EXTRA_ICON_URL);
         textView.setText(getString(R.string.str_mobile) + source);
 
         mWebView.setWebViewClient(new WebViewClient(){
@@ -59,7 +61,7 @@ public class GoodsDetailActivity extends Activity {
         return super.onKeyDown(keyCode,event);
     }
 
-    @OnClick({R.id.imageview_btn_back,R.id.webview_back,R.id.webview_forward,R.id.webview_share,R.id.webview_favor,R.id.webview_close})
+    @OnClick({R.id.imageview_btn_back,R.id.webview_back,R.id.webview_forward,R.id.webview_share,R.id.webview_close})
     public void bkClick(View view){
         switch (view.getId()){
             case R.id.imageview_btn_back:
@@ -81,10 +83,7 @@ public class GoodsDetailActivity extends Activity {
                 }
                 break;
             case R.id.webview_share:
-                ShareUtils.share(this);
-                break;
-            case R.id.webview_favor:
-                //TODO 收藏
+                UMengShareUtils.share(this,iconUrl);
                 break;
         }
     }

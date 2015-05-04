@@ -150,6 +150,7 @@ public class GoodsListFragment extends Fragment {
                 Intent intent = new Intent(mContext, GoodsDetailActivity.class);
                 intent.putExtra(GoodsDetailActivity.EXTRA_IMAGE_URL, viewHolder.goods.link);
                 intent.putExtra(GoodsDetailActivity.EXTRA_GOODS_SOURCE,viewHolder.goods.sourceName);
+                intent.putExtra(GoodsDetailActivity.EXTRA_ICON_URL,viewHolder.goods.icon);
                 startActivity(intent);
                 //TODO 后台线程跑
                 GoodsManager.saveHistory(viewHolder.goods);

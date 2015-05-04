@@ -49,13 +49,13 @@
             android:background="@color/transparent"
             android:src="@drawable/ic_menu_share"/>
 
-        <ImageButton
+        <!--<ImageButton
             android:id="@+id/webview_favor"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/transparent"
-            android:src="@drawable/ic_menu_star"/>
+            android:src="@drawable/ic_menu_star"/>-->
 
         <ImageButton
             android:id="@+id/webview_close"
