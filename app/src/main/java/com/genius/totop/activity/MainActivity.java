@@ -13,7 +13,10 @@ import com.genius.totop.fragment.HelpFragment;
 import com.genius.totop.fragment.OnHomeFragmentListener;
 import com.genius.totop.manager.VersionManager;
 import com.genius.totop.model.Item;
+import com.genius.totop.utils.Constants;
 import com.genius.totop.utils.UMengShareUtils;
+import com.qq.e.appwall.GdtAppwall;
+import com.totop.genius.BuildConfig;
 import com.totop.genius.R;
 
 import net.simonvt.menudrawer.MenuDrawer;
@@ -29,7 +32,7 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
 
     private static final String STATE_CURRENT_FRAGMENT = "com.genius.totop.activity.MainActivity";
     private long exitTime = 0;
-
+    GdtAppwall appwall;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +62,7 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
 
         //友盟分享相关
         UMengShareUtils.addCustomPlatforms(this);
+        appwall = new GdtAppwall(this, Constants.GDT_APP_ID,Constants.GDT_POST_ID, BuildConfig.DEBUG);
 
     }
 
@@ -79,6 +83,7 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
             }else if(title.equals(getString(R.string.menu_version))){
                 VersionManager.getInstance(this).checkVersion(true);
             }else if(title.equals(getString(R.string.menu_hot))){
+                appwall.doShowAppWall();
                 Toast.makeText(this,"热门",Toast.LENGTH_SHORT).show();
             }else {
                 if (mCurrentFragmentTag != null){

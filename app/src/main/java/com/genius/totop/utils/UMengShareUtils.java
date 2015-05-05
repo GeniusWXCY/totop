@@ -13,20 +13,18 @@ import com.umeng.socialize.weixin.controller.UMWXHandler;
 
 public class UMengShareUtils {
 
-    private static final String TARGET_URL = "http://www.ladgift.com/";
-
     /**
      * @功能描述 : 添加微信平台分享
      * @return
      */
     public static void addWXPlatform(Activity activity) {
 
-        String appId = "wx3ab32e5b0eda2675";
-        String appSecret = "b31450db0162afd2ac860f2c9e7adf3b";
+        String appId = Constants.UMENG_WX_APP_ID;
+        String appSecret = Constants.UMENG_WX_APP_SECRET;
         // 添加微信平台
         UMWXHandler wxHandler = new UMWXHandler(activity, appId, appSecret);
 
-        wxHandler.setTargetUrl(TARGET_URL);
+        wxHandler.setTargetUrl(Constants.UMENG_TARGET_URL);
         wxHandler.addToSocialSDK();
 
         // 支持微信朋友圈
@@ -43,12 +41,12 @@ public class UMengShareUtils {
      * @return
      */
     public static void addQQQZonePlatform(Activity activity) {
-        String appId = "1104595382";
-        String appKey = "AuYQNWEXY02oUpi2";
+        String appId = Constants.UMENG_QQ_APP_ID;
+        String appKey = Constants.UMENG_QQ_APP_KEY;
         // 添加QQ支持, 并且设置QQ分享内容的target url
         UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(activity,
                 appId, appKey);
-        qqSsoHandler.setTargetUrl(TARGET_URL);
+        qqSsoHandler.setTargetUrl(Constants.UMENG_TARGET_URL);
         qqSsoHandler.addToSocialSDK();
 
         // 添加QZone平台

@@ -31,23 +31,30 @@
         <!-- 友盟配置 TODO 根据不同渠道配置-->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="553e1fb3e0f55a314f001187"/>
+            android:value="553e1fb3e0f55a314f001187" />
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="Wandoujia" />
 
         <activity
             android:name="com.genius.totop.activity.MainActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.genius.totop.activity.GoodsDetailActivity" />
-        <activity android:name="com.genius.totop.activity.SearchActivity"/>
-        <activity android:name="com.genius.totop.activity.HistoryActivity"/>
+        <activity
+            android:name="com.genius.totop.activity.GoodsDetailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.genius.totop.activity.SearchActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.genius.totop.activity.HistoryActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name="com.umeng.socialize.view.ShareActivity"
             android:configChanges="orientation|keyboard"
@@ -66,7 +73,7 @@
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
-            android:noHistory="true" >
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -76,10 +83,15 @@
                 <data android:scheme="tencent1104595382" />
             </intent-filter>
         </activity>
-        <activity android:name="com.tencent.connect.common.AssistActivity"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"
-            android:screenOrientation="portrait">
-        </activity>
+        <activity
+            android:name="com.tencent.connect.common.AssistActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"></activity>
+
+        <service android:name="com.qq.e.comm.DownloadService"
+            android:exported="false" />
+        <activity android:name="com.qq.e.ads.AdActivity"
+            android:theme="@android:style/Theme.Translucent" />
     </application>
 
 </manifest>
