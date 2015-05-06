@@ -193,9 +193,34 @@ public class ColoredRatingBar extends View {
 
             final int width = progressBackground.getWidth() * mNumStars;
             final int height = progressBackground.getHeight();
-            setMeasuredDimension(resolveSizeAndState(width, widthMeasureSpec, 0),
-                    resolveSizeAndState(height, heightMeasureSpec, 0));
+            setMeasuredDimension(resolveSizeAndState2(width, widthMeasureSpec, 0),
+                    resolveSizeAndState2(height, heightMeasureSpec, 0));
         }
+    }
+
+    /**
+     * add myself 为了兼容3.0以下版本
+     */
+    private int resolveSizeAndState2(int size, int measureSpec, int childMeasuredState) {
+        int result = size;
+        int specMode = MeasureSpec.getMode(measureSpec);
+        int specSize =  MeasureSpec.getSize(measureSpec);
+        switch (specMode) {
+            case MeasureSpec.UNSPECIFIED:
+                result = size;
+                break;
+            case MeasureSpec.AT_MOST:
+                if (specSize < size) {
+                    result = specSize | MEASURED_STATE_TOO_SMALL;
+                } else {
+                    result = size;
+                }
+                break;
+            case MeasureSpec.EXACTLY:
+                result = specSize;
+                break;
+        }
+        return result | (childMeasuredState&MEASURED_STATE_MASK);
     }
 
     @Override

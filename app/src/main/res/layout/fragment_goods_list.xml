@@ -14,7 +14,7 @@
             android:id="@+id/layout_main_head"
             android:layout_width="fill_parent"
             android:layout_height="@dimen/title_height"
-            android:background="@color/title_bg_color">
+            android:background="@color/light_red">
 
             <include
                 android:id="@+id/layout_goods_title"
@@ -180,9 +180,9 @@
             android:layout_marginBottom="40dip"
             android:src="@drawable/fab_top"
             app:fab_type="mini"
-            app:fab_colorNormal="@color/accent"
-            app:fab_colorPressed="@color/accent_pressed"
-            app:fab_colorRipple="@color/ripple"/>
+            app:fab_colorNormal="@color/light_red"
+            app:fab_colorPressed="@color/light_red_pressed"
+            app:fab_colorRipple="@color/light_red"/>
 
         <com.melnykov.fab.FloatingActionButton
             android:id="@+id/fab_type"
@@ -194,9 +194,9 @@
             android:layout_alignParentBottom="true"
             android:src="@drawable/fab_money"
             app:fab_type="mini"
-            app:fab_colorNormal="@color/accent"
-            app:fab_colorPressed="@color/accent_pressed"
-            app:fab_colorRipple="@color/ripple"/>
+            app:fab_colorNormal="@color/light_red"
+            app:fab_colorPressed="@color/light_red_pressed"
+            app:fab_colorRipple="@color/light_red"/>
 
         <tr.xip.errorview.ErrorView
             android:id="@+id/error_view"
