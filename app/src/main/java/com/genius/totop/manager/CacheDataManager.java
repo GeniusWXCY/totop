@@ -73,9 +73,7 @@ public class CacheDataManager {
                 long priceTime = cacheData.price.time;
 
                 List<CacheDataDB> cacheDataDBs = new Select().from(CacheDataDB.class).execute();
-                if(cacheDataDBs.isEmpty()){
-
-                }else {
+                if(!cacheDataDBs.isEmpty()){
                     CacheDataDB cacheDataDB = cacheDataDBs.get(0);
                     cacheDataDB.shareTime = shareTime;
                     cacheDataDB.shareUrl = cacheData.share.url;
