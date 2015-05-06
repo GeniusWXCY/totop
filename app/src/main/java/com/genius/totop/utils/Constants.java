@@ -24,4 +24,7 @@ public class Constants {
      */
     public static final String UMENG_QQ_APP_ID = "1104595382";
     public static final String UMENG_QQ_APP_KEY = "AuYQNWEXY02oUpi2";
+
+    public static final String helpDesc = "";
+    public static final String shareUrl = "";
 }

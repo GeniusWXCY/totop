@@ -7,13 +7,11 @@ import com.activeandroid.query.Update;
 import com.genius.totop.model.DataRes;
 import com.genius.totop.model.Goods;
 import com.genius.totop.model.db.GoodsDB;
-import com.genius.totop.network.NetApi;
-import com.genius.totop.utils.Constants;
+import com.genius.totop.utils.NetApiUtils;
 
 import java.util.List;
 
 import retrofit.Callback;
-import retrofit.RestAdapter;
 
 public class GoodsManager {
     /**
@@ -36,22 +34,12 @@ public class GoodsManager {
      */
     public static final int MAX_HISTORY_COUNT = 20;
 
-    private static NetApi service = null;
-
-    static{
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint(Constants.HOST)
-                .build();
-
-        service = restAdapter.create(NetApi.class);
-    }
-
     public static void findGoods(int pageNo,int pageCount,int sortType,String typeKey,int typeValue, Callback<DataRes<Goods>> response){
 
         if(MODE_PRICE.equals(typeKey)){
-            service.findGoodsByPrice(pageNo, pageCount, sortType, typeValue,response);
+            NetApiUtils.service.findGoodsByPrice(pageNo, pageCount, sortType, typeValue,response);
         }else if(MODE_OBJECT.equals(typeKey)){
-            service.findGoodsByObject(pageNo,pageCount,sortType,typeValue,response);
+            NetApiUtils.service.findGoodsByObject(pageNo,pageCount,sortType,typeValue,response);
         }
     }
 

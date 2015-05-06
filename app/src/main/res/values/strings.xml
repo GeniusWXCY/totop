@@ -78,4 +78,8 @@
     <string name="str_update_ok">更新</string>
     <string name="str_update_no">取消</string>
 
+    <string name="str_shaonv">少女</string>
+    <string name="str_mingyuan">名媛</string>
+    <string name="str_shenshi">绅士</string>
+    <string name="str_ertong">儿童</string>
 </resources>

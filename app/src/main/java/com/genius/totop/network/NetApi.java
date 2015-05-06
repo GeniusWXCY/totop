@@ -1,5 +1,6 @@
 package com.genius.totop.network;
 
+import com.genius.totop.model.CacheData;
 import com.genius.totop.model.DataRes;
 import com.genius.totop.model.Goods;
 import com.genius.totop.model.Version;
@@ -31,6 +32,13 @@ public interface NetApi {
      */
     @GET("/interface/api.do?sk=1000")
     void findGoodsByObject(@Query("pi") int pageNo, @Query("ps") int pageCount, @Query("sort") int sortType,@Query("otype") int objectType,Callback<DataRes<Goods>> response);
+
+    /**
+     * 获取需要更新的数据
+     * @param response
+     */
+    @GET("/interface/api.do?sk=1001")
+    void findCacheData(Callback<CacheData> response);
 
     //搜索
 

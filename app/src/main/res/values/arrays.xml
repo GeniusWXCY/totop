@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="type">
+        <item>@string/str_nine_nine</item>
+        <item>@string/str_nineteen_nine</item>
+        <item>@string/str_twentynine_nine</item>
+        <item>@string/str_thirtynine_nine</item>
+    </string-array>
+
+    <string-array name="object">
+        <item>@string/str_shaonv</item>
+        <item>@string/str_mingyuan</item>
+        <item>@string/str_shenshi</item>
+        <item>@string/str_ertong</item>
+    </string-array>
+</resources>
