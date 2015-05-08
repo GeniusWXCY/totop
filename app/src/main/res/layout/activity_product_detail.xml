@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/transparent"
-            android:src="@drawable/ic_menu_back"/>
+            android:src="@drawable/btn_selector_menu_back"/>
 
         <ImageButton
             android:id="@+id/webview_forward"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/transparent"
-            android:src="@drawable/ic_menu_forward"/>
+            android:src="@drawable/btn_selector_menu_forward"/>
 
         <ImageButton
             android:id="@+id/webview_share"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/transparent"
-            android:src="@drawable/ic_menu_share"/>
+            android:src="@drawable/btn_selector_menu_share"/>
 
         <!--<ImageButton
             android:id="@+id/webview_favor"
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@color/transparent"
-            android:src="@drawable/ic_menu_close_clear_cancel"/>
+            android:src="@drawable/btn_selector_menu_close"/>
     </LinearLayout>
 
     <WebView
