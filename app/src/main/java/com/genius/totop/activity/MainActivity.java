@@ -1,5 +1,13 @@
 package com.genius.totop.activity;
 
+import android.annotation.TargetApi;
+import android.app.DownloadManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -33,6 +41,8 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
     private static final String STATE_CURRENT_FRAGMENT = "com.genius.totop.activity.MainActivity";
     private long exitTime = 0;
     GdtAppwall appwall;
+    private CompleteReceiver       completeReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +73,10 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
         //友盟分享相关
         UMengShareUtils.addCustomPlatforms(this);
         appwall = new GdtAppwall(this, Constants.GDT_APP_ID,Constants.GDT_POST_ID, BuildConfig.DEBUG);
+
+        completeReceiver = new CompleteReceiver();
+        registerReceiver(completeReceiver,
+                new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
 
     }
 
@@ -205,5 +219,29 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
         openHome();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(completeReceiver);
+    }
+
+    class CompleteReceiver extends BroadcastReceiver {
+
+        @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // get complete download id
+            long completeDownloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
+            if(completeDownloadId == Constants.DOWNLOAD_ID){
+
+                DownloadManager downloadManager = (DownloadManager)context.getSystemService(Context.DOWNLOAD_SERVICE);
+                Intent install = new Intent(Intent.ACTION_VIEW);
+                Uri downloadFileUri = downloadManager.getUriForDownloadedFile(completeDownloadId);
+                install.setDataAndType(downloadFileUri, "application/vnd.android.package-archive");
+                install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(install);
+            }
+        }
+    };
 
 }

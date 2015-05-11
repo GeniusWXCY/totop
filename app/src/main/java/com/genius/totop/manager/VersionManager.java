@@ -1,14 +1,16 @@
 package com.genius.totop.manager;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.totop.genius.R;
 import com.genius.totop.model.Version;
+import com.genius.totop.utils.Constants;
+import com.totop.genius.R;
 
 import cn.trinea.android.common.util.PackageUtils;
 import cn.trinea.android.common.util.ToastUtils;
@@ -31,14 +33,24 @@ public class VersionManager {
     }
 
     public Version getVersion() {
-        return new Version();
+        Version version = new Version();
+        version.versionCode = 10;
+        version.packageUrl = "http://img.meilishuo.net/css/images/AndroidShare/Meilishuo_3.6.1_10006.apk";
+        return version;
     }
 
     public void checkVersion(boolean isAlert) {
-        //DownloadManager downloadManager = DownloadManager;
-        //DownloadManagerPro downloadManagerPro = new DownloadManagerPro();
         new UpdateAsyncTask(isAlert).execute();
 
+    }
+
+    private void download(Context context,String apkUrl){
+        DownloadManager downloadManager = (DownloadManager)context.getSystemService(Context.DOWNLOAD_SERVICE);
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(apkUrl));
+        request.setDestinationInExternalPublicDir(Constants.DOWNLOAD_PATH, Constants.DOWNLOAD_FILE_NAME);
+        request.setTitle(context.getString(R.string.app_name));
+        request.setMimeType("application/vnd.android.package-archive");
+        Constants.DOWNLOAD_ID = downloadManager.enqueue(request);
     }
 
     class UpdateAsyncTask extends AsyncTask<Void,Void,Version>{
@@ -52,7 +64,7 @@ public class VersionManager {
         protected void onPreExecute() {
             super.onPreExecute();
             if (isAlert) {
-                ToastUtils.show(mContext, mContext.getString(R.string.str_check_updating), Toast.LENGTH_LONG);
+                ToastUtils.show(mContext, mContext.getString(R.string.str_check_updating), Toast.LENGTH_SHORT);
             }
         }
 
@@ -65,35 +77,39 @@ public class VersionManager {
         protected void onPostExecute(Version version) {
             int appVersionCode = PackageUtils.getAppVersionCode(mContext);
             int remoteVersionCode = version.versionCode;
+            final String apkUrl = version.packageUrl;
             if (appVersionCode < remoteVersionCode) {
 
-                String packageUrl = version.packageUrl;
+                AlertDialog alertDialog = null;
+                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 
+                builder.setTitle(mContext.getString(R.string.str_update_title)).setMessage(mContext.getString(R.string.str_update_found)).setCancelable(false);
+                builder.setPositiveButton(mContext.getString(R.string.str_update_ok),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                download(mContext, apkUrl);
+                                dialog.dismiss();
+                            }
+                        });
+
+                //强制更新
                 if (appVersionCode <= version.lowestVersionCode) {
-                    //强制更新
-                } else {
-                    //普通更新
-                    Dialog dialog = new AlertDialog.Builder(mContext).setTitle(mContext.getString(R.string.str_update_title)).setMessage(mContext.getString(R.string.str_update_found))
-                            // 设置内容
-                            .setPositiveButton(mContext.getString(R.string.str_update_ok),
-                                    new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog,
-                                                            int which) {
-                                            dialog.dismiss();
-                                        }
-                                    })
-                            .setNegativeButton(mContext.getString(R.string.str_update_no),
-                                    new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog,
-                                                            int whichButton) {
-                                            dialog.dismiss();
-                                        }
-                                    }).create();
-                    // 显示对话框
-                    dialog.show();
-
+                    alertDialog = builder.create();
+                    //TODO 退出应用
+                } else {//普通更新
+                    alertDialog = builder.setNegativeButton(mContext.getString(R.string.str_update_no),
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,
+                                                    int whichButton) {
+                                    dialog.dismiss();
+                                }
+                            }).create();
+                    alertDialog = builder.create();
                 }
+                // 显示对话框
+                alertDialog.show();
             } else {
                 if (isAlert) {
                     ToastUtils.show(mContext, mContext.getString(R.string.str_no_update), Toast.LENGTH_LONG);
@@ -102,5 +118,4 @@ public class VersionManager {
             super.onPostExecute(version);
         }
     }
-
 }

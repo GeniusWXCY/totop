@@ -25,6 +25,16 @@ public class Constants {
     public static final String UMENG_QQ_APP_ID = "1104595382";
     public static final String UMENG_QQ_APP_KEY = "AuYQNWEXY02oUpi2";
 
+    /**
+     * 默认分享地址和帮助说明
+     */
     public static final String helpDesc = "";
     public static final String shareUrl = "";
+
+    /**
+     * 下载相关
+     */
+    public static long DOWNLOAD_ID;
+    public static String DOWNLOAD_FILE_NAME = "nineisall.apk";
+    public static String DOWNLOAD_PATH = "nineisall";
 }
