@@ -9,7 +9,6 @@ import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -31,9 +30,7 @@ import com.totop.genius.R;
 import net.simonvt.menudrawer.MenuDrawer;
 import net.simonvt.menudrawer.Position;
 
-import java.io.File;
-
-import cn.trinea.android.common.util.PackageUtils;
+import cn.trinea.android.common.util.DownloadManagerPro;
 
 
 public class MainActivity extends BaseMenuActivity implements OnHomeFragmentListener {
@@ -239,19 +236,21 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
             long completeDownloadId = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1);
             if(completeDownloadId == Constants.DOWNLOAD_ID){
 
-                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
-                    DownloadManager downloadManager = (DownloadManager)context.getSystemService(Context.DOWNLOAD_SERVICE);
-                    Intent install = new Intent(Intent.ACTION_VIEW);
-                    Uri downloadFileUri = downloadManager.getUriForDownloadedFile(completeDownloadId);
-                    install.setDataAndType(downloadFileUri, "application/vnd.android.package-archive");
-                    install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(install);
+                Uri downloadFileUri = null;
+                DownloadManager downloadManager = (DownloadManager)context.getSystemService(Context.DOWNLOAD_SERVICE);
 
-                }else{//TODO 文件名不固定
-                    File file = Environment.getExternalStoragePublicDirectory(Constants.DOWNLOAD_PATH);
-                    String path = file.toString() + File.separator + Constants.DOWNLOAD_FILE_NAME;
-                    PackageUtils.install(MainActivity.this, path);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+                    downloadFileUri = downloadManager.getUriForDownloadedFile(completeDownloadId);
+                }else{//兼容低版本的下载安装--TODO 未测试
+                    DownloadManagerPro downloadManagerPro = new DownloadManagerPro(downloadManager);
+                    String fileName = downloadManagerPro.getFileName(completeDownloadId);
+                    downloadFileUri = Uri.parse(fileName);
                 }
+
+                Intent install = new Intent(Intent.ACTION_VIEW);
+                install.setDataAndType(downloadFileUri, "application/vnd.android.package-archive");
+                install.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(install);
             }
         }
     };
