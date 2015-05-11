@@ -82,4 +82,7 @@
     <string name="str_mingyuan">名媛</string>
     <string name="str_shenshi">绅士</string>
     <string name="str_ertong">儿童</string>
+
+    <string name="str_about_desc"></string>
+
 </resources>

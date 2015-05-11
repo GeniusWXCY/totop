@@ -2,8 +2,10 @@ package com.genius.totop.manager;
 
 import android.app.AlertDialog;
 import android.app.DownloadManager;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -11,6 +13,8 @@ import android.widget.Toast;
 import com.genius.totop.model.Version;
 import com.genius.totop.utils.Constants;
 import com.totop.genius.R;
+
+import java.io.File;
 
 import cn.trinea.android.common.util.PackageUtils;
 import cn.trinea.android.common.util.ToastUtils;
@@ -53,10 +57,11 @@ public class VersionManager {
         Constants.DOWNLOAD_ID = downloadManager.enqueue(request);
     }
 
-    class UpdateAsyncTask extends AsyncTask<Void,Void,Version>{
+    class UpdateAsyncTask extends AsyncTask<Void,Void,Version> {
 
         private boolean isAlert;
-        public UpdateAsyncTask(boolean isAlert){
+
+        public UpdateAsyncTask(boolean isAlert) {
             this.isAlert = isAlert;
         }
 
@@ -118,4 +123,5 @@ public class VersionManager {
             super.onPostExecute(version);
         }
     }
+
 }

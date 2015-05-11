@@ -3,6 +3,7 @@ package com.genius.totop.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
@@ -18,6 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.easyandroidanimations.library.FlipVerticalAnimation;
 import com.genius.totop.App;
 import com.genius.totop.activity.GoodsDetailActivity;
 import com.genius.totop.activity.HistoryActivity;
@@ -53,6 +55,7 @@ public class GoodsListFragment extends Fragment {
     @InjectView(R.id.empty_view)View mEmptyView;
     @InjectView(R.id.fab_top) FloatingActionButton mFabTop;
     @InjectView(R.id.fab_type) FloatingActionButton mFabType;
+    @InjectView(R.id.layout_bottom_bar) View bottomBar;
 
 
     private Context mContext;
@@ -381,7 +384,11 @@ public class GoodsListFragment extends Fragment {
         RadioButton radioButton3 = (RadioButton) mRadioGroup.findViewById(R.id.radio_level_three);
         RadioButton radioButton4 = (RadioButton) mRadioGroup.findViewById(R.id.radio_level_four);
 
-        //TODO 动画效果
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
+            //动画效果
+            new FlipVerticalAnimation(bottomBar).animate();
+        }
+
         if(currentModeType == GoodsManager.MODE_OBJECT){
             radioButton1.setText("老人");
             radioButton2.setText("小孩");
