@@ -9,12 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.totop.genius.BuildConfig;
 import com.totop.genius.R;
 
 import butterknife.ButterKnife;
+import butterknife.InjectView;
 import butterknife.OnClick;
 
 public class ContactUsFragment extends Fragment {
+
+    @InjectView(R.id.text_title)TextView titleText;
+    @InjectView(R.id.tv_version)TextView versionText;
 
     private OnHomeFragmentListener mListener;
 
@@ -30,8 +35,8 @@ public class ContactUsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view  =  inflater.inflate(R.layout.fragment_contact_us, container, false);
         ButterKnife.inject(this, view);
-        TextView textView = (TextView) view.findViewById(R.id.text_title);
-        textView.setText(getString(R.string.menu_contact));
+        titleText.setText(getString(R.string.menu_contact));
+        versionText.setText("版本V" + BuildConfig.VERSION_NAME);
         return view;
     }
 

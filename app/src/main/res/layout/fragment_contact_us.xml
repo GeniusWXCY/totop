@@ -1,99 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:background="@color/main_bg_color"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="@color/main_bg_color"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/layout_head_title"
-        android:background="@color/light_red"
         android:layout_width="fill_parent"
-        android:layout_height="@dimen/title_height">
+        android:layout_height="@dimen/title_height"
+        android:background="@color/light_red">
 
         <include
             android:id="@+id/layout_title"
+            layout="@layout/title_normal_layout"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            layout="@layout/title_normal_layout" />
+            android:layout_height="fill_parent" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:id="@+id/layout_wave_bg"
-        android:background="@color/white"
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16.0dip"
+        android:layout_marginTop="50.0dip"
+        android:src="@drawable/icon_120" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/str_about_label"
+        android:textColor="#ff83797c"
+        android:textSize="23.0sp" />
+
+    <TextView
+        android:id="@+id/tv_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/dimen_5"
+        android:text="版本 V1.0.1"
+        android:textColor="@color/gray"
+        android:textSize="15.0sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="20dp"
+        android:textColor="@color/about_us_text_color"
+        android:lineSpacingExtra="@dimen/dimen_5"
+        android:text="@string/str_about_desc"/>
+
+    <TextView
+        android:textSize="@dimen/about_us_default_text_size"
+        android:textColor="@color/about_us_text_color"
+        android:gravity="center"
         android:layout_width="fill_parent"
-        android:layout_height="1.0px"
-        android:layout_below="@id/layout_head_title" />
+        android:layout_height="wrap_content"
+        android:text="@string/str_about_connect_us" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_below="@id/layout_wave_bg">
-
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="0.7">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="30.0dip"
-                android:src="@drawable/ic_welcome_bg"
-                android:adjustViewBounds="true" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="1.0">
-
-            <TextView
-                android:textSize="@dimen/about_us_default_text_size"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:id="@+id/text_kefu"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:textSize="@dimen/about_us_default_text_size"
-                android:textColor="@color/about_us_text_color"
-                android:gravity="center"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/str_connect_us" />
-
-            <TextView
-                android:textSize="@dimen/about_us_default_text_size"
-                android:textColor="@color/about_us_text_color"
-                android:gravity="center"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20.0dip"
-                android:text="@string/str_company_name" />
-
-            <TextView
-                android:textSize="@dimen/about_us_default_text_size"
-                android:textColor="@color/about_us_text_color"
-                android:gravity="center"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/str_copyright_info" />
-
-            <TextView
-                android:textSize="@dimen/about_us_default_text_size"
-                android:textColor="@color/about_us_text_color"
-                android:gravity="center"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/str_all_right" />
-        </LinearLayout>
-    </LinearLayout>
-</RelativeLayout>
+</LinearLayout>

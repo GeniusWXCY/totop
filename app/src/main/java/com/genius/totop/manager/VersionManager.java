@@ -34,7 +34,7 @@ public class VersionManager {
 
     public Version getVersion() {
         Version version = new Version();
-        version.versionCode = 10;
+        version.versionCode = 1;
         version.packageUrl = "http://img.meilishuo.net/css/images/AndroidShare/Meilishuo_3.6.1_10006.apk";
         return version;
     }

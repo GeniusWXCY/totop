@@ -45,10 +45,6 @@
     <string name="str_logout">登出</string>
     <string name="str_submit">提交</string>
     <string name="str_confirm">确认</string>
-    <string name="str_connect_us">商务合作和商家报名QQ：88888888888</string>
-    <string name="str_company_name">郭大爷网络科技有限公司 版权所有</string>
-    <string name="str_copyright_info">Copyright © 2013 - 2015 www.ladgift.com.</string>
-    <string name="str_all_right">All Rights Reserved</string>
     <string name="str_share_waitting">分享中，请稍候...</string>
 
     <string name="str_new">上新</string>
@@ -83,6 +79,10 @@
     <string name="str_shenshi">绅士</string>
     <string name="str_ertong">儿童</string>
 
-    <string name="str_about_desc"></string>
-
+    <string name="str_about_desc">\u3000\u3000红丫帽是国内领先的优质折扣平台，每日通过汇集各大电商平台的独家折扣精品，以更低的价格优惠，严格的样品质检和服务监督，为广大的用户提供最实惠的商品和完整的网购服务。</string>
+    <string name="str_about_label">红丫帽,九块九还包邮</string>
+    <string name="str_about_connect_us">商务合作和商家报名QQ：88888888888</string>
+    <string name="str_about_company_name">郭大爷网络科技有限公司 版权所有</string>
+    <string name="str_about_copyright_info">Copyright © 2013 - 2015 www.ladgift.com.</string>
+    <string name="str_about_all_right">All Rights Reserved</string>
 </resources>
