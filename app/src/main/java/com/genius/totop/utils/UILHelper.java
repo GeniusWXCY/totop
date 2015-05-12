@@ -10,7 +10,6 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.core.display.RoundedBitmapDisplayer;
-import com.totop.genius.R;
 
 public class UILHelper {
 
@@ -31,9 +30,9 @@ public class UILHelper {
     /**
      * 常规图片显示设置
      */
-    static DisplayImageOptions options        = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_item_list_default_bg)
-                                                                                 .showImageForEmptyUri(R.drawable.ic_item_list_default_bg)
-                                                                                 .showImageOnFail(R.drawable.ic_item_list_default_bg)
+    static DisplayImageOptions options        = new DisplayImageOptions.Builder()//.showImageOnLoading(R.drawable.ic_item_list_default_bg)
+                                                                                 //.showImageForEmptyUri(R.drawable.ic_item_list_default_bg)
+                                                                                 //.showImageOnFail(R.drawable.ic_item_list_default_bg)
                                                                                  .cacheInMemory(true)
                                                                                  .cacheOnDisk(true)
                                                                                  .considerExifParams(true)
@@ -43,9 +42,9 @@ public class UILHelper {
     /**
      * 圆角图片显示设置
      */
-    static DisplayImageOptions roundedOptions = new DisplayImageOptions.Builder().showImageOnLoading(R.drawable.ic_item_list_default_bg)
-                                                                                 .showImageForEmptyUri(R.drawable.ic_item_list_default_bg)
-                                                                                 .showImageOnFail(R.drawable.ic_item_list_default_bg)
+    static DisplayImageOptions roundedOptions = new DisplayImageOptions.Builder()//.showImageOnLoading(R.drawable.ic_item_list_default_bg)
+                                                                                 //.showImageForEmptyUri(R.drawable.ic_item_list_default_bg)
+                                                                                 //.showImageOnFail(R.drawable.ic_item_list_default_bg)
                                                                                  .cacheInMemory(false)
                                                                                  .cacheOnDisk(true)
                                                                                  .considerExifParams(true)
