@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.genius.totop.activity.GoodsDetailActivity;
 import com.genius.totop.manager.GoodsManager;
@@ -29,8 +30,8 @@ public class HistoryFragment extends Fragment {
 
     @InjectView(R.id.listView_goods)ListView mListView;
     @InjectView(R.id.progressBar) ProgressBar mProgressBar;
-    //TODO 没有数据时的界面
     @InjectView(R.id.empty_view)View mEmptyView;
+    @InjectView(R.id.text_empty_desc)TextView emptyDesc;
 
     private Context mContext;
     private GoodsAdapter mGoodsAdapter;
@@ -59,6 +60,7 @@ public class HistoryFragment extends Fragment {
                 startActivity(intent);
             }
         });
+        emptyDesc.setText(getString(R.string.str_history_empty));
 
         new GetDataTask().execute();
 

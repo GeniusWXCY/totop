@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.totop.genius.R;
 import com.genius.totop.activity.GoodsDetailActivity;
 import com.genius.totop.manager.GoodsManager;
@@ -30,14 +33,18 @@ import tr.xip.errorview.ErrorView;
 
 public class SearchFragment extends Fragment {
 
-    @InjectView(R.id.listView_goods)ListView mListView;
     @InjectView(R.id.progressBar) ProgressBar mProgressBar;
     @InjectView(R.id.error_view) ErrorView mErrorView;
     @InjectView(R.id.empty_view)View mEmptyView;
+    @InjectView(R.id.text_empty_desc)TextView emptyDesc;
+    @InjectView(R.id.listView_goods)PullToRefreshListView mPullRefreshListView;
 
     private Context mContext;
     private GoodsAdapter mGoodsAdapter;
     private List<Goods> currentList = new ArrayList<Goods>();
+
+    private int currentPageNo = 1;
+    private String serarchText;
 
     public SearchFragment() {
     }
@@ -50,6 +57,24 @@ public class SearchFragment extends Fragment {
         ButterKnife.inject(this, view);
         mContext = getActivity();
         mGoodsAdapter = new GoodsAdapter(mContext, currentList);
+
+        mPullRefreshListView.setMode(PullToRefreshBase.Mode.PULL_FROM_END);
+
+        mPullRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
+
+            @Override
+            public void onPullDownToRefresh(PullToRefreshBase<ListView> refreshView) {
+
+            }
+
+            @Override
+            public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
+                currentPageNo++;
+                executeData();
+            }
+        });
+
+        ListView mListView = mPullRefreshListView.getRefreshableView();
         mListView.setAdapter(mGoodsAdapter);
 
         mErrorView.setOnRetryListener(new ErrorView.RetryListener() {
@@ -72,16 +97,18 @@ public class SearchFragment extends Fragment {
             }
         });
 
+        emptyDesc.setText(getString(R.string.str_search_empty));
+
         return view;
     }
 
     private void toggleErrorView(boolean isShow){
         if(isShow){
             mErrorView.setVisibility(View.VISIBLE);
-            mListView.setVisibility(View.GONE);
+            mPullRefreshListView.setVisibility(View.GONE);
         }else{
             mErrorView.setVisibility(View.GONE);
-            mListView.setVisibility(View.VISIBLE);
+            mPullRefreshListView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -89,22 +116,27 @@ public class SearchFragment extends Fragment {
 
         toggleErrorView(false);
         mEmptyView.setVisibility(View.GONE);
-        mListView.setVisibility(View.VISIBLE);
+        mPullRefreshListView.setVisibility(View.VISIBLE);
 
         //TODO 判断是否有网络连接
         mProgressBar.setVisibility(View.VISIBLE);
 
-        GoodsManager.findGoods(1, 1, GoodsManager.MODE_PRICE, 1, new Callback<DataRes<Goods>>() {
+        GoodsManager.search(currentPageNo, GoodsManager.PAGE_COUNT, serarchText, new Callback<DataRes<Goods>>() {
             @Override
             public void success(DataRes<Goods> goodsDataRes, Response response) {
                 if (goodsDataRes != null) {
                     List<Goods> list = goodsDataRes.data;
                     if (list.isEmpty()) {
                         mEmptyView.setVisibility(View.VISIBLE);
-                        mListView.setVisibility(View.GONE);
+                        mPullRefreshListView.setVisibility(View.GONE);
                     } else {
                         currentList.addAll(list);
                         mGoodsAdapter.notifyDataSetChanged();
+                    }
+
+                    //是否有下一页
+                    if (list.size() < GoodsManager.PAGE_COUNT) {
+                        mPullRefreshListView.setMode(PullToRefreshBase.Mode.DISABLED);
                     }
                 }
                 mProgressBar.setVisibility(View.GONE);
@@ -118,8 +150,8 @@ public class SearchFragment extends Fragment {
         });
     }
 
-
     public void search(String text){
+        serarchText = text;
         executeData();
     }
 

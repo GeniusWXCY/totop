@@ -71,7 +71,6 @@ public class UMengShareUtils {
         mController.setShareContent("红丫帽九块九包邮，便宜又实用，我正在购买产品，你也来吧！");
         // 设置分享图片, 参数2为图片的url地址
         if(null == iconUrl){
-            //TODO 微信要加个白底的图片
             mController.setShareImage(new UMImage(activity, R.drawable.ic_launcher_share));
         }else{
             mController.setShareImage(new UMImage(activity, iconUrl));

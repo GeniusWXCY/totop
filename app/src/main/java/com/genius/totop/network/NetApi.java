@@ -40,11 +40,20 @@ public interface NetApi {
     @GET("/interface/api.do?sk=1001")
     void findCacheData(Callback<CacheData> response);
 
-    //搜索
+    /**
+     * 搜索
+     * @param pageNo
+     * @param pageCount
+     * @param key
+     * @param response
+     */
+    @GET("/interface/api.do?sk=1006")
+    void search(@Query("pi") int pageNo, @Query("ps") int pageCount,@Query("key") String key ,Callback<DataRes<Goods>> response);
 
     //按时间获取产品列表
 
     //系统更新
     DataRes<Version> getVersion();
 
+    //获取
 }

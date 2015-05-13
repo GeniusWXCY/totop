@@ -47,6 +47,10 @@ public class GoodsManager {
         findGoods(pageNo,PAGE_COUNT,sortType,typeKey,typeValue,response);
     }
 
+    public static void search(int pageNo,int pageCount ,String key,Callback<DataRes<Goods>> response){
+        NetApiUtils.service.search(pageNo,pageCount,key,response);
+    }
+
     /**
      * 保存了浏览记录
      * @param goods
