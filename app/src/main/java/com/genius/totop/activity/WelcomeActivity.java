@@ -12,10 +12,13 @@ import com.genius.totop.model.CacheData;
 import com.genius.totop.model.Category;
 import com.genius.totop.model.DataRes;
 import com.genius.totop.model.db.CacheDataDB;
+import com.genius.totop.utils.EventCode;
 import com.genius.totop.utils.ThreadPoolUtils;
 
 import java.util.Timer;
 import java.util.TimerTask;
+
+import de.greenrobot.event.EventBus;
 
 public class WelcomeActivity extends FragmentActivity{
 
@@ -29,6 +32,7 @@ public class WelcomeActivity extends FragmentActivity{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_welcome);
 
+        EventBus.getDefault().register(this);
 
         TimerTask task = new TimerTask() {
             @Override
@@ -40,16 +44,28 @@ public class WelcomeActivity extends FragmentActivity{
             }
         };
 
-        new Timer().schedule(task, 2000);
+        new Timer().schedule(task, 1000);
         operateCacheData();
     }
 
     private void executeNext(){
         Intent intent = new Intent(this,MainActivity.class);
         startActivity(intent);
-        WelcomeActivity.this.finish();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEvent(Integer code){
+        if(code == EventCode.COMMAND_FINISH_WELCOME){
+            finish();
+        }
+    }
+
+    //TODO 此方法有内存泄露嫌疑
     private void operateCacheData(){
         //从db中获取数据
         final CacheDataDB cacheDataDB = CacheDataManager.findFromLocal();
@@ -88,7 +104,8 @@ public class WelcomeActivity extends FragmentActivity{
         }else{
             //取本地数据进行初始化
             CacheDataManager.initData(cacheDataDB);
-            //TODO 更新本地数据
+            //异步更新本地数据
+            CacheDataManager.updateLocal(cacheDataDB);
             isFinishInit = true;
             if (isTimeout){
                 executeNext();

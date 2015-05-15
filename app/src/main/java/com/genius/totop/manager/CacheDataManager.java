@@ -107,20 +107,27 @@ public class CacheDataManager {
         }
     }
 
-    public static void updateLocal() {
+    /**
+     * 异步更新本地数据
+     */
+    public static void updateLocal(final CacheDataDB cacheDataDB) {
 
         ThreadPoolUtils.getInstance().execute(new Runnable() {
             @Override
             public void run() {
                 DataRes<CacheData> cacheDatas = findCacheDatas();
                 DataRes<Category> categorys = findCategorys();
-                //获取本地数据
-                CacheDataDB cacheDataDB = findFromLocal();
                 updateLocal(cacheDataDB,cacheDatas,categorys);
             }
         });
     }
 
+    /**
+     * 同步更新本地数据
+     * @param cacheDataDB
+     * @param cacheDatas
+     * @param categorys
+     */
     public static void updateLocal(CacheDataDB cacheDataDB,DataRes<CacheData> cacheDatas,DataRes<Category> categorys){
 
         boolean isSaveOrUpdate = false;

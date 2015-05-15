@@ -24,6 +24,7 @@ import com.genius.totop.fragment.OnHomeFragmentListener;
 import com.genius.totop.manager.VersionManager;
 import com.genius.totop.model.Item;
 import com.genius.totop.utils.Constants;
+import com.genius.totop.utils.EventCode;
 import com.genius.totop.utils.UMengShareUtils;
 import com.qq.e.appwall.GdtAppwall;
 
@@ -31,6 +32,7 @@ import net.simonvt.menudrawer.MenuDrawer;
 import net.simonvt.menudrawer.Position;
 
 import cn.trinea.android.common.util.DownloadManagerPro;
+import de.greenrobot.event.EventBus;
 
 
 public class MainActivity extends BaseMenuActivity implements OnHomeFragmentListener {
@@ -79,6 +81,9 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
         completeReceiver = new CompleteReceiver();
         registerReceiver(completeReceiver,
                 new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
+
+        //发送指令，退出欢迎界面
+        EventBus.getDefault().post(EventCode.COMMAND_FINISH_WELCOME);
 
     }
 
