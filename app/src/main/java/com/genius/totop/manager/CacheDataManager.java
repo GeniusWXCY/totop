@@ -49,11 +49,11 @@ public class CacheDataManager {
         int length2 = CATEGORY_NUM > objectArray.length ? CATEGORY_NUM : objectArray.length;
 
         for (int i = 0; i < length1; i++) {
-            mCategory.price.types.add(new Type( (i + 1) + "",priceArray[i],"1"));
+            mCategory.price.types.add(new Type( (i + 1),priceArray[i],"1"));
         }
 
         for (int i = 0; i < length2; i++) {
-            mCategory.object.types.add(new Type((i + 5) + "",priceArray[i], "2"));
+            mCategory.object.types.add(new Type((i + 5),priceArray[i], "2"));
         }
     }
 

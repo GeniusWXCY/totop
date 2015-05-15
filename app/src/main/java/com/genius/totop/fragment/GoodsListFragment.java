@@ -25,9 +25,11 @@ import com.genius.totop.R;
 import com.genius.totop.activity.GoodsDetailActivity;
 import com.genius.totop.activity.HistoryActivity;
 import com.genius.totop.activity.SearchActivity;
+import com.genius.totop.manager.CacheDataManager;
 import com.genius.totop.manager.GoodsManager;
 import com.genius.totop.model.DatasRes;
 import com.genius.totop.model.Goods;
+import com.genius.totop.model.Type;
 import com.genius.totop.view.adapter.GoodsAdapter;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -344,19 +346,23 @@ public class GoodsListFragment extends Fragment {
      */
     @OnCheckedChanged({R.id.radio_level_one,R.id.radio_level_two,R.id.radio_level_three,R.id.radio_level_four})
     void changePriceOrObjectd(RadioButton rb,boolean isCheck){
+
         if(isCheck){
+            List<Type> priceTypes = CacheDataManager.mCategory.price.types;
+            List<Type> objectTypes = CacheDataManager.mCategory.object.types;
+
             switch (rb.getId()){
                 case R.id.radio_level_one:
-                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?1:5;
+                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?priceTypes.get(0).id:objectTypes.get(0).id;
                     break;
                 case R.id.radio_level_two:
-                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?2:6;
+                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?priceTypes.get(1).id:objectTypes.get(1).id;
                     break;
                 case R.id.radio_level_three:
-                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?3:7;
+                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?priceTypes.get(2).id:objectTypes.get(2).id;
                     break;
                 case R.id.radio_level_four:
-                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?4:8;
+                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?priceTypes.get(3).id:objectTypes.get(3).id;
                     break;
             }
             loadView();
@@ -390,15 +396,17 @@ public class GoodsListFragment extends Fragment {
         }
 
         if(currentModeType == GoodsManager.MODE_OBJECT){
-            radioButton1.setText("老人");
-            radioButton2.setText("小孩");
-            radioButton3.setText("女人");
-            radioButton4.setText("男人");
+            List<Type> types = CacheDataManager.mCategory.object.types;
+            radioButton1.setText(types.get(0).name);
+            radioButton2.setText(types.get(1).name);
+            radioButton3.setText(types.get(2).name);
+            radioButton4.setText(types.get(3).name);
         }else{
-            radioButton1.setText("9块9");
-            radioButton2.setText("19块9");
-            radioButton3.setText("29块9");
-            radioButton4.setText("39块9");
+            List<Type> types = CacheDataManager.mCategory.price.types;
+            radioButton1.setText(types.get(0).name);
+            radioButton2.setText(types.get(1).name);
+            radioButton3.setText(types.get(2).name);
+            radioButton4.setText(types.get(3).name);
         }
         mRadioGroup.clearCheck();
         radioButton1.setChecked(true);
