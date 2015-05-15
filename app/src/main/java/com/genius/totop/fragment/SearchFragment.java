@@ -12,14 +12,14 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.handmark.pulltorefresh.library.PullToRefreshBase;
-import com.handmark.pulltorefresh.library.PullToRefreshListView;
-import com.totop.genius.R;
+import com.genius.totop.R;
 import com.genius.totop.activity.GoodsDetailActivity;
 import com.genius.totop.manager.GoodsManager;
-import com.genius.totop.model.DataRes;
+import com.genius.totop.model.DatasRes;
 import com.genius.totop.model.Goods;
 import com.genius.totop.view.adapter.GoodsAdapter;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,11 +121,11 @@ public class SearchFragment extends Fragment {
         //TODO 判断是否有网络连接
         mProgressBar.setVisibility(View.VISIBLE);
 
-        GoodsManager.search(currentPageNo, GoodsManager.PAGE_COUNT, serarchText, new Callback<DataRes<Goods>>() {
+        GoodsManager.search(currentPageNo, GoodsManager.PAGE_COUNT, serarchText, new Callback<DatasRes<Goods>>() {
             @Override
-            public void success(DataRes<Goods> goodsDataRes, Response response) {
-                if (goodsDataRes != null) {
-                    List<Goods> list = goodsDataRes.data;
+            public void success(DatasRes<Goods> goodsDatasRes, Response response) {
+                if (goodsDatasRes != null) {
+                    List<Goods> list = goodsDatasRes.data;
                     if (list.isEmpty()) {
                         mEmptyView.setVisibility(View.VISIBLE);
                         mPullRefreshListView.setVisibility(View.GONE);

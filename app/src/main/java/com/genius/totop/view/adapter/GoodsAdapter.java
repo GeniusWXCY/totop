@@ -10,11 +10,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.genius.totop.R;
 import com.genius.totop.model.Goods;
 import com.genius.totop.utils.UILHelper;
 import com.genius.totop.utils.UMengShareUtils;
 import com.genius.totop.view.widget.ColoredRatingBar;
-import com.totop.genius.R;
 
 import java.util.List;
 

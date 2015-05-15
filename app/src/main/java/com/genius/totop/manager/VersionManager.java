@@ -8,9 +8,9 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import com.genius.totop.R;
 import com.genius.totop.model.Version;
 import com.genius.totop.utils.Constants;
-import com.totop.genius.R;
 
 import cn.trinea.android.common.util.PackageUtils;
 import cn.trinea.android.common.util.ToastUtils;
@@ -36,6 +36,7 @@ public class VersionManager {
         Version version = new Version();
         version.versionCode = 1;
         version.packageUrl = "http://img.meilishuo.net/css/images/AndroidShare/Meilishuo_3.6.1_10006.apk";
+        version.packageUrl = "http://172.25.74.165/app/apk/2015/05_15/14/201505151456462266.apk";
         return version;
     }
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.totop.genius">
+    package="com.genius.totop">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -16,7 +16,7 @@
     <uses-sdk tools:overrideLibrary="com.easyandroidanimations.library"/>
 
     <application
-        android:name="com.genius.totop.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -38,24 +38,27 @@
             android:name="UMENG_CHANNEL"
             android:value="Wandoujia" />
 
-        <activity
-            android:name="com.genius.totop.activity.MainActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
+        <activity android:name=".activity.WelcomeActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
-            android:name="com.genius.totop.activity.GoodsDetailActivity"
+            android:name=".activity.MainActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.GoodsDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.genius.totop.activity.SearchActivity"
+            android:name=".activity.SearchActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.genius.totop.activity.HistoryActivity"
+            android:name=".activity.HistoryActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name="com.umeng.socialize.view.ShareActivity"
@@ -65,7 +68,7 @@
             android:theme="@style/Theme.UMDialog"
             android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
-            android:name="com.genius.totop.wxapi.WXEntryActivity"
+            android:name=".wxapi.WXEntryActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:screenOrientation="portrait"

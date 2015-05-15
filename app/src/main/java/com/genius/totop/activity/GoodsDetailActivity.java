@@ -10,8 +10,8 @@ import android.webkit.WebViewClient;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.genius.totop.R;
 import com.genius.totop.utils.UMengShareUtils;
-import com.totop.genius.R;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

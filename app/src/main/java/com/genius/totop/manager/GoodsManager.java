@@ -4,7 +4,7 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
 import com.activeandroid.query.Select;
 import com.activeandroid.query.Update;
-import com.genius.totop.model.DataRes;
+import com.genius.totop.model.DatasRes;
 import com.genius.totop.model.Goods;
 import com.genius.totop.model.db.GoodsDB;
 import com.genius.totop.utils.NetApiUtils;
@@ -34,7 +34,7 @@ public class GoodsManager {
      */
     public static final int MAX_HISTORY_COUNT = 20;
 
-    public static void findGoods(int pageNo,int pageCount,int sortType,String typeKey,int typeValue, Callback<DataRes<Goods>> response){
+    public static void findGoods(int pageNo,int pageCount,int sortType,String typeKey,int typeValue, Callback<DatasRes<Goods>> response){
 
         if(MODE_PRICE.equals(typeKey)){
             NetApiUtils.service.findGoodsByPrice(pageNo, pageCount, sortType, typeValue,response);
@@ -43,11 +43,11 @@ public class GoodsManager {
         }
     }
 
-    public static void findGoods(int pageNo,int sortType,String typeKey,int typeValue,Callback<DataRes<Goods>> response){
+    public static void findGoods(int pageNo,int sortType,String typeKey,int typeValue,Callback<DatasRes<Goods>> response){
         findGoods(pageNo,PAGE_COUNT,sortType,typeKey,typeValue,response);
     }
 
-    public static void search(int pageNo,int pageCount ,String key,Callback<DataRes<Goods>> response){
+    public static void search(int pageNo,int pageCount ,String key,Callback<DatasRes<Goods>> response){
         NetApiUtils.service.search(pageNo,pageCount,key,response);
     }
 

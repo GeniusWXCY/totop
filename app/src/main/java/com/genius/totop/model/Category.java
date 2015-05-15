@@ -1,13 +1,13 @@
 package com.genius.totop.model;
 
-/**
- * 类别--侧滑菜单使用
- */
+import java.util.List;
+
 public class Category {
+    public TypeWrap price;
+    public TypeWrap object;
 
-    public String mTitle;
-
-    public Category(String title) {
-        mTitle = title;
+    public class TypeWrap{
+        public List<Type> types;
+        public long time;
     }
 }

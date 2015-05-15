@@ -2,11 +2,13 @@ package com.genius.totop.model;
 
 public class Type{
 
+    public String id;
     public String name;
-    public String value;
+    public String type;
 
-    public Type(String name,String value){
+    public Type(String id,String name,String type){
+        this.id = id;
         this.name = name;
-        this.value = value;
+        this.type = type;
     }
 }

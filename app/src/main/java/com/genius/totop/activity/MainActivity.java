@@ -15,6 +15,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
+import com.genius.totop.BuildConfig;
+import com.genius.totop.R;
 import com.genius.totop.fragment.ContactUsFragment;
 import com.genius.totop.fragment.GoodsListFragment;
 import com.genius.totop.fragment.HelpFragment;
@@ -24,8 +26,6 @@ import com.genius.totop.model.Item;
 import com.genius.totop.utils.Constants;
 import com.genius.totop.utils.UMengShareUtils;
 import com.qq.e.appwall.GdtAppwall;
-import com.totop.genius.BuildConfig;
-import com.totop.genius.R;
 
 import net.simonvt.menudrawer.MenuDrawer;
 import net.simonvt.menudrawer.Position;
@@ -42,7 +42,7 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
 
     private static final String STATE_CURRENT_FRAGMENT = "com.genius.totop.activity.MainActivity";
     private long exitTime = 0;
-    GdtAppwall appwall;
+    private GdtAppwall appwall;
     private CompleteReceiver  completeReceiver;
 
     @Override
@@ -254,7 +254,4 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
             }
         }
     };
-
-
-
 }

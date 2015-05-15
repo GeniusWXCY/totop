@@ -10,11 +10,9 @@ public class CacheDataDB extends Model {
     @Column
     public String shareUrl;
     @Column
-    public long shareTime;
-    @Column
     public String helpDesc;
     @Column
-    public long helpTime;
+    public long modifyTime;
     @Column
     public String price;
     @Column

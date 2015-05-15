@@ -3,95 +3,150 @@ package com.genius.totop.manager;
 import android.content.Context;
 
 import com.activeandroid.query.Select;
+import com.genius.totop.R;
 import com.genius.totop.model.CacheData;
+import com.genius.totop.model.Category;
+import com.genius.totop.model.DataRes;
 import com.genius.totop.model.Type;
 import com.genius.totop.model.db.CacheDataDB;
 import com.genius.totop.utils.Constants;
 import com.genius.totop.utils.NetApiUtils;
+import com.genius.totop.utils.ThreadPoolUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.totop.genius.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
 
 public class CacheDataManager {
 
-    public static void findCacheData(Callback<CacheData> response) {
-        NetApiUtils.service.findCacheData(response);
-    }
+    /**
+     * 帮助信息、分享地址等缓存数据
+     */
+    public static final CacheData mCacheData = new CacheData();
+    /**
+     * 对象/价格等类别对象
+     */
+    public static Category mCategory = new Category();
 
-    public static CacheData findCacheDataLocal(Context context) {
+    private static final int CATEGORY_NUM = 4;
 
-        CacheData cacheData = new CacheData();
-        cacheData.help = cacheData.new Help();
-        cacheData.price = cacheData.new TypeWrap();
-        cacheData.object = cacheData.new TypeWrap();
-        cacheData.share = cacheData.new Share();
+    public static void initData(Context context){
+        mCacheData.url = Constants.shareUrl;
+        mCacheData.content = Constants.helpDesc;
 
-        cacheData.help.desc = Constants.helpDesc;
-        cacheData.share.url = Constants.shareUrl;
-        cacheData.price.types = new ArrayList<>();
-        cacheData.object.types = new ArrayList<>();
+        mCategory.price = mCategory.new TypeWrap();
+        mCategory.object = mCategory.new TypeWrap();
 
-        List<CacheDataDB> cacheDatas = new Select().from(CacheDataDB.class).execute();
-        if (cacheDatas.isEmpty()) {
-            String[] priceArray = context.getResources().getStringArray(R.array.type);
-            String[] objectArray = context.getResources().getStringArray(R.array.object);
-            for (int i = 0; i < priceArray.length; i++) {
-                cacheData.price.types.add(new Type(priceArray[i], (i + 1) + ""));
-            }
+        mCategory.price.types = new ArrayList<>();
+        mCategory.object.types = new ArrayList<>();
 
-            for (int i = 0; i < objectArray.length; i++) {
-                cacheData.object.types.add(new Type(priceArray[i], (i + 5) + ""));
-            }
+        String[] priceArray = context.getResources().getStringArray(R.array.type);
+        String[] objectArray = context.getResources().getStringArray(R.array.object);
 
-        } else {
-            CacheDataDB cacheDataDB = cacheDatas.get(0);
-            cacheData.help.desc = cacheDataDB.helpDesc;
-            cacheData.share.url = cacheDataDB.shareUrl;
-            cacheData.price.types = new Gson().fromJson(cacheDataDB.price, new TypeToken<List<Type>>() {
-            }.getType());
-            cacheData.object.types = new Gson().fromJson(cacheDataDB.object, new TypeToken<List<Type>>() {
-            }.getType());
+        int length1 = CATEGORY_NUM > priceArray.length ? CATEGORY_NUM : priceArray.length;
+        int length2 = CATEGORY_NUM > objectArray.length ? CATEGORY_NUM : objectArray.length;
+
+        for (int i = 0; i < length1; i++) {
+            mCategory.price.types.add(new Type( (i + 1) + "",priceArray[i],"1"));
         }
 
-        return cacheData;
+        for (int i = 0; i < length2; i++) {
+            mCategory.object.types.add(new Type((i + 5) + "",priceArray[i], "2"));
+        }
     }
 
-    public static void update() {
-        findCacheData(new Callback<CacheData>() {
-            @Override
-            public void success(CacheData cacheData, Response response) {
-                long shareTime = cacheData.share.time;
-                long helpTime = cacheData.help.time;
-                long objectTime = cacheData.object.time;
-                long priceTime = cacheData.price.time;
+    public static DataRes<CacheData> findCacheDatas() {
+        return NetApiUtils.service.findCacheDatas();
+    }
 
-                List<CacheDataDB> cacheDataDBs = new Select().from(CacheDataDB.class).execute();
-                if(!cacheDataDBs.isEmpty()){
-                    CacheDataDB cacheDataDB = cacheDataDBs.get(0);
-                    cacheDataDB.shareTime = shareTime;
-                    cacheDataDB.shareUrl = cacheData.share.url;
-                    cacheDataDB.helpDesc = cacheData.help.desc;
-                    cacheDataDB.helpTime = cacheData.help.time;
-                    cacheDataDB.price = new Gson().toJson(cacheData.price.types);
-                    cacheDataDB.priceTime = cacheData.price.time;
-                    cacheDataDB.object = new Gson().toJson(cacheData.object.types);
-                    cacheDataDB.objectTime = cacheData.object.time;
-                    //TODO 判断是否更新
-                    cacheDataDB.save();
-                }
+    public static DataRes<Category> findCategorys(){
+        return NetApiUtils.service.findCategorys();
+    }
+
+    public static void initData(DataRes<CacheData> cacheDatas, DataRes<Category> categorys) {
+        if(cacheDatas.success){
+            CacheData tempCacheData = cacheDatas.data;
+            if(tempCacheData != null){
+                mCacheData.url = tempCacheData.url;
+                mCacheData.content = tempCacheData.content;
             }
+        }
+        if (cacheDatas.success){
+            Category tempCateGory = categorys.data;
+            if(tempCateGory != null){
+                mCategory.object = tempCateGory.object;
+                mCategory.price = tempCateGory.price;
+            }
+        }
+    }
 
+    public static void initData(CacheDataDB cacheDataDB) {
+
+        mCategory.price = mCategory.new TypeWrap();
+        mCategory.object = mCategory.new TypeWrap();
+        mCategory.price.types = new Gson().fromJson(cacheDataDB.price, new TypeToken<List<Type>>() {
+            }.getType());
+        mCategory.object.types = new Gson().fromJson(cacheDataDB.object, new TypeToken<List<Type>>() {
+            }.getType());
+        mCacheData.url = cacheDataDB.shareUrl;
+        mCacheData.content = cacheDataDB.helpDesc;
+    }
+
+    /**
+     * 获取本地数据
+     * @return
+     */
+    public static CacheDataDB findFromLocal(){
+        List<CacheDataDB> cacheDataDBs = new Select().from(CacheDataDB.class).execute();
+        if(cacheDataDBs!= null && !cacheDataDBs.isEmpty()){
+            return cacheDataDBs.get(0);
+        }else{
+            return null;
+        }
+    }
+
+    public static void updateLocal() {
+
+        ThreadPoolUtils.getInstance().execute(new Runnable() {
             @Override
-            public void failure(RetrofitError error) {
-
+            public void run() {
+                DataRes<CacheData> cacheDatas = findCacheDatas();
+                DataRes<Category> categorys = findCategorys();
+                //获取本地数据
+                CacheDataDB cacheDataDB = findFromLocal();
+                updateLocal(cacheDataDB,cacheDatas,categorys);
             }
         });
+    }
+
+    public static void updateLocal(CacheDataDB cacheDataDB,DataRes<CacheData> cacheDatas,DataRes<Category> categorys){
+
+        boolean isSaveOrUpdate = false;
+
+        if (cacheDataDB == null) {
+            cacheDataDB = new CacheDataDB();
+            isSaveOrUpdate = true;
+        } else {
+            //判断是否要更新
+            if (cacheDataDB.priceTime < categorys.data.price.time
+                    || cacheDataDB.objectTime < categorys.data.object.time
+                    || cacheDataDB.modifyTime < cacheDatas.data.modifyTime) {
+                isSaveOrUpdate = true;
+            }
+        }
+
+        cacheDataDB.object = new Gson().toJson(categorys.data.object.types);
+        cacheDataDB.price = new Gson().toJson(categorys.data.price.types);
+        cacheDataDB.objectTime = categorys.data.object.time;
+        cacheDataDB.priceTime = categorys.data.price.time;
+        cacheDataDB.modifyTime = cacheDatas.data.modifyTime;
+        cacheDataDB.helpDesc = cacheDatas.data.content;
+        cacheDataDB.shareUrl = cacheDatas.data.url;
+
+        if(isSaveOrUpdate){
+            cacheDataDB.save();
+        }
     }
 }

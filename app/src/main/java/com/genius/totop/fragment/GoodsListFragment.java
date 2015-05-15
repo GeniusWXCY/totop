@@ -21,17 +21,17 @@ import android.widget.RadioGroup;
 
 import com.easyandroidanimations.library.FlipVerticalAnimation;
 import com.genius.totop.App;
+import com.genius.totop.R;
 import com.genius.totop.activity.GoodsDetailActivity;
 import com.genius.totop.activity.HistoryActivity;
 import com.genius.totop.activity.SearchActivity;
 import com.genius.totop.manager.GoodsManager;
-import com.genius.totop.model.DataRes;
+import com.genius.totop.model.DatasRes;
 import com.genius.totop.model.Goods;
 import com.genius.totop.view.adapter.GoodsAdapter;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.melnykov.fab.FloatingActionButton;
-import com.totop.genius.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -214,15 +214,15 @@ public class GoodsListFragment extends Fragment {
         if(isRefresh){
             pageNo = 1;
         }
-        GoodsManager.findGoods(pageNo, currentSortType, currentModeType, currentModeValue, new Callback<DataRes<Goods>>() {
+        GoodsManager.findGoods(pageNo, currentSortType, currentModeType, currentModeValue, new Callback<DatasRes<Goods>>() {
             @Override
-            public void success(DataRes<Goods> goodsDataRes, Response response) {
+            public void success(DatasRes<Goods> goodsDatasRes, Response response) {
 
                 mPullRefreshListView.onRefreshComplete();
 
-                if(goodsDataRes != null) {
+                if(goodsDatasRes != null) {
 
-                    List<Goods> list = goodsDataRes.data;
+                    List<Goods> list = goodsDatasRes.data;
 
                     //以下逻辑缓存数据
                     List<Goods> cacheList = currentSparseArray.get(currentModeValue);
@@ -248,7 +248,7 @@ public class GoodsListFragment extends Fragment {
                     } else {
                         if (list != null) {
                             //去重复
-                            ListUtils.addDistinctList(cacheList, goodsDataRes.data);
+                            ListUtils.addDistinctList(cacheList, goodsDatasRes.data);
                             currentList.clear();
                             currentList.addAll(cacheList);
 
@@ -436,5 +436,4 @@ public class GoodsListFragment extends Fragment {
     public void moveToTop(ImageButton view){
         mPullRefreshListView.getRefreshableView().setSelection(0);
     }
-
 }

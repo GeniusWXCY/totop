@@ -26,7 +26,7 @@ public class Constants {
     public static final String UMENG_QQ_APP_KEY = "AuYQNWEXY02oUpi2";
 
     /**
-     * 默认分享地址和帮助说明
+     * 默认分享地址和帮助说明 TODO 值
      */
     public static final String helpDesc = "";
     public static final String shareUrl = "";

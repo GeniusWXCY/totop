@@ -2,7 +2,7 @@ package com.genius.totop.utils;
 
 import android.app.Activity;
 
-import com.totop.genius.R;
+import com.genius.totop.R;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;

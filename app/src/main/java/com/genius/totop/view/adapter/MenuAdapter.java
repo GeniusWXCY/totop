@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.totop.genius.R;
-import com.genius.totop.model.Category;
+import com.genius.totop.R;
 import com.genius.totop.model.Item;
 
 import java.util.List;
@@ -83,14 +82,14 @@ public class MenuAdapter extends BaseAdapter {
         View v = convertView;
         Object item = getItem(position);
 
-        if (item instanceof Category) {
-            if (v == null) {
-                v = LayoutInflater.from(mContext).inflate(R.layout.menu_row_category, parent, false);
-            }
-
-            ((TextView) v).setText(((Category) item).mTitle);
-
-        } else {
+//        if (item instanceof Category) {
+//            if (v == null) {
+//                v = LayoutInflater.from(mContext).inflate(R.layout.menu_row_category, parent, false);
+//            }
+//
+//            ((TextView) v).setText(((Category) item).mTitle);
+//
+//        } else {
             if (v == null) {
                 v = LayoutInflater.from(mContext).inflate(R.layout.menu_row_item, parent, false);
             }
@@ -102,7 +101,7 @@ public class MenuAdapter extends BaseAdapter {
             } else {
                 tv.setCompoundDrawablesWithIntrinsicBounds(((Item) item).mIconRes, 0, 0, 0);
             }
-        }
+//        }
 
         v.setTag(R.id.mdActiveViewPosition, position);
 

@@ -6,9 +6,9 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.genius.totop.R;
 import com.genius.totop.model.Item;
 import com.genius.totop.view.adapter.MenuAdapter;
-import com.totop.genius.R;
 
 import net.simonvt.menudrawer.MenuDrawer;
 import net.simonvt.menudrawer.Position;

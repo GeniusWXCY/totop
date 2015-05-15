@@ -1,7 +1,9 @@
 package com.genius.totop.network;
 
 import com.genius.totop.model.CacheData;
+import com.genius.totop.model.Category;
 import com.genius.totop.model.DataRes;
+import com.genius.totop.model.DatasRes;
 import com.genius.totop.model.Goods;
 import com.genius.totop.model.Version;
 
@@ -20,7 +22,7 @@ public interface NetApi {
      * @return
      */
     @GET("/interface/api.do?sk=1000")
-    void findGoodsByPrice(@Query("pi") int pageNo, @Query("ps") int pageCount, @Query("sort") int sortType,@Query("ptype") int priceType, Callback<DataRes<Goods>> response);
+    void findGoodsByPrice(@Query("pi") int pageNo, @Query("ps") int pageCount, @Query("sort") int sortType,@Query("ptype") int priceType, Callback<DatasRes<Goods>> response);
 
     /**
      * 根据对象类型获取商品信息
@@ -31,14 +33,7 @@ public interface NetApi {
      * @return
      */
     @GET("/interface/api.do?sk=1000")
-    void findGoodsByObject(@Query("pi") int pageNo, @Query("ps") int pageCount, @Query("sort") int sortType,@Query("otype") int objectType,Callback<DataRes<Goods>> response);
-
-    /**
-     * 获取需要更新的数据
-     * @param response
-     */
-    @GET("/interface/api.do?sk=1001")
-    void findCacheData(Callback<CacheData> response);
+    void findGoodsByObject(@Query("pi") int pageNo, @Query("ps") int pageCount, @Query("sort") int sortType,@Query("otype") int objectType,Callback<DatasRes<Goods>> response);
 
     /**
      * 搜索
@@ -48,12 +43,30 @@ public interface NetApi {
      * @param response
      */
     @GET("/interface/api.do?sk=1006")
-    void search(@Query("pi") int pageNo, @Query("ps") int pageCount,@Query("key") String key ,Callback<DataRes<Goods>> response);
+    void search(@Query("pi") int pageNo, @Query("ps") int pageCount,@Query("key") String key ,Callback<DatasRes<Goods>> response);
+
+    /**
+     * 获取帮助信息和分享地址
+     */
+    @GET("/interface/api.do?sk=1600")
+    DataRes<CacheData> findCacheDatas();
+
+    /**
+     * 获取帮助信息和分享地址
+     * @param time 获取大于传值时间的记录
+     */
+    @GET("/interface/api.do?sk=1600")
+    DataRes<CacheData> findCacheDatas(@Query("mt") long time);
+
+    /**
+     * 获取对象和价格等类别数据
+     */
+    @GET("/interface/api.do?sk=1510")
+    DataRes<Category> findCategorys();
 
     //按时间获取产品列表
 
     //系统更新
-    DataRes<Version> getVersion();
+    DatasRes<Version> getVersion();
 
-    //获取
 }

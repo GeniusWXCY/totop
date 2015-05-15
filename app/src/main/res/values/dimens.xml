@@ -51,4 +51,5 @@
     <dimen name="slidingmenu_shadow_width">15.0dip</dimen>
 
     <dimen name="tool_bar_height">56dp</dimen>
+    <dimen name="dimen_30">30dip</dimen>
 </resources>

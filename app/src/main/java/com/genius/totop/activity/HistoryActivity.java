@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.widget.TextView;
 
-import com.totop.genius.R;
+import com.genius.totop.R;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

@@ -13,12 +13,12 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.genius.totop.R;
 import com.genius.totop.activity.GoodsDetailActivity;
 import com.genius.totop.manager.GoodsManager;
 import com.genius.totop.model.Goods;
 import com.genius.totop.model.db.GoodsDB;
 import com.genius.totop.view.adapter.GoodsAdapter;
-import com.totop.genius.R;
 
 import java.util.ArrayList;
 import java.util.List;

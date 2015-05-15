@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.totop.genius.R;
+import com.genius.totop.R;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

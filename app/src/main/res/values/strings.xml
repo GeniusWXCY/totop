@@ -8,6 +8,8 @@
     <string name="pull_to_refresh_from_bottom_release_label">@string/lib_pull_to_refresh_release_label</string>
     <string name="pull_to_refresh_from_bottom_refreshing_label">@string/lib_pull_to_refresh_refreshing_label</string>
     <string name="app_name">9块9包邮</string>
+    <string name="app_logo">-红丫帽-</string>
+    <string name="app_name2">9.9包邮</string>
     <string name="net_error">网络异常,请检查您的网络</string>
     <string name="update_dialog_yes">立即更新</string>
     <string name="update_dialog_no">下次再说</string>

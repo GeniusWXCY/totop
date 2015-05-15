@@ -10,8 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.genius.totop.R;
 import com.genius.totop.fragment.SearchFragment;
-import com.totop.genius.R;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

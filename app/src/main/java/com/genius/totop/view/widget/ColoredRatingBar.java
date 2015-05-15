@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.totop.genius.R;
+import com.genius.totop.R;
 
 
 /**
