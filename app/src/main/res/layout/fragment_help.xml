@@ -18,4 +18,10 @@
             layout="@layout/title_normal_layout" />
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_head_title"
+        android:layout_margin="@dimen/dimen_30"
+        android:id="@+id/tv_help_text"/>
 </RelativeLayout>

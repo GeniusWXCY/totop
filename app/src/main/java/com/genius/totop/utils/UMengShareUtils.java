@@ -3,6 +3,7 @@ package com.genius.totop.utils;
 import android.app.Activity;
 
 import com.genius.totop.R;
+import com.genius.totop.manager.CacheDataManager;
 import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.umeng.socialize.controller.UMServiceFactory;
 import com.umeng.socialize.controller.UMSocialService;
@@ -24,7 +25,7 @@ public class UMengShareUtils {
         // 添加微信平台
         UMWXHandler wxHandler = new UMWXHandler(activity, appId, appSecret);
 
-        wxHandler.setTargetUrl(Constants.UMENG_TARGET_URL);
+        wxHandler.setTargetUrl(CacheDataManager.mCacheData.url);
         wxHandler.addToSocialSDK();
 
         // 支持微信朋友圈
@@ -46,7 +47,7 @@ public class UMengShareUtils {
         // 添加QQ支持, 并且设置QQ分享内容的target url
         UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(activity,
                 appId, appKey);
-        qqSsoHandler.setTargetUrl(Constants.UMENG_TARGET_URL);
+        qqSsoHandler.setTargetUrl(CacheDataManager.mCacheData.url);
         qqSsoHandler.addToSocialSDK();
 
         // 添加QZone平台
