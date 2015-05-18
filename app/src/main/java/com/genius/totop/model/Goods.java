@@ -44,10 +44,29 @@ public class Goods {
      * 商品地址
      */
     public String link;
-
+    /**
+     * 价格类型ID
+     */
     public String priceType;
+    /**
+     * 对象类型ID
+     */
     public String objectType;
+    /**
+     * 热度
+     */
     public String heat;
+    /**
+     * 新鲜度
+     */
+    public String freshness;
+    /**
+     *创建时间
+     */
+    public String create_time;
+    /**
+     * 来源名称
+     */
     public String sourceName;
 
     @Override

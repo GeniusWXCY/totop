@@ -26,6 +26,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import cn.trinea.android.common.util.ListUtils;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -124,13 +125,14 @@ public class SearchFragment extends Fragment {
         GoodsManager.search(currentPageNo, GoodsManager.PAGE_COUNT, serarchText, new Callback<DatasRes<Goods>>() {
             @Override
             public void success(DatasRes<Goods> goodsDatasRes, Response response) {
+                mPullRefreshListView.onRefreshComplete();
                 if (goodsDatasRes != null) {
                     List<Goods> list = goodsDatasRes.data;
                     if (list.isEmpty()) {
                         mEmptyView.setVisibility(View.VISIBLE);
                         mPullRefreshListView.setVisibility(View.GONE);
                     } else {
-                        currentList.addAll(list);
+                        ListUtils.addDistinctList(currentList, list);
                         mGoodsAdapter.notifyDataSetChanged();
                     }
 

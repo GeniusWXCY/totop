@@ -86,9 +86,9 @@ public class GoodsListFragment extends Fragment {
      */
     private String currentModeType = GoodsManager.MODE_PRICE;
     /**
-     * 当前模式的值
+     * 当前模式的值:初始值为第一价位
      */
-    private int currentModeValue = MODE_VALUE_PRICE_INIT;
+    private int currentModeValue = CacheDataManager.mCategory.price.types.get(0).id;
     /**
      * 当前产品集合
      */
@@ -112,7 +112,7 @@ public class GoodsListFragment extends Fragment {
 
         ButterKnife.inject(this,view);
         mContext = getActivity();
-        mGoodsAdapter = new GoodsAdapter(mContext, currentList);
+        mGoodsAdapter = new GoodsAdapter(mContext, currentList,currentSortType);
 
         mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
         mPullRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -154,10 +154,11 @@ public class GoodsListFragment extends Fragment {
                 Intent intent = new Intent(mContext, GoodsDetailActivity.class);
                 intent.putExtra(GoodsDetailActivity.EXTRA_IMAGE_URL, viewHolder.goods.link);
                 intent.putExtra(GoodsDetailActivity.EXTRA_GOODS_SOURCE,viewHolder.goods.sourceName);
-                intent.putExtra(GoodsDetailActivity.EXTRA_ICON_URL,viewHolder.goods.icon);
+                intent.putExtra(GoodsDetailActivity.EXTRA_ICON_URL, viewHolder.goods.icon);
                 startActivity(intent);
                 //TODO 后台线程跑
                 GoodsManager.saveHistory(viewHolder.goods);
+                //TODO 上传查看记录
             }
         });
 
@@ -216,6 +217,8 @@ public class GoodsListFragment extends Fragment {
         if(isRefresh){
             pageNo = 1;
         }
+        mGoodsAdapter.setCurrentSortType(currentSortType);
+
         GoodsManager.findGoods(pageNo, currentSortType, currentModeType, currentModeValue, new Callback<DatasRes<Goods>>() {
             @Override
             public void success(DatasRes<Goods> goodsDatasRes, Response response) {
@@ -337,10 +340,6 @@ public class GoodsListFragment extends Fragment {
         }
     }
 
-    //TODO
-    public static final int MODE_VALUE_PRICE_INIT = 1;
-    public static final int MODE_VALUE_OBJECT_INIT = 5;
-
     /**
      * 切换价格(对象)的事件
      */
@@ -418,7 +417,7 @@ public class GoodsListFragment extends Fragment {
         if(currentModeType == GoodsManager.MODE_OBJECT){
             //切换成价格模式
             currentModeType = GoodsManager.MODE_PRICE;
-            currentModeValue = MODE_VALUE_PRICE_INIT;//赋初始值
+            currentModeValue = CacheDataManager.mCategory.price.types.get(0).id;//赋初始值
             if(currentSortType == GoodsManager.SORT_BY_HOT){
                 currentSparseArray = priceHotSparseArray;
             }else{
@@ -427,7 +426,7 @@ public class GoodsListFragment extends Fragment {
             view.setImageResource(R.drawable.fab_money);
         }else {
             currentModeType = GoodsManager.MODE_OBJECT;
-            currentModeValue = MODE_VALUE_OBJECT_INIT;//赋初始值
+            currentModeValue = CacheDataManager.mCategory.object.types.get(0).id;//赋初始值
             if(currentSortType == GoodsManager.SORT_BY_HOT){
                 currentSparseArray = objectHotSparseArray;
             }else{

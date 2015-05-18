@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.genius.totop.R;
+import com.genius.totop.manager.GoodsManager;
 import com.genius.totop.model.Goods;
 import com.genius.totop.utils.UILHelper;
 import com.genius.totop.utils.UMengShareUtils;
@@ -26,12 +27,26 @@ public class GoodsAdapter extends BaseAdapter{
     private List<Goods> list;
     private LayoutInflater mInflater;
     private Context mContext;
+    /**
+     * 当前排序方式-默认按照人气值排序
+     */
+    private int currentSortType = GoodsManager.SORT_BY_HOT;
+
+    public GoodsAdapter(Context context,List<Goods> list,int currentSortType){
+        this(context,list);
+        this.currentSortType = currentSortType;
+    }
 
     public GoodsAdapter(Context context,List<Goods> list){
         this.list = list;
         this.mContext = context;
         mInflater = LayoutInflater.from(mContext);
     }
+
+    public void setCurrentSortType(int currentSortType){
+        this.currentSortType = currentSortType;
+    }
+
     @Override
     public int getCount() {
         return list.size();
@@ -64,7 +79,7 @@ public class GoodsAdapter extends BaseAdapter{
         UILHelper.displayImage(goods.icon, holder.goodsPicImage);
         holder.titleText.setText(goods.name);
 
-        if(Float.valueOf(goods.heat) - 0.5 < 0){//新鲜度
+        if(currentSortType == GoodsManager.SORT_BY_NEW){//新鲜度
             //TODO 没有新鲜度的字段
             holder.ratingBar.setRating(Float.valueOf(Math.random() * 5 + ""));
             holder.ratingBar.setVisibility(View.VISIBLE);
