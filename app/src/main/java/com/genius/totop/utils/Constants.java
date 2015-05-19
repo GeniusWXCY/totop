@@ -4,10 +4,10 @@ public class Constants {
     public static final String HOST = "http://www.ladgift.com/";
 
     /**
-     * 腾讯广点通APPID和广告位ID TODO
+     * 腾讯广点通APPID和广告位ID
      */
-    public static final String GDT_APP_ID = "1101152570";//1104595382
-    public static final String GDT_POST_ID = "9007479624379698465";//7010803355668242
+    public static final String GDT_APP_ID = "1104595382";
+    public static final String GDT_POST_ID = "7010803355668242";
 
     /**
      * 友盟相关
