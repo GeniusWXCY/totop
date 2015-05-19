@@ -59,7 +59,7 @@ public class Goods {
     /**
      * 新鲜度
      */
-    public String freshness;
+    public float freshness;
     /**
      *创建时间
      */

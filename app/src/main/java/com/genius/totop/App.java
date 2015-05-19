@@ -2,8 +2,10 @@ package com.genius.totop;
 
 import android.app.Application;
 import android.content.Context;
+import android.telephony.TelephonyManager;
 
 import com.activeandroid.ActiveAndroid;
+import com.genius.totop.utils.Constants;
 import com.genius.totop.utils.UILHelper;
 
 public class App extends Application {
@@ -16,6 +18,9 @@ public class App extends Application {
         sContext = getApplicationContext();
         UILHelper.initImageLoader(sContext);
         ActiveAndroid.initialize(this);
+
+        Constants.IMEI =  ((TelephonyManager) getSystemService(TELEPHONY_SERVICE))
+                .getDeviceId();
     }
 
     @Override

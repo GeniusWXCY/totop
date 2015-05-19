@@ -9,6 +9,7 @@ import com.genius.totop.model.Version;
 
 import retrofit.Callback;
 import retrofit.http.GET;
+import retrofit.http.POST;
 import retrofit.http.Query;
 
 public interface NetApi {
@@ -49,20 +50,22 @@ public interface NetApi {
      * 获取帮助信息和分享地址
      */
     @GET("/interface/api.do?sk=1600")
-    DataRes<CacheData> findCacheDatas();
-
-    /**
-     * 获取帮助信息和分享地址
-     * @param time 获取大于传值时间的记录
-     */
-    @GET("/interface/api.do?sk=1600")
-    DataRes<CacheData> findCacheDatas(@Query("mt") long time);
+    DataRes<CacheData> findCacheDatas() throws Exception;
 
     /**
      * 获取对象和价格等类别数据
      */
     @GET("/interface/api.do?sk=1510")
-    DataRes<Category> findCategorys();
+    DataRes<Category> findCategorys() throws Exception;
+
+    /**
+     * 提交用户访问商品信息
+     * @param imei
+     * @param area
+     * @param id
+     */
+    @POST("/interface/api.do?sk=1300")
+    DatasRes<Void> postVisit(@Query("imei")String imei,@Query("area")String area,@Query("id")String id) throws Exception;
 
     //按时间获取产品列表
 

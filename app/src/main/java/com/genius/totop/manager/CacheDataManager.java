@@ -57,11 +57,11 @@ public class CacheDataManager {
         }
     }
 
-    public static DataRes<CacheData> findCacheDatas() {
+    public static DataRes<CacheData> findCacheDatas() throws Exception {
         return NetApiUtils.service.findCacheDatas();
     }
 
-    public static DataRes<Category> findCategorys(){
+    public static DataRes<Category> findCategorys() throws Exception {
         return NetApiUtils.service.findCategorys();
     }
 
@@ -115,9 +115,14 @@ public class CacheDataManager {
         ThreadPoolUtils.getInstance().execute(new Runnable() {
             @Override
             public void run() {
-                DataRes<CacheData> cacheDatas = findCacheDatas();
-                DataRes<Category> categorys = findCategorys();
-                updateLocal(cacheDataDB,cacheDatas,categorys);
+                DataRes<CacheData> cacheDatas = null;
+                try {
+                    cacheDatas = findCacheDatas();
+                    DataRes<Category> categorys = findCategorys();
+                    updateLocal(cacheDataDB,cacheDatas,categorys);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

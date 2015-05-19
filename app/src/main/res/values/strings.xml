@@ -56,7 +56,7 @@
     <string name="str_net_error">网络请求失败</string>
     <string name="str_retry">重试</string>
     <string name="str_new_text">新鲜指数:</string>
-    <string name="str_heat_text">人气值:</string>
+    <string name="str_heat_text">人气</string>
     <string name="str_from">来自</string>
 
     <string name="menu_home">首页</string>

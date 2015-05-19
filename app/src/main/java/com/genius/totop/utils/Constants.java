@@ -35,6 +35,8 @@ public class Constants {
      * 下载相关
      */
     public static long DOWNLOAD_ID;
-    public static String DOWNLOAD_FILE_NAME = "nineisall.apk";
-    public static String DOWNLOAD_PATH = "nineisall";
+    public static final String DOWNLOAD_FILE_NAME = "nineisall.apk";
+    public static final String DOWNLOAD_PATH = "nineisall";
+
+    public static String IMEI = "";
 }

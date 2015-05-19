@@ -156,9 +156,8 @@ public class GoodsListFragment extends Fragment {
                 intent.putExtra(GoodsDetailActivity.EXTRA_GOODS_SOURCE,viewHolder.goods.sourceName);
                 intent.putExtra(GoodsDetailActivity.EXTRA_ICON_URL, viewHolder.goods.icon);
                 startActivity(intent);
-                //TODO 后台线程跑
-                GoodsManager.saveHistory(viewHolder.goods);
-                //TODO 上传查看记录
+                //TODO 未测试
+                GoodsManager.executeAfterView(viewHolder.goods,mContext);
             }
         });
 
@@ -217,7 +216,6 @@ public class GoodsListFragment extends Fragment {
         if(isRefresh){
             pageNo = 1;
         }
-        mGoodsAdapter.setCurrentSortType(currentSortType);
 
         GoodsManager.findGoods(pageNo, currentSortType, currentModeType, currentModeValue, new Callback<DatasRes<Goods>>() {
             @Override
@@ -318,6 +316,7 @@ public class GoodsListFragment extends Fragment {
     void changeNewGoods(RadioButton rb , boolean isCheck){
         if(isCheck){
             currentSortType = GoodsManager.SORT_BY_NEW;
+            mGoodsAdapter.setCurrentSortType(currentSortType);
             if (currentModeType == GoodsManager.MODE_PRICE){
                 currentSparseArray = priceNewSparseArray;
             }else{
@@ -331,6 +330,7 @@ public class GoodsListFragment extends Fragment {
     void changeHotGoods(RadioButton rb , boolean isCheck){
         if(isCheck){
             currentSortType = GoodsManager.SORT_BY_HOT;
+            mGoodsAdapter.setCurrentSortType(currentSortType);
             if (currentModeType == GoodsManager.MODE_PRICE){
                 currentSparseArray = priceHotSparseArray;
             }else{
