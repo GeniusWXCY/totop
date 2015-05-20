@@ -3,6 +3,7 @@ package com.genius.totop.manager;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
+import android.util.Log;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.Model;
@@ -10,14 +11,20 @@ import com.activeandroid.query.Select;
 import com.activeandroid.query.Update;
 import com.genius.totop.model.DatasRes;
 import com.genius.totop.model.Goods;
-import com.genius.totop.model.SimpleLocation;
+import com.genius.totop.model.VisitInfo;
 import com.genius.totop.model.db.GoodsDB;
 import com.genius.totop.utils.Constants;
 import com.genius.totop.utils.NetApiUtils;
 import com.genius.totop.utils.ThreadPoolUtils;
 import com.google.gson.Gson;
 
+import java.security.SecureRandom;
 import java.util.List;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESKeySpec;
 
 import retrofit.Callback;
 
@@ -42,6 +49,8 @@ public class GoodsManager {
      */
     public static final int MAX_HISTORY_COUNT = 20;
 
+    public static final String TAG = "GoodsManager";
+
     public static void findGoods(int pageNo,int pageCount,int sortType,String typeKey,int typeValue, Callback<DatasRes<Goods>> response){
 
         if(MODE_PRICE.equals(typeKey)){
@@ -52,7 +61,7 @@ public class GoodsManager {
     }
 
     public static void findGoods(int pageNo,int sortType,String typeKey,int typeValue,Callback<DatasRes<Goods>> response){
-        findGoods(pageNo,PAGE_COUNT,sortType,typeKey,typeValue,response);
+        findGoods(pageNo, PAGE_COUNT, sortType, typeKey, typeValue, response);
     }
 
     /**
@@ -122,12 +131,22 @@ public class GoodsManager {
 
     /**
      * 提交浏览记录到服务端
-     * @param imei
-     * @param area
-     * @param id
      */
-    public static void postVisit(String imei, String area, String id) throws Exception {
-        NetApiUtils.service.postVisit(imei,area,id);
+    public static void postVisit(VisitInfo visitInfo) throws Exception {
+        String data = new Gson().toJson(visitInfo).toString();
+
+        //加密
+        String password = "qazsedcf";
+        SecureRandom random = new SecureRandom();
+        DESKeySpec desKey = new DESKeySpec(password.getBytes());
+        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
+        SecretKey securekey = keyFactory.generateSecret(desKey);
+        Cipher cipher = Cipher.getInstance("DES");
+        //用密匙初始化Cipher对象
+        cipher.init(Cipher.ENCRYPT_MODE, securekey, random);
+        String encodeData = String.valueOf(cipher.doFinal(data.getBytes()));
+        Log.e("Genius",encodeData);
+        NetApiUtils.service.postVisit(encodeData);
     }
 
     /**
@@ -142,11 +161,18 @@ public class GoodsManager {
                 try {
                     //TODO 测试
                     Location location = getLocation(context);
-                    SimpleLocation simpleLocation = new SimpleLocation(location.getLatitude(),location.getLongitude());
-                    String json = new Gson().toJson(simpleLocation).toString();
-                    postVisit(Constants.IMEI, json, goods.id);
+                    String area = "test";
+                    double latitude = 0;
+                    double longitude = 0;
+                    if(location != null){
+                        latitude = location.getLatitude();
+                        longitude = location.getLongitude();
+                    }
+                    VisitInfo visitInfo = new VisitInfo(Constants.IMEI,goods.id,area,latitude,longitude);
+                    postVisit(visitInfo);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    Log.e(TAG,e.toString());
                 }
             }
         });

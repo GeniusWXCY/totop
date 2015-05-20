@@ -60,12 +60,9 @@ public interface NetApi {
 
     /**
      * 提交用户访问商品信息
-     * @param imei
-     * @param area
-     * @param id
      */
     @POST("/interface/api.do?sk=1300")
-    DatasRes<Void> postVisit(@Query("imei")String imei,@Query("area")String area,@Query("id")String id) throws Exception;
+    DatasRes<Void> postVisit(@Query("data")String data) throws Exception;
 
     //按时间获取产品列表
 
