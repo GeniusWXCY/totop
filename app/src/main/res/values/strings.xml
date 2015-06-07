@@ -88,4 +88,5 @@
     <string name="str_about_all_right">All Rights Reserved</string>
     <string name="str_search_empty">找不到对应的商品，请尝试搜索其他关键字</string>
     <string name="str_history_empty">您还未浏览过商品哦</string>
+    <string name="star_load">初始化数据中...</string>
 </resources>
