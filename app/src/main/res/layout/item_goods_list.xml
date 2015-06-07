@@ -169,6 +169,7 @@
                                 android:id="@+id/text_price_char"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/dimen_5"
                                 android:text="￥" />
 
                             <TextView
