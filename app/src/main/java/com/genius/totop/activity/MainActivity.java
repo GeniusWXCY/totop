@@ -105,7 +105,6 @@ public class MainActivity extends BaseMenuActivity implements OnHomeFragmentList
                 VersionManager.getInstance(this).checkVersion(true);
             }else if(title.equals(getString(R.string.menu_hot))){
                 appwall.doShowAppWall();
-                Toast.makeText(this,"热门",Toast.LENGTH_SHORT).show();
             }else {
                 if (mCurrentFragmentTag != null){
                     detachFragment(getFragment(mCurrentFragmentTag));

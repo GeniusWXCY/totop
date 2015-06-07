@@ -42,4 +42,6 @@ public class Constants {
     public static final String DOWNLOAD_PATH = "nineisall";
 
     public static String IMEI = "";
+
+    public static String SHARE_CONTENT = "萌萌礼物吧,九块九还包邮，便宜又实用，我正在购买礼物，你也来吧！";
 }

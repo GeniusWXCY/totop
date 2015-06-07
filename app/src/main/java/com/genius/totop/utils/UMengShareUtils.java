@@ -30,6 +30,7 @@ public class UMengShareUtils {
 
         // 支持微信朋友圈
         UMWXHandler wxCircleHandler = new UMWXHandler(activity, appId, appSecret);
+        wxCircleHandler.setTitle(activity.getString(R.string.app_name));
         wxCircleHandler.setToCircle(true);
         wxCircleHandler.addToSocialSDK();
     }
@@ -69,10 +70,10 @@ public class UMengShareUtils {
 
     public static void share(Activity activity,String iconUrl){
         UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
-        mController.setShareContent("红丫帽九块九包邮，便宜又实用，我正在购买产品，你也来吧！");
+        mController.setShareContent(Constants.SHARE_CONTENT);
         // 设置分享图片, 参数2为图片的url地址
         if(null == iconUrl){
-            mController.setShareImage(new UMImage(activity, R.drawable.ic_launcher_share));
+            mController.setShareImage(new UMImage(activity, R.drawable.ic_launcher));
         }else{
             mController.setShareImage(new UMImage(activity, iconUrl));
         }
