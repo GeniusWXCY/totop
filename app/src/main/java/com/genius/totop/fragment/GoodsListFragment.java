@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,7 +36,13 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.melnykov.fab.FloatingActionButton;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -57,46 +64,58 @@ public class GoodsListFragment extends Fragment {
     @InjectView(R.id.empty_view)View mEmptyView;
     @InjectView(R.id.fab_top) FloatingActionButton mFabTop;
     @InjectView(R.id.fab_type) FloatingActionButton mFabType;
-    @InjectView(R.id.layout_bottom_bar) View bottomBar;
+    @InjectView(R.id.layout_bottom_bar) View mBottomBar;
 
+    public static final String TAG = "GoodsListFragment";
 
     private Context mContext;
     private GoodsAdapter mGoodsAdapter;
     private OnHomeFragmentListener mListener;
-    /**
-     * 当前页数
-     */
-    private int currentPageNo = 1;
 
     /** 上新-价格 */
-    SparseArray<List<Goods>> priceNewSparseArray = new SparseArray<List<Goods>>();
+    SparseArray<List<Goods>> mPriceNewSparseArray = new SparseArray<List<Goods>>();
     /** 上新-对象 */
-    SparseArray<List<Goods>> objectNewSparseArray = new SparseArray<List<Goods>>();
+    SparseArray<List<Goods>> mObjectNewSparseArray = new SparseArray<List<Goods>>();
     /** 人气-价格 */
-    SparseArray<List<Goods>> priceHotSparseArray = new SparseArray<List<Goods>>();
+    SparseArray<List<Goods>> mPriceHotSparseArray = new SparseArray<List<Goods>>();
     /** 人气-对象 */
-    SparseArray<List<Goods>> objectHotSparseArray = new SparseArray<List<Goods>>();
+    SparseArray<List<Goods>> mObjectHotSparseArray = new SparseArray<List<Goods>>();
 
     /**
      * 当前排序方式 0 按时间排序 1 按照热度排序
      */
-    private int currentSortType = GoodsManager.SORT_BY_NEW;
+    private int mCurrentSortType = GoodsManager.SORT_BY_NEW;
     /**
      * 当前模式：价格模式或对象模式
      */
-    private String currentModeType = GoodsManager.MODE_PRICE;
+    private String mCurrentModeType = GoodsManager.MODE_PRICE;
     /**
      * 当前模式的值:初始值为第一价位
      */
-    private int currentModeValue = CacheDataManager.mCategory.price.types.get(0).id;
+    private int mCurrentModeValue = CacheDataManager.mCategory.price.types.get(0).id;
     /**
      * 当前产品集合
      */
-    private List<Goods> currentList = new ArrayList<Goods>();
+    private List<Goods> mCurrentList = new ArrayList<Goods>();
+    /**
+     * 当前产品列表
+     */
+    private SparseArray<List<Goods>> mCurrentSparseArray = mPriceNewSparseArray;
 
-    private SparseArray<List<Goods>> currentSparseArray = priceNewSparseArray;
+    /**
+     * 以下两个对象为当前产品的更新时间--用于刷新数据，刷新接口传递该数据，服务端返回时间大于该值的数据。每次刷新操作后，更新改值
+     */
+    private SparseArray<Long> mNewUpdateTimeSparssArray = new SparseArray<>();
+    private SparseArray<Long> mHotUpdateTimeSparssArray = new SparseArray<>();
 
-    private boolean isRefresh = false;
+    /**
+     * 以下两个对象为当前产品的加载时间--用于获取第N页时候，传递该数据，服务端返回时间小于该值的数据
+     */
+    private SparseArray<Long> mNewLoadTimeSparssArray = new SparseArray<>();
+    private SparseArray<Long> mHotLoadTimeSparssArray = new SparseArray<>();
+
+    private SparseArray<Integer> mNewPageNoSparseArray = new SparseArray<>();
+    private SparseArray<Integer> mHotPageNoSparseArray = new SparseArray<>();
 
     public static GoodsListFragment newInstance() {
         return new GoodsListFragment();
@@ -112,7 +131,8 @@ public class GoodsListFragment extends Fragment {
 
         ButterKnife.inject(this,view);
         mContext = getActivity();
-        mGoodsAdapter = new GoodsAdapter(mContext, currentList,currentSortType);
+        initCurrentData();
+        mGoodsAdapter = new GoodsAdapter(mContext, mCurrentList, mCurrentSortType);
 
         mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
         mPullRefreshListView.setOnRefreshListener(new PullToRefreshBase.OnRefreshListener2<ListView>() {
@@ -124,16 +144,13 @@ public class GoodsListFragment extends Fragment {
                         DateUtils.FORMAT_SHOW_TIME | DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_ABBREV_ALL);
 
                 refreshView.getLoadingLayoutProxy().setLastUpdatedLabel("最后加载时间:" + label);
-
-                //TODO 如何处理刷新的时机--刷新数据用另外的接口
-                isRefresh = true;
-                executeData();
+                executeRefreshData();
             }
 
             @Override
             public void onPullUpToRefresh(PullToRefreshBase<ListView> refreshView) {
-                currentPageNo++;
-                executeData();
+                //获取当前页
+                executeLoadData();
             }
         });
 
@@ -183,7 +200,7 @@ public class GoodsListFragment extends Fragment {
             @Override
             public void onRetry() {
                 toggleErrorView(false);
-                executeData();
+                executeLoadData();
             }
         });
 
@@ -196,6 +213,49 @@ public class GoodsListFragment extends Fragment {
         return view;
     }
 
+    /**
+     * 将上新/人气的每个type对应的页码和加载时间，更新时间初始化
+     */
+    private void initCurrentData() {
+
+        try {
+            List<Type> priceTypes = CacheDataManager.mCategory.price.types;
+            List<Type> objectTypes = CacheDataManager.mCategory.object.types;
+
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+            //初始时间设置为100年以后
+            Date date  = df.parse("2115-01-01");
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(date);
+            long timestamp = cal.getTimeInMillis();
+
+
+            for(Type type : priceTypes){
+                mNewPageNoSparseArray.put(type.id, 1);
+                mHotPageNoSparseArray.put(type.id, 1);
+
+                mHotLoadTimeSparssArray.put(type.id,timestamp);
+                mHotUpdateTimeSparssArray.put(type.id,timestamp);
+
+                mNewLoadTimeSparssArray.put(type.id,timestamp);
+                mNewUpdateTimeSparssArray.put(type.id,timestamp);
+            }
+
+            for (Type type : objectTypes){
+                mNewPageNoSparseArray.put(type.id, 1);
+                mHotPageNoSparseArray.put(type.id, 1);
+
+                mHotLoadTimeSparssArray.put(type.id,timestamp);
+                mHotUpdateTimeSparssArray.put(type.id,timestamp);
+
+                mNewLoadTimeSparssArray.put(type.id,timestamp);
+                mNewUpdateTimeSparssArray.put(type.id,timestamp);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void toggleErrorView(boolean isShow){
         if(isShow){
             mErrorView.setVisibility(View.VISIBLE);
@@ -206,18 +266,20 @@ public class GoodsListFragment extends Fragment {
         }
     }
 
-    public void executeData(){
+    public void executeLoadData(){
 
         //判断是否有网络连接
         mProgressBar.setVisibility(View.VISIBLE);
 
-        int pageNo = currentPageNo;
-        //TODO 刷新
-        if(isRefresh){
-            pageNo = 1;
-        }
+        final int pageNo = getCurrentPageNoSparseArray().get(mCurrentModeValue);
 
-        GoodsManager.findGoods(pageNo, currentSortType, currentModeType, currentModeValue, new Callback<DatasRes<Goods>>() {
+        long loadTime = getCurrentLoadTimeSparseArray().get(mCurrentModeValue);
+
+        Log.i(TAG,"当前页码：" + pageNo);
+        Log.i(TAG,"当前模式：" + mCurrentModeValue);
+        Log.i(TAG, "当前loadTime：" + loadTime);
+
+        GoodsManager.findGoods(pageNo, mCurrentSortType, mCurrentModeType, mCurrentModeValue, loadTime,new Callback<DatasRes<Goods>>() {
             @Override
             public void success(DatasRes<Goods> goodsDatasRes, Response response) {
 
@@ -227,46 +289,100 @@ public class GoodsListFragment extends Fragment {
 
                     List<Goods> list = goodsDatasRes.data;
 
-                    //以下逻辑缓存数据
-                    List<Goods> cacheList = currentSparseArray.get(currentModeValue);
-                    if (cacheList == null) {
-                        cacheList = new ArrayList<Goods>();
-                        currentSparseArray.put(currentModeValue, cacheList);
+                    //如果为第一页，赋值updateTime和loadTime
+                    if(pageNo == 1){
+                        getCurrentUpdateTimeSparseArray().put(mCurrentModeValue,goodsDatasRes.serverTime);
+                        getCurrentLoadTimeSparseArray().put(mCurrentModeValue,goodsDatasRes.serverTime);
                     }
 
-                    if (isRefresh) { //刷新数据
-                        isRefresh = false;
-                        List<Goods> tempList = new ArrayList<Goods>();
-                        for (Goods goods : list) {
-                            if (!cacheList.contains(goods)) {
-                                tempList.add(goods);
-                            }
-                        }
-                        if (tempList.size() > 0) {
-                            cacheList.addAll(0, tempList);
-                            currentList.clear();
-                            currentList.addAll(cacheList);
-                            mGoodsAdapter.notifyDataSetChanged();
-                        }
-                    } else {
-                        if (list != null) {
-                            //去重复
-                            ListUtils.addDistinctList(cacheList, goodsDatasRes.data);
-                            currentList.clear();
-                            currentList.addAll(cacheList);
+                    //以下逻辑缓存数据
+                    List<Goods> cacheList = mCurrentSparseArray.get(mCurrentModeValue);
+                    if (cacheList == null) {
+                        cacheList = new ArrayList<Goods>();
+                        mCurrentSparseArray.put(mCurrentModeValue, cacheList);
+                    }
 
-                            if (currentList.isEmpty()) {
-                                mEmptyView.setVisibility(View.VISIBLE);
-                                mPullRefreshListView.setVisibility(View.GONE);
-                            }
+                    if (list != null) {
+                        //去重复
+                        ListUtils.addDistinctList(cacheList, goodsDatasRes.data);
+                        mCurrentList.clear();
+                        mCurrentList.addAll(cacheList);
 
-                            mGoodsAdapter.notifyDataSetChanged();
+                        if (mCurrentList.isEmpty()) {
+                            mEmptyView.setVisibility(View.VISIBLE);
+                            mPullRefreshListView.setVisibility(View.GONE);
                         }
 
-                        //是否有下一页
-                        if (list == null || list.size() < GoodsManager.PAGE_COUNT) {
-                            mPullRefreshListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                        mGoodsAdapter.notifyDataSetChanged();
+                    }
+
+                    //是否有下一页
+                    if (list == null || list.size() < GoodsManager.PAGE_COUNT) {
+                        mPullRefreshListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
+                    }else{
+                        getCurrentPageNoSparseArray().put(mCurrentModeValue, pageNo + 1);
+                    }
+                }
+                mProgressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                toggleErrorView(true);
+                mProgressBar.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void executeRefreshData(){
+
+        mProgressBar.setVisibility(View.VISIBLE);
+
+        final int pageNo = getCurrentPageNoSparseArray().get(mCurrentModeValue);
+
+        long updateTime = getCurrentUpdateTimeSparseArray().get(mCurrentModeValue);
+
+        GoodsManager.refreshGoods(pageNo, mCurrentSortType, mCurrentModeType, mCurrentModeValue, updateTime,new Callback<DatasRes<Goods>>() {
+
+            @Override
+            public void success(DatasRes<Goods> goodsDatasRes, Response response) {
+
+                mPullRefreshListView.onRefreshComplete();
+
+                if(goodsDatasRes != null) {
+
+                    List<Goods> list = goodsDatasRes.data;
+
+                    //更新updateTime
+                    getCurrentUpdateTimeSparseArray().put(mCurrentModeValue,goodsDatasRes.serverTime);
+
+                    //以下逻辑缓存数据
+                    List<Goods> cacheList = mCurrentSparseArray.get(mCurrentModeValue);
+
+                    List<Goods> tempList = new ArrayList<Goods>();
+                    for (Goods goods : list) {
+                        if (!cacheList.contains(goods)) {
+                            tempList.add(goods);
                         }
+                    }
+                    if (tempList.size() > 0) {
+                        cacheList.addAll(0, tempList);
+                        //如果是人气，要根据人气值进行降序 --TODO 未测试
+                        if(mCurrentSortType == GoodsManager.SORT_BY_HOT){
+                            Collections.sort(cacheList, new Comparator<Goods>() {
+                                @Override
+                                public int compare(Goods lhs, Goods rhs) {
+                                    if(Float.valueOf(lhs.heat) - Float.valueOf(rhs.heat) > 0 ){
+                                        return 1;
+                                    }else {
+                                        return -1;
+                                    }
+                                }
+                            });
+                        }
+                        mCurrentList.clear();
+                        mCurrentList.addAll(cacheList);
+                        mGoodsAdapter.notifyDataSetChanged();
                     }
                 }
                 mProgressBar.setVisibility(View.GONE);
@@ -315,12 +431,16 @@ public class GoodsListFragment extends Fragment {
     @OnCheckedChanged(R.id.radiobutton_new_goods)
     void changeNewGoods(RadioButton rb , boolean isCheck){
         if(isCheck){
-            currentSortType = GoodsManager.SORT_BY_NEW;
-            mGoodsAdapter.setCurrentSortType(currentSortType);
-            if (currentModeType == GoodsManager.MODE_PRICE){
-                currentSparseArray = priceNewSparseArray;
+
+            //每次切换后将列表设置为可加载更多
+            mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+
+            mCurrentSortType = GoodsManager.SORT_BY_NEW;
+            mGoodsAdapter.setCurrentSortType(mCurrentSortType);
+            if (mCurrentModeType == GoodsManager.MODE_PRICE){
+                mCurrentSparseArray = mPriceNewSparseArray;
             }else{
-                currentSparseArray = objectNewSparseArray;
+                mCurrentSparseArray = mObjectNewSparseArray;
             }
 
             loadView();
@@ -329,12 +449,16 @@ public class GoodsListFragment extends Fragment {
     @OnCheckedChanged(R.id.radiobutton_hot_goods)
     void changeHotGoods(RadioButton rb , boolean isCheck){
         if(isCheck){
-            currentSortType = GoodsManager.SORT_BY_HOT;
-            mGoodsAdapter.setCurrentSortType(currentSortType);
-            if (currentModeType == GoodsManager.MODE_PRICE){
-                currentSparseArray = priceHotSparseArray;
+
+            //每次切换后将列表设置为可加载更多
+            mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+
+            mCurrentSortType = GoodsManager.SORT_BY_HOT;
+            mGoodsAdapter.setCurrentSortType(mCurrentSortType);
+            if (mCurrentModeType == GoodsManager.MODE_PRICE){
+                mCurrentSparseArray = mPriceHotSparseArray;
             }else{
-                currentSparseArray = objectHotSparseArray;
+                mCurrentSparseArray = mObjectHotSparseArray;
             }
             loadView();
         }
@@ -347,21 +471,25 @@ public class GoodsListFragment extends Fragment {
     void changePriceOrObjectd(RadioButton rb,boolean isCheck){
 
         if(isCheck){
+
+            //每次切换后将列表设置为可加载更多
+            mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
+
             List<Type> priceTypes = CacheDataManager.mCategory.price.types;
             List<Type> objectTypes = CacheDataManager.mCategory.object.types;
 
             switch (rb.getId()){
                 case R.id.radio_level_one:
-                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?priceTypes.get(0).id:objectTypes.get(0).id;
+                    mCurrentModeValue = mCurrentModeType == GoodsManager.MODE_PRICE?priceTypes.get(0).id:objectTypes.get(0).id;
                     break;
                 case R.id.radio_level_two:
-                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?priceTypes.get(1).id:objectTypes.get(1).id;
+                    mCurrentModeValue = mCurrentModeType == GoodsManager.MODE_PRICE?priceTypes.get(1).id:objectTypes.get(1).id;
                     break;
                 case R.id.radio_level_three:
-                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?priceTypes.get(2).id:objectTypes.get(2).id;
+                    mCurrentModeValue = mCurrentModeType == GoodsManager.MODE_PRICE?priceTypes.get(2).id:objectTypes.get(2).id;
                     break;
                 case R.id.radio_level_four:
-                    currentModeValue = currentModeType == GoodsManager.MODE_PRICE?priceTypes.get(3).id:objectTypes.get(3).id;
+                    mCurrentModeValue = mCurrentModeType == GoodsManager.MODE_PRICE?priceTypes.get(3).id:objectTypes.get(3).id;
                     break;
             }
             loadView();
@@ -372,12 +500,12 @@ public class GoodsListFragment extends Fragment {
         toggleErrorView(false);
         mEmptyView.setVisibility(View.GONE);
         mPullRefreshListView.setVisibility(View.VISIBLE);
-        List<Goods> cacheList = currentSparseArray.get(currentModeValue);
+        List<Goods> cacheList = mCurrentSparseArray.get(mCurrentModeValue);
         if (cacheList == null || cacheList.isEmpty()){
-            executeData();
+            executeLoadData();
         }else{
-            currentList.clear();
-            currentList.addAll(cacheList);
+            mCurrentList.clear();
+            mCurrentList.addAll(cacheList);
             mGoodsAdapter.notifyDataSetChanged();
         }
     }
@@ -391,10 +519,10 @@ public class GoodsListFragment extends Fragment {
 
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
             //动画效果
-            new FlipVerticalAnimation(bottomBar).animate();
+            new FlipVerticalAnimation(mBottomBar).animate();
         }
 
-        if(currentModeType == GoodsManager.MODE_OBJECT){
+        if(mCurrentModeType == GoodsManager.MODE_OBJECT){
             List<Type> types = CacheDataManager.mCategory.object.types;
             radioButton1.setText(types.get(0).name);
             radioButton2.setText(types.get(1).name);
@@ -414,23 +542,23 @@ public class GoodsListFragment extends Fragment {
     @OnClick(R.id.fab_type)
     public void changeType(ImageButton view){
 
-        if(currentModeType == GoodsManager.MODE_OBJECT){
+        if(mCurrentModeType == GoodsManager.MODE_OBJECT){
             //切换成价格模式
-            currentModeType = GoodsManager.MODE_PRICE;
-            currentModeValue = CacheDataManager.mCategory.price.types.get(0).id;//赋初始值
-            if(currentSortType == GoodsManager.SORT_BY_HOT){
-                currentSparseArray = priceHotSparseArray;
+            mCurrentModeType = GoodsManager.MODE_PRICE;
+            mCurrentModeValue = CacheDataManager.mCategory.price.types.get(0).id;//赋初始值
+            if(mCurrentSortType == GoodsManager.SORT_BY_HOT){
+                mCurrentSparseArray = mPriceHotSparseArray;
             }else{
-                currentSparseArray = priceNewSparseArray;
+                mCurrentSparseArray = mPriceNewSparseArray;
             }
             view.setImageResource(R.drawable.fab_money);
         }else {
-            currentModeType = GoodsManager.MODE_OBJECT;
-            currentModeValue = CacheDataManager.mCategory.object.types.get(0).id;//赋初始值
-            if(currentSortType == GoodsManager.SORT_BY_HOT){
-                currentSparseArray = objectHotSparseArray;
+            mCurrentModeType = GoodsManager.MODE_OBJECT;
+            mCurrentModeValue = CacheDataManager.mCategory.object.types.get(0).id;//赋初始值
+            if(mCurrentSortType == GoodsManager.SORT_BY_HOT){
+                mCurrentSparseArray = mObjectHotSparseArray;
             }else{
-                currentSparseArray = objectNewSparseArray;
+                mCurrentSparseArray = mObjectNewSparseArray;
             }
             view.setImageResource(R.drawable.fab_group);
         }
@@ -442,5 +570,34 @@ public class GoodsListFragment extends Fragment {
     @OnClick(R.id.fab_top)
     public void moveToTop(ImageButton view){
         mPullRefreshListView.getRefreshableView().setSelection(0);
+    }
+
+
+    /**
+     * 获取当前页码集合
+     * @return
+     */
+    private SparseArray<Integer> getCurrentPageNoSparseArray(){
+        if(mCurrentSortType == GoodsManager.SORT_BY_HOT){
+            return mHotPageNoSparseArray;
+        }else{
+            return mNewPageNoSparseArray;
+        }
+    }
+
+    private SparseArray<Long> getCurrentUpdateTimeSparseArray(){
+        if(mCurrentSortType == GoodsManager.SORT_BY_HOT){
+            return mHotUpdateTimeSparssArray;
+        }else{
+            return mNewUpdateTimeSparssArray;
+        }
+    }
+
+    private SparseArray<Long> getCurrentLoadTimeSparseArray(){
+        if(mCurrentSortType == GoodsManager.SORT_BY_HOT){
+            return mHotLoadTimeSparssArray;
+        }else{
+            return mNewLoadTimeSparssArray;
+        }
     }
 }

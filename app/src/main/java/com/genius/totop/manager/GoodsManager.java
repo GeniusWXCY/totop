@@ -51,17 +51,31 @@ public class GoodsManager {
 
     public static final String TAG = "GoodsManager";
 
-    public static void findGoods(int pageNo,int pageCount,int sortType,String typeKey,int typeValue, Callback<DatasRes<Goods>> response){
+    public static void findGoods(int pageNo, int pageCount, int sortType, String typeKey, int typeValue, long loadtime,Callback<DatasRes<Goods>> response){
 
         if(MODE_PRICE.equals(typeKey)){
-            NetApiUtils.service.findGoodsByPrice(pageNo, pageCount, sortType, typeValue,response);
+            NetApiUtils.service.findGoodsByPrice(pageNo, pageCount, sortType, typeValue,loadtime,null,response);
         }else if(MODE_OBJECT.equals(typeKey)){
-            NetApiUtils.service.findGoodsByObject(pageNo,pageCount,sortType,typeValue,response);
+            NetApiUtils.service.findGoodsByObject(pageNo,pageCount,sortType,typeValue,loadtime,null,response);
         }
     }
 
-    public static void findGoods(int pageNo,int sortType,String typeKey,int typeValue,Callback<DatasRes<Goods>> response){
-        findGoods(pageNo, PAGE_COUNT, sortType, typeKey, typeValue, response);
+    public static void findGoods(int pageNo,int sortType,String typeKey,int typeValue,long loadtime,Callback<DatasRes<Goods>> response){
+        findGoods(pageNo, PAGE_COUNT, sortType, typeKey, typeValue,loadtime,response);
+    }
+
+
+    public static void refreshGoods(int pageNo, int pageCount, int sortType, String typeKey, int typeValue, long updateTime,Callback<DatasRes<Goods>> response){
+
+        if(MODE_PRICE.equals(typeKey)){
+            NetApiUtils.service.findGoodsByPrice(pageNo, pageCount, sortType, typeValue,null,updateTime,response);
+        }else if(MODE_OBJECT.equals(typeKey)){
+            NetApiUtils.service.findGoodsByObject(pageNo,pageCount,sortType,typeValue,null,updateTime,response);
+        }
+    }
+
+    public static void refreshGoods(int pageNo,int sortType,String typeKey,int typeValue,long updateTime,Callback<DatasRes<Goods>> response){
+        refreshGoods(pageNo, PAGE_COUNT, sortType, typeKey, typeValue, updateTime, response);
     }
 
     /**

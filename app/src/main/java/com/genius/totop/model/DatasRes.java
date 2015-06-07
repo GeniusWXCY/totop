@@ -8,4 +8,5 @@ public class DatasRes<T> {
     public int total;
     public List<T> data;
     public int code;
+    public long serverTime;
 }
