@@ -1,7 +1,10 @@
 package com.genius.totop.utils;
 
 public class Constants {
+
     public static final String HOST = "http://www.ladgift.com/";
+
+    public static final String DES_KEY = "qazsedcf";
 
     /**
      * 腾讯广点通APPID和广告位ID

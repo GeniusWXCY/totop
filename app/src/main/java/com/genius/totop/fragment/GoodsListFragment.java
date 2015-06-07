@@ -173,7 +173,6 @@ public class GoodsListFragment extends Fragment {
                 intent.putExtra(GoodsDetailActivity.EXTRA_GOODS_SOURCE,viewHolder.goods.sourceName);
                 intent.putExtra(GoodsDetailActivity.EXTRA_ICON_URL, viewHolder.goods.icon);
                 startActivity(intent);
-                //TODO 未测试
                 GoodsManager.executeAfterView(viewHolder.goods,mContext);
             }
         });

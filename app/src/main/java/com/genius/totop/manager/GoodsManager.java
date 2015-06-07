@@ -147,20 +147,31 @@ public class GoodsManager {
      * 提交浏览记录到服务端
      */
     public static void postVisit(VisitInfo visitInfo) throws Exception {
-        String data = new Gson().toJson(visitInfo).toString();
 
-        //加密
-        String password = "qazsedcf";
-        SecureRandom random = new SecureRandom();
-        DESKeySpec desKey = new DESKeySpec(password.getBytes());
-        SecretKeyFactory keyFactory = SecretKeyFactory.getInstance("DES");
-        SecretKey securekey = keyFactory.generateSecret(desKey);
+        String data = new Gson().toJson(visitInfo).toString();
+        String key = Constants.DES_KEY;
         Cipher cipher = Cipher.getInstance("DES");
-        //用密匙初始化Cipher对象
-        cipher.init(Cipher.ENCRYPT_MODE, securekey, random);
-        String encodeData = String.valueOf(cipher.doFinal(data.getBytes()));
-        Log.e("Genius",encodeData);
+        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("DES");
+        SecretKey secretKey = secretKeyFactory.generateSecret(new DESKeySpec(
+                key.getBytes()));
+        cipher.init(Cipher.ENCRYPT_MODE, secretKey, new SecureRandom());
+        byte[] encyData = cipher.doFinal(data.getBytes());
+        String encodeData = binToHex(encyData);
         NetApiUtils.service.postVisit(encodeData);
+    }
+
+    private static String binToHex(byte[] md) {
+        StringBuffer sb = new StringBuffer("");
+        int read = 0;
+        for (int i = 0; i < md.length; i++) {
+            read = md[i];
+            if (read < 0)
+                read += 256;
+            if (read < 16)
+                sb.append("0");
+            sb.append(Integer.toHexString(read));
+        }
+        return sb.toString();
     }
 
     /**
