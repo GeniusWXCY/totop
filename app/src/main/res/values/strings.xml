@@ -8,8 +8,7 @@
     <string name="pull_to_refresh_from_bottom_release_label">@string/lib_pull_to_refresh_release_label</string>
     <string name="pull_to_refresh_from_bottom_refreshing_label">@string/lib_pull_to_refresh_refreshing_label</string>
     <string name="app_name">萌萌礼物吧</string>
-    <string name="app_logo">-萌萌礼物吧-</string>
-    <string name="app_name2">9.9包邮</string>
+    <string name="app_name2">—萌萌礼物吧—</string>
     <string name="net_error">网络异常,请检查您的网络</string>
     <string name="update_dialog_yes">立即更新</string>
     <string name="update_dialog_no">下次再说</string>
@@ -49,8 +48,8 @@
     <string name="str_confirm">确认</string>
     <string name="str_share_waitting">分享中，请稍候...</string>
 
-    <string name="str_new">上新</string>
-    <string name="str_popularity">人气</string>
+    <string name="str_new">最新精选</string>
+    <string name="str_popularity">热门排行</string>
     <string name="str_sorry">对不起</string>
     <string name="str_net_error">网络请求失败</string>
     <string name="str_retry">重试</string>
@@ -80,11 +79,9 @@
     <string name="str_shenshi">绅士</string>
     <string name="str_ertong">儿童</string>
 
-    <string name="str_about_desc">\u3000\u3000萌萌礼物吧是国内领先的优质折扣平台，每日通过汇集各大电商平台的独家折扣精品，以更低的价格优惠，严格的样品质检和服务监督，为广大的用户提供最实惠的商品和完整的网购服务。</string>
-    <string name="str_about_label">萌萌礼物吧,九块九还包邮</string>
-    <string name="str_about_connect_us">商务合作和商家报名QQ：88888888888</string>
-    <string name="str_about_company_name">郭大爷网络科技有限公司 版权所有</string>
-    <string name="str_about_copyright_info">Copyright © 2013 - 2015 www.ladgift.com.</string>
+    <string name="str_about_desc">\u3000\u3000“萌萌礼物吧”，是时下最热门的礼物App。汇集全网最新时尚特色小礼物，每天都会收罗淘宝、天猫、京东等各大电商上最全的创意新品，在这里总能找到你中意的礼物，能够帮你表达心情、传递情义。</string>
+    <string name="str_about_label">萌萌礼物吧</string>
+    <string name="str_about_connect_us">商务合作和商家报名QQ：1035242464</string>
     <string name="str_about_all_right">All Rights Reserved</string>
     <string name="str_search_empty">找不到对应的商品，请尝试搜索其他关键字</string>
     <string name="str_history_empty">您还未浏览过商品哦</string>

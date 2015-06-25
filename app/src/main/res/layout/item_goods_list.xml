@@ -68,20 +68,21 @@
                 android:layout_height="fill_parent"
                 android:layout_weight="0.8">
 
-                <TextView
+                <com.genius.totop.view.widget.AlwaysMarqueeTextView
                     android:textSize="@dimen/item_goods_list_title_text_size"
                     android:textColor="@color/black"
-                    android:ellipsize="marquee"
                     android:id="@+id/textview_title"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/item_goods_list_r_margin_left"
                     android:layout_marginTop="5.0dip"
                     android:layout_marginRight="@dimen/item_goods_list_r_margin_right"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:focusableInTouchMode="true"
                     android:scrollHorizontally="true"
-                    android:singleLine="true"
+                    android:singleLine = "true"
                     android:text="折叠布简易衣柜" />
 
                 <RelativeLayout

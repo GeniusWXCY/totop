@@ -341,19 +341,19 @@ public class GoodsListFragment extends Fragment {
 
         long updateTime = getCurrentUpdateTimeSparseArray().get(mCurrentModeValue);
 
-        GoodsManager.refreshGoods(pageNo, mCurrentSortType, mCurrentModeType, mCurrentModeValue, updateTime,new Callback<DatasRes<Goods>>() {
+        GoodsManager.refreshGoods(pageNo, mCurrentSortType, mCurrentModeType, mCurrentModeValue, updateTime, new Callback<DatasRes<Goods>>() {
 
             @Override
             public void success(DatasRes<Goods> goodsDatasRes, Response response) {
 
                 mPullRefreshListView.onRefreshComplete();
 
-                if(goodsDatasRes != null) {
+                if (goodsDatasRes != null) {
 
                     List<Goods> list = goodsDatasRes.data;
 
                     //更新updateTime
-                    getCurrentUpdateTimeSparseArray().put(mCurrentModeValue,goodsDatasRes.serverTime);
+                    getCurrentUpdateTimeSparseArray().put(mCurrentModeValue, goodsDatasRes.serverTime);
 
                     //以下逻辑缓存数据
                     List<Goods> cacheList = mCurrentSparseArray.get(mCurrentModeValue);
@@ -367,13 +367,13 @@ public class GoodsListFragment extends Fragment {
                     if (tempList.size() > 0) {
                         cacheList.addAll(0, tempList);
                         //如果是人气，要根据人气值进行降序 --TODO 未测试
-                        if(mCurrentSortType == GoodsManager.SORT_BY_HOT){
+                        if (mCurrentSortType == GoodsManager.SORT_BY_HOT) {
                             Collections.sort(cacheList, new Comparator<Goods>() {
                                 @Override
                                 public int compare(Goods lhs, Goods rhs) {
-                                    if(Float.valueOf(lhs.heat) - Float.valueOf(rhs.heat) > 0 ){
+                                    if (Float.valueOf(lhs.heat) - Float.valueOf(rhs.heat) > 0) {
                                         return 1;
-                                    }else {
+                                    } else {
                                         return -1;
                                     }
                                 }
@@ -470,7 +470,6 @@ public class GoodsListFragment extends Fragment {
     void changePriceOrObjectd(RadioButton rb,boolean isCheck){
 
         if(isCheck){
-
             //每次切换后将列表设置为可加载更多
             mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
 
@@ -492,6 +491,9 @@ public class GoodsListFragment extends Fragment {
                     break;
             }
             loadView();
+
+            //ListView滑动至顶部
+            moveToTop();
         }
     }
 
@@ -563,11 +565,14 @@ public class GoodsListFragment extends Fragment {
         }
         //切换价格-对象的栏目,默认选中第一个栏目
         changeCategoryBar();
-
     }
 
     @OnClick(R.id.fab_top)
     public void moveToTop(ImageButton view){
+        moveToTop();
+    }
+
+    private void moveToTop(){
         mPullRefreshListView.getRefreshableView().setSelection(0);
     }
 

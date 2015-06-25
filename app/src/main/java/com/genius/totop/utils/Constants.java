@@ -43,5 +43,5 @@ public class Constants {
 
     public static String IMEI = "";
 
-    public static String SHARE_CONTENT = "萌萌礼物吧,九块九还包邮，便宜又实用，我正在购买礼物，你也来吧！";
+    public static String SHARE_CONTENT = "萌萌礼物吧,创意十足的礼物乐园，我在这里，你也一起来分享吧！";
 }

@@ -25,7 +25,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="16.0dip"
         android:layout_marginTop="50.0dip"
-        android:src="@drawable/icon_120" />
+        android:src="@drawable/ic_launcher_180" />
 
     <TextView
         android:layout_width="wrap_content"

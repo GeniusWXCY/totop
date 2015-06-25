@@ -36,7 +36,7 @@
 
             <RadioButton
                 android:id="@+id/radiobutton_new_goods"
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:background="@drawable/radio_selector_top"
                 android:button="@null"
@@ -47,7 +47,7 @@
 
             <RadioButton
                 android:id="@+id/radiobutton_hot_goods"
-                android:layout_width="60dp"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:background="@drawable/radio_selector_top"
                 android:button="@null"
