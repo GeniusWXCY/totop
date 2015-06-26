@@ -117,7 +117,9 @@
                         android:layout_marginTop="10.0dip"
                         android:gravity="bottom"
                         android:layout_marginLeft="@dimen/item_goods_list_r_margin_left"
-                        android:drawableLeft="@drawable/heat"
+                        android:drawableLeft="@drawable/icon_popularity_app_content"
+                        android:textSize="@dimen/dimen_15"
+                        android:drawablePadding="@dimen/dimen_5"
                         android:textColor="@color/yellow"
                         />
                     <TextView
