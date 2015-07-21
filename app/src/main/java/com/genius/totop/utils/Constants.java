@@ -20,8 +20,8 @@ public class Constants {
     /**
      * 微信分享
      */
-    public static final String UMENG_WX_APP_ID = "wx3ab32e5b0eda2675";
-    public static final String UMENG_WX_APP_SECRET = "b31450db0162afd2ac860f2c9e7adf3b";
+    public static final String UMENG_WX_APP_ID = "wx7dc29412b854db76";
+    public static final String UMENG_WX_APP_SECRET = "dfe938b5ea4e100a1855132b99eef2a9";
     /**
      * qq分享
      */
