@@ -18,7 +18,6 @@ public class AlwaysMarqueeTextView extends TextView {
         super(context, attrs, defStyle);
     }
 
-    //始终返回true，即一直获得焦点
     @Override
     public boolean isFocused() {
         return true;

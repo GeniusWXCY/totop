@@ -41,11 +41,10 @@ public class GoodsDetailActivity extends Activity {
         iconUrl = getIntent().getStringExtra(EXTRA_ICON_URL);
         textView.setText(getString(R.string.str_mobile) + source);
 
-        mWebView.setWebViewClient(new WebViewClient(){
+        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
+                return super.shouldOverrideUrlLoading(view, url);
             }
         });
         mWebView.getSettings().setJavaScriptEnabled(true);
