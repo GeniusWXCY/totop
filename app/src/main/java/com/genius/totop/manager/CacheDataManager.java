@@ -10,6 +10,7 @@ import com.genius.totop.model.DataRes;
 import com.genius.totop.model.Type;
 import com.genius.totop.model.db.CacheDataDB;
 import com.genius.totop.utils.Constants;
+import com.genius.totop.utils.EncyUtils;
 import com.genius.totop.utils.NetApiUtils;
 import com.genius.totop.utils.ThreadPoolUtils;
 import com.google.gson.Gson;
@@ -58,11 +59,11 @@ public class CacheDataManager {
     }
 
     public static DataRes<CacheData> findCacheDatas() throws Exception {
-        return NetApiUtils.service.findCacheDatas();
+        return NetApiUtils.service.findCacheDatas(EncyUtils.ency(System.currentTimeMillis()));
     }
 
     public static DataRes<Category> findCategorys() throws Exception {
-        return NetApiUtils.service.findCategorys();
+        return NetApiUtils.service.findCategorys(EncyUtils.ency(System.currentTimeMillis()));
     }
 
     public static void initData(DataRes<CacheData> cacheDatas, DataRes<Category> categorys) {
