@@ -14,6 +14,7 @@ import com.genius.totop.model.Goods;
 import com.genius.totop.model.VisitInfo;
 import com.genius.totop.model.db.GoodsDB;
 import com.genius.totop.utils.Constants;
+import com.genius.totop.utils.EncyUtils;
 import com.genius.totop.utils.NetApiUtils;
 import com.genius.totop.utils.ThreadPoolUtils;
 import com.google.gson.Gson;
@@ -53,10 +54,12 @@ public class GoodsManager {
 
     public static void findGoods(int pageNo, int pageCount, int sortType, String typeKey, int typeValue, long loadtime,Callback<DatasRes<Goods>> response){
 
+        String ency = EncyUtils.ency(System.currentTimeMillis());
+
         if(MODE_PRICE.equals(typeKey)){
-            NetApiUtils.service.findGoodsByPrice(pageNo, pageCount, sortType, typeValue,loadtime,null,response);
+            NetApiUtils.service.findGoodsByPrice(pageNo, pageCount, sortType, typeValue,loadtime,null,ency,response);
         }else if(MODE_OBJECT.equals(typeKey)){
-            NetApiUtils.service.findGoodsByObject(pageNo,pageCount,sortType,typeValue,loadtime,null,response);
+            NetApiUtils.service.findGoodsByObject(pageNo,pageCount,sortType,typeValue,loadtime,null,ency,response);
         }
     }
 
@@ -67,10 +70,11 @@ public class GoodsManager {
 
     public static void refreshGoods(int pageNo, int pageCount, int sortType, String typeKey, int typeValue, long updateTime,Callback<DatasRes<Goods>> response){
 
+        String ency = EncyUtils.ency(System.currentTimeMillis());
         if(MODE_PRICE.equals(typeKey)){
-            NetApiUtils.service.findGoodsByPrice(pageNo, pageCount, sortType, typeValue,null,updateTime,response);
+            NetApiUtils.service.findGoodsByPrice(pageNo, pageCount, sortType, typeValue,null,updateTime,ency,response);
         }else if(MODE_OBJECT.equals(typeKey)){
-            NetApiUtils.service.findGoodsByObject(pageNo,pageCount,sortType,typeValue,null,updateTime,response);
+            NetApiUtils.service.findGoodsByObject(pageNo,pageCount,sortType,typeValue,null,updateTime,ency,response);
         }
     }
 
@@ -86,7 +90,7 @@ public class GoodsManager {
      * @param response
      */
     public static void search(int pageNo,int pageCount ,String key,Callback<DatasRes<Goods>> response){
-        NetApiUtils.service.search(pageNo, pageCount, key, response);
+        NetApiUtils.service.search(pageNo, pageCount, key,EncyUtils.ency(System.currentTimeMillis()), response);
     }
 
     /**
@@ -147,31 +151,9 @@ public class GoodsManager {
      * 提交浏览记录到服务端
      */
     public static void postVisit(VisitInfo visitInfo) throws Exception {
-
         String data = new Gson().toJson(visitInfo).toString();
-        String key = Constants.DES_KEY;
-        Cipher cipher = Cipher.getInstance("DES");
-        SecretKeyFactory secretKeyFactory = SecretKeyFactory.getInstance("DES");
-        SecretKey secretKey = secretKeyFactory.generateSecret(new DESKeySpec(
-                key.getBytes()));
-        cipher.init(Cipher.ENCRYPT_MODE, secretKey, new SecureRandom());
-        byte[] encyData = cipher.doFinal(data.getBytes());
-        String encodeData = binToHex(encyData);
-        NetApiUtils.service.postVisit(encodeData);
-    }
-
-    private static String binToHex(byte[] md) {
-        StringBuffer sb = new StringBuffer("");
-        int read = 0;
-        for (int i = 0; i < md.length; i++) {
-            read = md[i];
-            if (read < 0)
-                read += 256;
-            if (read < 16)
-                sb.append("0");
-            sb.append(Integer.toHexString(read));
-        }
-        return sb.toString();
+        String encodeData = EncyUtils.ency(data);
+        NetApiUtils.service.postVisit(encodeData,EncyUtils.ency(System.currentTimeMillis()));
     }
 
     /**
