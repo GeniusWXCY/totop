@@ -54,7 +54,7 @@ public class CacheDataManager {
         }
 
         for (int i = 0; i < length2; i++) {
-            mCategory.object.types.add(new Type((i + 5),priceArray[i], "2"));
+            mCategory.object.types.add(new Type((i + 5),objectArray[i], "2"));
         }
     }
 

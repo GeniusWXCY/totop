@@ -9,15 +9,15 @@ public class Version {
     /**
      * 版本名称
      */
-    public String versionName;
+    public String vname;
     /**
      * 版本号代码
      */
-    public int versionCode;
+    public int vcode;
     /**
      * 包名
      */
-    public String packageName;
+    public String pname;
     /**
      * 包地址
      */

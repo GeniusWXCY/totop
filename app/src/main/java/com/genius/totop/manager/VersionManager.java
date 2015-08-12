@@ -9,8 +9,12 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.genius.totop.R;
+import com.genius.totop.model.DataRes;
+import com.genius.totop.model.DatasRes;
 import com.genius.totop.model.Version;
 import com.genius.totop.utils.Constants;
+import com.genius.totop.utils.EncyUtils;
+import com.genius.totop.utils.NetApiUtils;
 
 import cn.trinea.android.common.util.PackageUtils;
 import cn.trinea.android.common.util.ToastUtils;
@@ -30,14 +34,6 @@ public class VersionManager {
             mVersionManager = new VersionManager(context);
         }
         return mVersionManager;
-    }
-
-    public Version getVersion() {
-        Version version = new Version();
-        version.versionCode = 1;
-        version.packageUrl = "http://img.meilishuo.net/css/images/AndroidShare/Meilishuo_3.6.1_10006.apk";
-        version.packageUrl = "http://172.25.74.165/app/apk/2015/05_15/14/201505151456462266.apk";
-        return version;
     }
 
     public void checkVersion(boolean isAlert) {
@@ -72,13 +68,27 @@ public class VersionManager {
 
         @Override
         protected Version doInBackground(Void... params) {
-            return getVersion();
+
+            String ents = EncyUtils.ency(System.currentTimeMillis());
+            DataRes<Version> dataRes = null;
+            try {
+                dataRes = NetApiUtils.service.getVersion(ents);
+                if(dataRes != null){
+                    return dataRes.data;
+                }
+            } catch (Exception e) {
+                return null;
+            }
+            return null;
         }
 
         @Override
         protected void onPostExecute(Version version) {
+
+            if(version == null) return;
+
             int appVersionCode = PackageUtils.getAppVersionCode(mContext);
-            int remoteVersionCode = version.versionCode;
+            int remoteVersionCode = version.vcode;
             final String apkUrl = version.packageUrl;
             if (appVersionCode < remoteVersionCode) {
 

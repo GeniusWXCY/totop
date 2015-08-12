@@ -70,6 +70,7 @@ public interface NetApi {
     //按时间获取产品列表
 
     //系统更新
-    DatasRes<Version> getVersion(@Query("ents")String ents);
+    @GET("/interface/api.do?sk=1700")
+    DataRes<Version> getVersion(@Query("ents")String ents) throws Exception;
 
 }
