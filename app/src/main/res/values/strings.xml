@@ -16,10 +16,10 @@
     <string name="click_to_loading_more">点击加载更多</string>
     <string name="str_today_goods">今日新品</string>
     <string name="str_hot_sell">超值热销</string>
-    <string name="str_nine_nine">9块9</string>
-    <string name="str_nineteen_nine">19块9</string>
-    <string name="str_twentynine_nine">29块9</string>
-    <string name="str_thirtynine_nine">39块9</string>
+    <string name="str_nine_nine">price1</string>
+    <string name="str_nineteen_nine">price2</string>
+    <string name="str_twentynine_nine">price3</string>
+    <string name="str_thirtynine_nine">price4</string>
     <string name="str_share">分享</string>
     <string name="str_taobao_account">淘宝账号</string>
     <string name="str_my_taobao">我的淘宝</string>
@@ -74,10 +74,10 @@
     <string name="str_update_ok">更新</string>
     <string name="str_update_no">取消</string>
 
-    <string name="str_shaonv">少女</string>
-    <string name="str_mingyuan">名媛</string>
-    <string name="str_shenshi">绅士</string>
-    <string name="str_ertong">儿童</string>
+    <string name="str_shaonv">item1</string>
+    <string name="str_mingyuan">item2</string>
+    <string name="str_shenshi">item3</string>
+    <string name="str_ertong">item4</string>
 
     <string name="str_about_desc">\u3000\u3000“萌萌礼物吧”，是时下最热门的礼物App。汇集全网最新时尚特色小礼物，每天都会收罗淘宝、天猫、京东等各大电商上最全的创意新品，在这里总能找到你中意的礼物，能够帮你表达心情、传递情义。</string>
     <string name="str_about_label">萌萌礼物吧</string>

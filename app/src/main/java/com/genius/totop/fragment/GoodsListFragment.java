@@ -66,6 +66,11 @@ public class GoodsListFragment extends Fragment {
     @InjectView(R.id.fab_type) FloatingActionButton mFabType;
     @InjectView(R.id.layout_bottom_bar) View mBottomBar;
 
+    @InjectView(R.id.radio_level_one) RadioButton radioButton1;
+    @InjectView(R.id.radio_level_two) RadioButton radioButton2;
+    @InjectView(R.id.radio_level_three) RadioButton radioButton3;
+    @InjectView(R.id.radio_level_four) RadioButton radioButton4;
+
     public static final String TAG = "GoodsListFragment";
 
     private Context mContext;
@@ -132,6 +137,7 @@ public class GoodsListFragment extends Fragment {
         ButterKnife.inject(this,view);
         mContext = getActivity();
         initCurrentData();
+        initBottom();
         mGoodsAdapter = new GoodsAdapter(mContext, mCurrentList, mCurrentSortType);
 
         mPullRefreshListView.setMode(PullToRefreshBase.Mode.BOTH);
@@ -513,11 +519,6 @@ public class GoodsListFragment extends Fragment {
 
     private void changeCategoryBar(){
 
-        RadioButton radioButton1 = (RadioButton) mRadioGroup.findViewById(R.id.radio_level_one);
-        RadioButton radioButton2 = (RadioButton) mRadioGroup.findViewById(R.id.radio_level_two);
-        RadioButton radioButton3 = (RadioButton) mRadioGroup.findViewById(R.id.radio_level_three);
-        RadioButton radioButton4 = (RadioButton) mRadioGroup.findViewById(R.id.radio_level_four);
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB){
             //动画效果
             new FlipVerticalAnimation(mBottomBar).animate();
@@ -538,6 +539,17 @@ public class GoodsListFragment extends Fragment {
         }
         mRadioGroup.clearCheck();
         radioButton1.setChecked(true);
+    }
+
+    /**
+     * 初始化底部按钮
+     */
+    private void initBottom(){
+        List<Type> types = CacheDataManager.mCategory.price.types;
+        radioButton1.setText(types.get(0).name);
+        radioButton2.setText(types.get(1).name);
+        radioButton3.setText(types.get(2).name);
+        radioButton4.setText(types.get(3).name);
     }
 
     @OnClick(R.id.fab_type)
