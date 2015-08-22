@@ -37,10 +37,12 @@ public class SearchActivity extends FragmentActivity {
         mSearchFragment = new SearchFragment();
 
         getSupportFragmentManager().beginTransaction().add(R.id.fragment, mSearchFragment).commit();
+        mSearchInputEditText.requestFocus();
     }
 
     @OnClick(R.id.searchText)
     public void search(View view) {
+        mSearchInputEditText.clearFocus();
         String searchText = mSearchInputEditText.getText().toString();
         if(StringUtils.isBlank(searchText)){
             Toast.makeText(this,getString(R.string.str_search_input_empty),Toast.LENGTH_SHORT).show();
