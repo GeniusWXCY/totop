@@ -115,6 +115,7 @@ public class SearchFragment extends Fragment {
 
     private void executeData(){
 
+        currentList.clear();
         toggleErrorView(false);
         mEmptyView.setVisibility(View.GONE);
         mPullRefreshListView.setVisibility(View.VISIBLE);
