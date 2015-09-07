@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="dimen_5">5.0dip</dimen>
-    <dimen name="dimen_10">10.0dip</dimen>
-    <dimen name="dimen_15">15.0dip</dimen>
-
     <dimen name="indicator_right_padding">10.0dip</dimen>
     <dimen name="indicator_corner_radius">12.0dip</dimen>
     <dimen name="indicator_internal_padding">4.0dip</dimen>
@@ -51,5 +47,10 @@
     <dimen name="slidingmenu_shadow_width">15.0dip</dimen>
 
     <dimen name="tool_bar_height">56dp</dimen>
+
+    <dimen name="dimen_5">5.0dip</dimen>
+    <dimen name="dimen_10">10.0dip</dimen>
+    <dimen name="dimen_15">15.0dip</dimen>
     <dimen name="dimen_30">30dip</dimen>
+    <dimen name="dimen_50">50dip</dimen>
 </resources>

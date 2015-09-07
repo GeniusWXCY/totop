@@ -19,6 +19,8 @@ import com.google.gson.reflect.TypeToken;
 import java.util.ArrayList;
 import java.util.List;
 
+import retrofit.Callback;
+
 
 public class CacheDataManager {
 
@@ -58,23 +60,48 @@ public class CacheDataManager {
         }
     }
 
+    /**
+     * 获取帮助信息和分享地址
+     */
     public static DataRes<CacheData> findCacheDatas() throws Exception {
         return NetApiUtils.service.findCacheDatas(EncyUtils.ency(System.currentTimeMillis()));
     }
 
+    /**
+     * 获取对象和价格类别
+     */
     public static DataRes<Category> findCategorys() throws Exception {
         return NetApiUtils.service.findCategorys(EncyUtils.ency(System.currentTimeMillis()));
     }
 
+    /**
+     * 异步获取帮助信息和分享地址
+     */
+    public static void findCacheDatas(Callback<DataRes<CacheData>> response) {
+        NetApiUtils.service.findCacheDatas(EncyUtils.ency(System.currentTimeMillis()),response);
+    }
+
+    /**
+     * 异步获取对象和价格类别
+     */
+    public static void findCategorys(Callback<DataRes<Category>> response){
+        NetApiUtils.service.findCategorys(EncyUtils.ency(System.currentTimeMillis()),response);
+    }
+
+    /**
+     * 根据网络请求结果，将数据缓存至内存中
+     * @param cacheDatas
+     * @param categorys
+     */
     public static void initData(DataRes<CacheData> cacheDatas, DataRes<Category> categorys) {
-        if(cacheDatas.success){
+        if(cacheDatas != null && cacheDatas.success){
             CacheData tempCacheData = cacheDatas.data;
             if(tempCacheData != null){
                 mCacheData.url = tempCacheData.url;
                 mCacheData.content = tempCacheData.content;
             }
         }
-        if (cacheDatas.success){
+        if (categorys != null && categorys.success){
             Category tempCateGory = categorys.data;
             if(tempCateGory != null){
                 mCategory.object = tempCateGory.object;
@@ -83,6 +110,10 @@ public class CacheDataManager {
         }
     }
 
+    /**
+     * 将本地数据缓存至内存中
+     * @param cacheDataDB
+     */
     public static void initData(CacheDataDB cacheDataDB) {
 
         mCategory.price = mCategory.new TypeWrap();
@@ -136,30 +167,26 @@ public class CacheDataManager {
      */
     public static void updateLocal(CacheDataDB cacheDataDB,DataRes<CacheData> cacheDatas,DataRes<Category> categorys){
 
-        boolean isSaveOrUpdate = false;
-
         if (cacheDataDB == null) {
             cacheDataDB = new CacheDataDB();
-            isSaveOrUpdate = true;
-        } else {
-            //判断是否要更新
-            if (cacheDataDB.priceTime < categorys.data.price.time
-                    || cacheDataDB.objectTime < categorys.data.object.time
-                    || cacheDataDB.modifyTime < cacheDatas.data.modifyTime) {
-                isSaveOrUpdate = true;
-            }
         }
 
-        cacheDataDB.object = new Gson().toJson(categorys.data.object.types);
-        cacheDataDB.price = new Gson().toJson(categorys.data.price.types);
-        cacheDataDB.objectTime = categorys.data.object.time;
-        cacheDataDB.priceTime = categorys.data.price.time;
-        cacheDataDB.modifyTime = cacheDatas.data.modifyTime;
-        cacheDataDB.helpDesc = cacheDatas.data.content;
-        cacheDataDB.shareUrl = cacheDatas.data.url;
+        //保存本地时间
+        long currentTime = System.currentTimeMillis();
 
-        if(isSaveOrUpdate){
-            cacheDataDB.save();
+        if(categorys != null){
+            cacheDataDB.object = new Gson().toJson(categorys.data.object.types);
+            cacheDataDB.price = new Gson().toJson(categorys.data.price.types);
+            cacheDataDB.objectTime = currentTime;
+            cacheDataDB.priceTime = currentTime;
         }
+
+        if(cacheDatas != null){
+            cacheDataDB.helpDesc = cacheDatas.data.content;
+            cacheDataDB.shareUrl = cacheDatas.data.url;
+            cacheDataDB.modifyTime = currentTime;
+        }
+
+        cacheDataDB.save();
     }
 }

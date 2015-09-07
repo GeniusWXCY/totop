@@ -75,9 +75,6 @@ public class WelcomeActivity extends FragmentActivity{
             //取常量进行初始化
             CacheDataManager.initData(WelcomeActivity.this);
 
-            //TODO 进度条
-            //mProgressBar.setVisibility(View.VISIBLE);
-
             //发起网络请求，并将数据缓存起来
             ThreadPoolUtils.getInstance().execute(new Runnable() {
                 @Override
