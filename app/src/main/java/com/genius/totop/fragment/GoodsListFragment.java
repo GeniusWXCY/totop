@@ -574,7 +574,6 @@ public class GoodsListFragment extends Fragment {
 
             if(isRefreshCache){//需要从网络上获取数据
                 mProgressBar.setVisibility(View.VISIBLE);
-                Log.e(TAG,"请求数据，刷新缓存。。。。。。。。。。");
                 //应甲方要求，切换状态时发送网络请求,更新底部状态
                 CacheDataManager.findCategorys(new Callback<DataRes<Category>>() {
                     @Override
