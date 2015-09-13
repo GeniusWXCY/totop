@@ -28,9 +28,14 @@ import com.genius.totop.activity.HistoryActivity;
 import com.genius.totop.activity.SearchActivity;
 import com.genius.totop.manager.CacheDataManager;
 import com.genius.totop.manager.GoodsManager;
+import com.genius.totop.model.Category;
+import com.genius.totop.model.DataRes;
 import com.genius.totop.model.DatasRes;
 import com.genius.totop.model.Goods;
 import com.genius.totop.model.Type;
+import com.genius.totop.model.db.CacheDataDB;
+import com.genius.totop.utils.Constants;
+import com.genius.totop.utils.NetApiUtils;
 import com.genius.totop.view.adapter.GoodsAdapter;
 import com.handmark.pulltorefresh.library.PullToRefreshBase;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
@@ -62,8 +67,8 @@ public class GoodsListFragment extends Fragment {
     @InjectView(R.id.progressBar) ProgressBar mProgressBar;
     @InjectView(R.id.error_view) ErrorView mErrorView;
     @InjectView(R.id.empty_view)View mEmptyView;
-    @InjectView(R.id.fab_top) FloatingActionButton mFabTop;
-    @InjectView(R.id.fab_type) FloatingActionButton mFabType;
+    @InjectView(R.id.fab_top) FloatingActionButton mFabTop;//置顶按钮
+    @InjectView(R.id.fab_type) FloatingActionButton mFabType;//切换价格或对象的按钮
     @InjectView(R.id.layout_bottom_bar) View mBottomBar;
 
     @InjectView(R.id.radio_level_one) RadioButton radioButton1;
@@ -280,24 +285,20 @@ public class GoodsListFragment extends Fragment {
 
         long loadTime = getCurrentLoadTimeSparseArray().get(mCurrentModeValue);
 
-        Log.i(TAG,"当前页码：" + pageNo);
-        Log.i(TAG,"当前模式：" + mCurrentModeValue);
-        Log.i(TAG, "当前loadTime：" + loadTime);
-
-        GoodsManager.findGoods(pageNo, mCurrentSortType, mCurrentModeType, mCurrentModeValue, loadTime,new Callback<DatasRes<Goods>>() {
+        GoodsManager.findGoods(pageNo, mCurrentSortType, mCurrentModeType, mCurrentModeValue, loadTime, new Callback<DatasRes<Goods>>() {
             @Override
             public void success(DatasRes<Goods> goodsDatasRes, Response response) {
 
                 mPullRefreshListView.onRefreshComplete();
 
-                if(goodsDatasRes != null) {
+                if (goodsDatasRes != null) {
 
                     List<Goods> list = goodsDatasRes.data;
 
                     //如果为第一页，赋值updateTime和loadTime
-                    if(pageNo == 1){
-                        getCurrentUpdateTimeSparseArray().put(mCurrentModeValue,goodsDatasRes.serverTime);
-                        getCurrentLoadTimeSparseArray().put(mCurrentModeValue,goodsDatasRes.serverTime);
+                    if (pageNo == 1) {
+                        getCurrentUpdateTimeSparseArray().put(mCurrentModeValue, goodsDatasRes.serverTime);
+                        getCurrentLoadTimeSparseArray().put(mCurrentModeValue, goodsDatasRes.serverTime);
                     }
 
                     //以下逻辑缓存数据
@@ -324,7 +325,7 @@ public class GoodsListFragment extends Fragment {
                     //是否有下一页
                     if (list == null || list.size() < GoodsManager.PAGE_COUNT) {
                         mPullRefreshListView.setMode(PullToRefreshBase.Mode.PULL_FROM_START);
-                    }else{
+                    } else {
                         getCurrentPageNoSparseArray().put(mCurrentModeValue, pageNo + 1);
                     }
                 }
@@ -553,8 +554,56 @@ public class GoodsListFragment extends Fragment {
     }
 
     @OnClick(R.id.fab_type)
-    public void changeType(ImageButton view){
+    public void changeType(final ImageButton view){
 
+        if(NetApiUtils.isNetworkConnected(mContext)){
+
+            final CacheDataDB cacheDataDB = CacheDataManager.findFromLocal();
+            boolean isRefreshCache = false;
+
+            //判断是否需要从网络上获取数据，并更新缓存
+            if(cacheDataDB == null){
+                isRefreshCache = true;
+            }else{
+                long saveTime = cacheDataDB.objectTime;
+                long result = saveTime-System.currentTimeMillis();
+                if(Math.abs(result) > Constants.TIME_INTERVAL){
+                    isRefreshCache = true;
+                }
+            }
+
+            if(isRefreshCache){//需要从网络上获取数据
+                mProgressBar.setVisibility(View.VISIBLE);
+                Log.e(TAG,"请求数据，刷新缓存。。。。。。。。。。");
+                //应甲方要求，切换状态时发送网络请求,更新底部状态
+                CacheDataManager.findCategorys(new Callback<DataRes<Category>>() {
+                    @Override
+                    public void success(DataRes<Category> categoryDataRes, Response response) {
+                        //初始化数据
+                        CacheDataManager.initData(null,categoryDataRes);
+                        CacheDataManager.updateLocal(cacheDataDB, null, categoryDataRes);
+                        mProgressBar.setVisibility(View.GONE);
+                        changeTypeFormCache(view);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        mProgressBar.setVisibility(View.GONE);
+                        changeTypeFormCache(view);
+                    }
+                });
+            }else{
+                changeTypeFormCache(view);
+            }
+        }else{
+            changeTypeFormCache(view);
+        }
+    }
+
+    /**
+     * 从缓存数据进行切换
+     */
+    private void changeTypeFormCache(ImageButton view){
         if(mCurrentModeType == GoodsManager.MODE_OBJECT){
             //切换成价格模式
             mCurrentModeType = GoodsManager.MODE_PRICE;

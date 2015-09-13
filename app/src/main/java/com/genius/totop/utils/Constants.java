@@ -44,4 +44,9 @@ public class Constants {
     public static String IMEI = "";
 
     public static String SHARE_CONTENT = "萌萌礼物吧,创意十足的礼物乐园，我在这里，你也一起来分享吧！";
+
+    /**
+     * 时间间隔10分钟
+     */
+    public static final long TIME_INTERVAL = 10*60*1000;
 }

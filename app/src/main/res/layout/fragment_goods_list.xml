@@ -25,7 +25,7 @@
 
         <RadioGroup
             android:id="@+id/layout_category_bar"
-            android:layout_height="@dimen/title_height"
+            android:layout_height="@dimen/dimen_50"
             android:layout_below="@id/layout_main_head"
             android:layout_width="fill_parent"
             android:gravity="center"
@@ -43,6 +43,7 @@
                 android:checked="true"
                 android:gravity="center"
                 android:text="@string/str_new"
+                android:layout_marginRight="@dimen/dimen_15"
                 android:textColor="@drawable/radio_selector_top_text" />
 
             <RadioButton
@@ -53,7 +54,8 @@
                 android:button="@null"
                 android:gravity="center"
                 android:text="@string/str_popularity"
-                android:textColor="@drawable/radio_selector_top_text" />
+                android:textColor="@drawable/radio_selector_top_text"
+                android:checked="false" />
         </RadioGroup>
 
         <RelativeLayout

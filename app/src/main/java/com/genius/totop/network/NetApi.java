@@ -62,6 +62,18 @@ public interface NetApi {
     DataRes<Category> findCategorys(@Query("ents")String ents) throws Exception;
 
     /**
+     * 获取帮助信息和分享地址
+     */
+    @GET("/interface/api.do?sk=1600")
+    void findCacheDatas(@Query("ents")String ents,Callback<DataRes<CacheData>> response);
+
+    /**
+     * 获取对象和价格等类别数据
+     */
+    @GET("/interface/api.do?sk=1510")
+    void findCategorys(@Query("ents")String ents,Callback<DataRes<Category>> response);
+
+    /**
      * 提交用户访问商品信息
      */
     @POST("/interface/api.do?sk=1300")
