@@ -24,12 +24,14 @@ public class UMengShareUtils {
         String appSecret = Constants.UMENG_WX_APP_SECRET;
         // 添加微信平台
         UMWXHandler wxHandler = new UMWXHandler(activity, appId, appSecret);
-
         wxHandler.setTargetUrl(CacheDataManager.mCacheData.url);
+        wxHandler.setTitle(activity.getString(R.string.app_name));
+        wxHandler.setToCircle(false);
         wxHandler.addToSocialSDK();
 
         // 支持微信朋友圈
         UMWXHandler wxCircleHandler = new UMWXHandler(activity, appId, appSecret);
+        wxCircleHandler.setTargetUrl(CacheDataManager.mCacheData.url);
         wxCircleHandler.setTitle(activity.getString(R.string.app_name));
         wxCircleHandler.setToCircle(true);
         wxCircleHandler.addToSocialSDK();
@@ -53,6 +55,7 @@ public class UMengShareUtils {
 
         // 添加QZone平台
         QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(activity, appId, appKey);
+        qZoneSsoHandler.setTargetUrl(CacheDataManager.mCacheData.url);
         qZoneSsoHandler.addToSocialSDK();
     }
 
@@ -77,6 +80,14 @@ public class UMengShareUtils {
         }else{
             mController.setShareImage(new UMImage(activity, iconUrl));
         }
+
+//        QZoneShareContent qzone = new QZoneShareContent();
+//        qzone.setTargetUrl(CacheDataManager.mCacheData.url);
+//        mController.setShareMedia(qzone);
+//
+//        CircleShareContent circleShareContent = new CircleShareContent();
+//        circleShareContent.setTargetUrl(CacheDataManager.mCacheData.url);
+//        mController.setShareMedia(circleShareContent);
 
         mController.getConfig().removePlatform(SHARE_MEDIA.SINA);
         mController.getConfig().removePlatform(SHARE_MEDIA.TENCENT);

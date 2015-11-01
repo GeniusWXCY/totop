@@ -36,7 +36,7 @@
             android:value="55740e2767e58eb54b002c49" />
         <meta-data
             android:name="UMENG_CHANNEL"
-            android:value="baidu" />
+            android:value="xiaomi" />
 
         <activity android:name=".activity.WelcomeActivity" android:screenOrientation="portrait">
             <intent-filter>
